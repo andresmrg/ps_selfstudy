@@ -19,7 +19,7 @@ class block_ps_selfstudy extends block_list {
         $url2 = new moodle_url('/blocks/ps_selfstudy/block_requests_view.php');
 
         $this->content->items[] = html_writer::link($url1, get_string('link_managecourses', 'block_ps_selfstudy'));
-        $this->content->items[] = html_writer::link($url2, get_string('link_requests', 'block_ps_selfstudy'));
+        //$this->content->items[] = html_writer::link($url2, get_string('link_requests', 'block_ps_selfstudy'));
 	 
 	    return $this->content;
 	}   // Here's the closing bracket for the class definition
