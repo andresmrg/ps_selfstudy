@@ -66,7 +66,8 @@ class courselist_table extends table_sql {
         // Show readable date from timestamp.
         $str = $values->course_description;
         $description = base64_encode($str);
-        return '<a href="editcourse.php?id='.$values->id.'&code='.$values->course_code.'&name='.$values->course_name.'&desc='.$description.'&type='.$values->course_type.'&status='.$values->course_status.'">Edit</a> - <a href="#">Delete</a>';
+        return '<a href="editcourse.php?id='.$values->id.'&code='.$values->course_code.'&name='.$values->course_name.'&desc='.$description.'&type='.$values->course_type.'&status='.$values->course_status.'">Edit</a> 
+        - <a href="deletecourse.php?id='.$values->id.'" onclick="return check_confirm()">Delete</a>';
     }
     /**
      * This function is called for each data row to allow processing of

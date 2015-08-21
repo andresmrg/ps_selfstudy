@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Simple file test_custom.php to drop into root of Moodle installation.
