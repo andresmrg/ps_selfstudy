@@ -30,7 +30,7 @@ echo "<h2>Manage self-study courses<br><br></h2>";
 $page->display(); //output button to create new courses
 
 // Work out the sql for the table.
-$table->set_sql('*', "{user}", '1');
+$table->set_sql('*', "{block_ps_selfstudy_course}", '1');
 $table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/managecourses.php");
 //$table->finish_output();
 //$table->print_html();

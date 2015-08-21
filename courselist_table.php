@@ -14,11 +14,11 @@ class test_table extends table_sql {
     function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('username', 'password', 'firstname');
+        $columns = array('course_name', 'course_description', 'course_type','course_status','date_created');
         $this->define_columns($columns);
 
         // Define the titles of columns to show in header.
-        $headers = array('Course Name', 'Description', 'Actions');
+        $headers = array('Course Name', 'Description', 'Course Type','Status','Date Created');
         $this->define_headers($headers);
     }
 
@@ -30,7 +30,7 @@ class test_table extends table_sql {
      * @return $string Return username with link to profile or username only
      *     when downloading.
      */
-    function col_username($values) {
+    function course_username($values) {
         // If the data is being downloaded than we don't want to show HTML.
         if ($this->is_downloading()) {
             return $values->username;
@@ -47,8 +47,24 @@ class test_table extends table_sql {
      */
     function other_cols($colname, $value) {
         // For security reasons we don't want to show the password hash.
-        if ($colname == 'password') {
-            return "****";
+        if ($colname == 'course_type') {
+            //print_object($value->course_type);
+            if($value->course_type == 0) {
+                return "Phisical Copy";    
+            } else {
+                return "Link Course";
+            }
+        }
+        if ($colname == 'course_status') {
+            if($value->course_status == 0) {
+                return "Active";    
+            } else {
+                return "Disable";
+            }
+        }
+        if ($colname == 'date_created') {
+            $date = $value->date_created;
+            return date("m/d/Y",$date);
         }
     }
 }
