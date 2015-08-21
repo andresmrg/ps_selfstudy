@@ -1,10 +1,11 @@
 <?php
 /**
- * Test table class to be put in test_table.php of root of Moodle installation.
+ * Table class to be put in managecourses.php selfstudy manage course page.
  *  for defining some custom column names and proccessing
- * Username and Password feilds using custom and other column methods.
  */
-class test_table extends table_sql {
+class courselist_table extends table_sql {
+
+    //GLOBAL $CFG;
 
     /**
      * Constructor
@@ -14,11 +15,11 @@ class test_table extends table_sql {
     function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_name', 'course_description', 'course_type','course_status','date_created');
+        $columns = array('course_code','course_name', 'course_description', 'course_type','course_status','date_created','actions');
         $this->define_columns($columns);
 
         // Define the titles of columns to show in header.
-        $headers = array('Course Name', 'Description', 'Course Type','Status','Date Created');
+        $headers = array('Course Code','Course Name', 'Description', 'Course Type','Status','Date Created','Action');
         $this->define_headers($headers);
     }
 
@@ -30,7 +31,7 @@ class test_table extends table_sql {
      * @return $string Return username with link to profile or username only
      *     when downloading.
      */
-    function course_username($values) {
+    function col_username($values) {
         // If the data is being downloaded than we don't want to show HTML.
         if ($this->is_downloading()) {
             return $values->username;
@@ -39,6 +40,34 @@ class test_table extends table_sql {
         }
     }
 
+    function col_course_type($values) {
+        //print_object($values);
+        // If the value is 0, show Phisical copy, else, Link course.
+        if($values->course_type == 0) {
+            return "Phisical Copy";    
+        } else {
+            return "Link Course";
+        }
+    }
+    function col_course_status($values) {
+        // If the value is 0, show Active copy, else, Disable.
+        if($values->course_status == 0) {
+            return "Active";    
+        } else {
+            return "Disable";
+        }
+    }
+    function col_date_created($values) {
+        // Show readable date from timestamp.
+        $date = $values->date_created;
+        return date("m/d/Y",$date);
+    }
+    function col_actions($values) {
+        // Show readable date from timestamp.
+        $str = $values->course_description;
+        $description = base64_encode($str);
+        return '<a href="editcourse.php?id='.$values->id.'&code='.$values->course_code.'&name='.$values->course_name.'&desc='.$description.'&type='.$values->course_type.'&status='.$values->course_status.'">Edit</a> - <a href="#">Delete</a>';
+    }
     /**
      * This function is called for each data row to allow processing of
      * columns which do not have a *_cols function.
@@ -47,24 +76,6 @@ class test_table extends table_sql {
      */
     function other_cols($colname, $value) {
         // For security reasons we don't want to show the password hash.
-        if ($colname == 'course_type') {
-            //print_object($value->course_type);
-            if($value->course_type == 0) {
-                return "Phisical Copy";    
-            } else {
-                return "Link Course";
-            }
-        }
-        if ($colname == 'course_status') {
-            if($value->course_status == 0) {
-                return "Active";    
-            } else {
-                return "Disable";
-            }
-        }
-        if ($colname == 'date_created') {
-            $date = $value->date_created;
-            return date("m/d/Y",$date);
-        }
+
     }
 }
