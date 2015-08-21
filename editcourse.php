@@ -28,6 +28,8 @@ if($form_page->is_cancelled()) {
    	2. save into the db
    	3. redirect to the course list page
    	*/
+    
+    //print_object($fromform);
    	if (!$DB->update_record('block_ps_selfstudy_course', $fromform)) {
    		print_error('inserterror', 'block_ps_selfstudy');
    	}

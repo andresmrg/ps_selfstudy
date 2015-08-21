@@ -25,12 +25,10 @@ class createcourse_form extends moodleform {
         $mform->addRule('course_description', null, 'required', null, 'client');
 
         //checkbox for link courses, if it is not checked, it is like if it didn't exist
-        $mform->addElement('checkbox', 'course_type', get_string('field_checkbox', 'block_ps_selfstudy'));
-        $mform->addElement('html', 'To create a self-study course with link, select the checkbox above.<br><br>'); //note about the type course
+        $mform->addElement('advcheckbox', 'course_type', get_string('field_checkbox', 'block_ps_selfstudy'), 'Select to create a self-study course with link.', array('group' => 1), array(0, 1));
 
         //checkbox for link courses, if it is not checked, it is like if it didn't exist
-        $mform->addElement('checkbox', 'course_status', get_string('field_checkbox_hide', 'block_ps_selfstudy'));
-        $mform->addElement('html', 'Select the checkbox above to have the course hidden by default.<br><br>'); //note about the type course
+        $mform->addElement('advcheckbox', 'course_status', get_string('field_checkbox_hide', 'block_ps_selfstudy'), 'Select to hide the course by default.', array('group' => 2), array(0, 1));
 
         //add time
         $mform->addElement('hidden', 'date_created');

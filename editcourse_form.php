@@ -30,6 +30,11 @@ class editcourse_form extends moodleform {
         // add group for text areas
         //$mform->addElement('header', 'displayinfo', get_string('text_coursename', 'block_ps_selfstudy'));
 
+        //pass id
+        $mform->addElement('hidden', 'id');
+        $mform->setType('id', PARAM_NOTAGS);
+        $mform->setDefault('id', $id);
+
 		// load existing course code
         $mform->addElement('text', 'course_code', get_string('field_coursecode', 'block_ps_selfstudy'));
         $mform->setType('course_code', PARAM_NOTAGS);
@@ -49,20 +54,13 @@ class editcourse_form extends moodleform {
         $mform->setDefault('course_description', $description);  
 
         //checkbox for link courses, if it is not checked, it is like if it didn't exist
-        $mform->addElement('checkbox', 'course_type', get_string('field_checkbox', 'block_ps_selfstudy'));
-        $mform->addElement('html', 'To create a self-study course with link, select the checkbox above.<br><br>'); //note about the type course
+        $mform->addElement('advcheckbox', 'course_type', get_string('field_checkbox', 'block_ps_selfstudy'), 'Select to create a self-study course with link.', array('group' => 1), array(0, 1));
         $mform->setDefault('course_type', $type); 
 
         //checkbox for link courses, if it is not checked, it is like if it didn't exist
-        $mform->addElement('checkbox', 'course_status', get_string('field_checkbox_hide', 'block_ps_selfstudy'));
-        $mform->addElement('html', 'Select the checkbox above to have the course hidden by default.<br><br>'); //note about the type course
-        $mform->setDefault('course_status', $status); 
-
-        //add time
-        $mform->addElement('hidden', 'id');
-        $mform->setType('id', PARAM_NOTAGS);
-        $mform->setDefault('id', $id); 
-
+        $mform->addElement('advcheckbox', 'course_status', get_string('field_checkbox_hide', 'block_ps_selfstudy'), 'Select to hide the course by default.', array('group' => 2), array(0, 1));
+        $mform->setDefault('course_status', $status);
+        
         $this->add_action_buttons();
     }
 

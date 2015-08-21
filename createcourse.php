@@ -32,14 +32,12 @@ if($form_page->is_cancelled()) {
    	2. save into the db
    	3. redirect to the course list page
    	*/
-   	//print_object($fromform);
-   	if (!$DB->insert_record('block_ps_selfstudy_course', $fromform)) {
-   		print_error('inserterror', 'block_simplehtml');
-   	}
+   	print_object($fromform);
+   	//if (!$DB->insert_record('block_ps_selfstudy_course', $fromform)) {
+   		//print_error('inserterror', 'block_simplehtml');
+   	//}
    	$courseurl = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
-   	redirect($courseurl);
-    
-
+   	//redirect($courseurl);
 
    } else {
     // form didn't validate or this is the first display
