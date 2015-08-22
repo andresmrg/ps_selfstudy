@@ -21,7 +21,3 @@ $courseurl = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
 redirect($courseurl);
 
 // form didn't validate or this is the first display
-$site = get_site();
-echo $OUTPUT->header();
-echo "<h2>Add a new course<br><br></h2>";
-echo $OUTPUT->footer();
