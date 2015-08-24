@@ -32,7 +32,7 @@ foreach($request as $value) {
 	$date = date("m/d/Y",$timestamp);
 	$status = ucfirst($value->request_status);
 
-	$links = '<a href="success.php?id='.$value->id.'&status=complete">Complete</a> - <a href="">Delete</a>';
+	$links = '<a href="success.php?id='.$value->id.'&status=complete">Complete</a> - <a href="deleterequest.php?id='.$value->id.'">Delete</a>';
 	//add the cells to the request table
 	$row = array($fullname,$course->course_name,$date,$status,$links);
     $table->data[] = $row;		
