@@ -7,6 +7,7 @@ $string['settings'] = 'Settings';
 $string['addcourse'] = 'Add a new self-study course';
 $string['link_managecourses'] = 'Manage self-study courses';
 $string['link_requests'] = 'View requests';
+$string['link_myrequests'] = 'My requests';
 $string['field_coursecode'] = 'Course Code';
 $string['field_coursename'] = 'Course Title';
 $string['field_description'] = 'Course Description';
