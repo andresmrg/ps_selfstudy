@@ -2,8 +2,9 @@
 
 require_once('../../config.php');
 require_once('requestcourse_form.php');
+require_once("../../user/lib.php");
 
-global $OUTPUT, $PAGE, $COURSE;
+global $OUTPUT, $PAGE, $COURSE, $USER;
 
 $context = context_system::instance();
 $PAGE->set_context($context);
@@ -22,19 +23,58 @@ if($form_page->is_cancelled()) {
 } else if ($fromform = $form_page->get_data()) {
     // We need to add code to appropriately act on and store the submitted data
 
-    //print_object($fromform);
-   	//if (!$DB->insert_record('block_ps_selfstudy_course', $fromform)) {
-   		//print_error('inserterror', 'block_ps_selfstudy');
-   	//}
-   	//$courseurl = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
-   	//redirect($courseurl);
+    /*
+    1. update user profile
+    2. save request data into request table
+    3. take the user to the list of request and pass the message if the request was made
+    successfully
+    */
+    $profile = new stdClass();
+    $profile->id = $USER->id;
+    $profile->firstname         = $fromform->firstname;
+    $profile->lastname         = $fromform->lastname;
+    $profile->email         = $fromform->email;
+    $profile->country         = $fromform->country;
+    $profile->department         = $fromform->department;
+    $profile->city         = $fromform->city;
+    $profile->zipcode         = $fromform->zipcode;
+    $profile->address         = $fromform->address;
+    $profile->phone1         = $fromform->phone1;
 
-   } else {
+    //print_object($profile);
+    user_update_user($profile, false,true);
+    // Reload from db.
+    $user = $DB->get_record('user', array('id' => $profile->id), '*', MUST_EXIST);
+    // Override old $USER session variable if needed.
+    if ($USER->id == $user->id) {
+        // Override old $USER session variable if needed.
+        foreach ((array)$user as $variable => $value) {
+            if ($variable === 'description' or $variable === 'password') {
+                // These are not set for security nad perf reasons.
+                continue;
+            }
+            $USER->$variable = $value;
+        }
+    }
+
+    $today = time();
+    $request = new stdClass();
+    $request->student_id = $profile->id;
+    $request->course_id = $fromform->courseid;
+    $request->request_date = $today;  
+    //$request->request_status = $profile->id;
+
+    //2. store the request data in the request table
+    if (!$DB->insert_record('block_ps_selfstudy_request', $request)) {
+      print_error('inserterror', 'block_ps_selfstudy');
+    }
+   	$courseurl = new moodle_url($CFG->wwwroot.'/blocks/ps_selfstudy/viewrequests.php');
+   	redirect($courseurl);
+
+} else {
     // form didn't validate or this is the first display
-   	$site = get_site();
-   	echo $OUTPUT->header();
-   	$form_page->display();
-   	echo $OUTPUT->footer();
-   }
-
-// form didn't validate or this is the first display
+  $site = get_site();
+  echo $OUTPUT->header();
+  $form_page->display();
+  echo $OUTPUT->footer();
+}

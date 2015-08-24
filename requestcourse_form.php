@@ -8,14 +8,17 @@ class requestcourse_form extends moodleform {
 
         global $USER, $CFG, $DB;
 
-        if(isset($_GET['id'])) {
-            $courseid = $_GET['id'];    
+        if(!isset($_GET['id'])) {
+            //$homeurl = new moodle_url($CFG->wwwroot);
+            //redirect($homeurl);
+        } else {
+            @$courseid = $_GET['id']; 
         }
 
         $mform = & $this->_form;
 
-        $course = $DB->get_record('block_ps_selfstudy_course', array ('id'=>$courseid), $fields='*', $strictness=IGNORE_MISSING);
-        $mform->addElement('html','<p>You are requesting a copy of the course <strong>'.$course->course_name.'</strong></p>');
+        $course = $DB->get_record('block_ps_selfstudy_course', array ('id'=>@$courseid), $fields='*', $strictness=IGNORE_MISSING);
+        $mform->addElement('html','<p>You are requesting a copy of the course <strong>'.@$course->course_name.'</strong></p>');
         
         // group user profile fields
         $mform->addElement('header', 'displayinfo', get_string('group_userfields', 'block_ps_selfstudy'));
