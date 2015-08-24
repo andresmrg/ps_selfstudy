@@ -20,6 +20,11 @@ class requestcourse_form extends moodleform {
         $course = $DB->get_record('block_ps_selfstudy_course', array ('id'=>@$courseid), $fields='*', $strictness=IGNORE_MISSING);
         $mform->addElement('html','<p>You are requesting a copy of the course <strong>'.@$course->course_name.'</strong></p>');
         
+        //get zipcode
+        $zip_id = $DB->get_record('user_info_field', array ('shortname'=>'zipcode'), $fields='id', $strictness=IGNORE_MISSING);        
+        $zipcode = $DB->get_record('user_info_data', array ('userid'=>$USER->id,'fieldid'=>$zip_id->id), $fields='data', $strictness=IGNORE_MISSING);
+
+
         // group user profile fields
         $mform->addElement('header', 'displayinfo', get_string('group_userfields', 'block_ps_selfstudy'));
 
@@ -54,6 +59,9 @@ class requestcourse_form extends moodleform {
         $mform->addElement('select', 'country', get_string('selectacountry'), $choices);
         if (!empty($CFG->country)) {
             $mform->setDefault('country', $CFG->country);
+        } 
+        if(!empty($USER->country)) {
+            $mform->setDefault('country', $USER->country);
         }
 
         $mform->addElement('text', 'department', get_string('department', 'block_ps_selfstudy'));
@@ -69,7 +77,7 @@ class requestcourse_form extends moodleform {
         @$mform->addElement('text', 'zipcode', get_string('zipcode', 'block_ps_selfstudy'));
         @$mform->setType('zipcode', PARAM_NOTAGS);
         $mform->addRule('zipcode', null, 'required', null, 'client');
-        @$mform->setDefault('zipcode', $USER->zipcode);
+        @$mform->setDefault('zipcode', $zipcode->data);
 
         $mform->addElement('text', 'address', get_string('address', 'block_ps_selfstudy'));
         $mform->setType('address', PARAM_NOTAGS);

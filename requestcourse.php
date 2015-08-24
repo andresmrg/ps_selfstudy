@@ -37,11 +37,10 @@ if($form_page->is_cancelled()) {
     $profile->country         = $fromform->country;
     $profile->department         = $fromform->department;
     $profile->city         = $fromform->city;
-    $profile->zipcode         = $fromform->zipcode;
     $profile->address         = $fromform->address;
     $profile->phone1         = $fromform->phone1;
 
-    //print_object($profile);
+    //update user
     user_update_user($profile, false,true);
     // Reload from db.
     $user = $DB->get_record('user', array('id' => $profile->id), '*', MUST_EXIST);
@@ -62,14 +61,39 @@ if($form_page->is_cancelled()) {
     $request->student_id = $profile->id;
     $request->course_id = $fromform->courseid;
     $request->request_date = $today;  
-    //$request->request_status = $profile->id;
 
     //2. store the request data in the request table
     if (!$DB->insert_record('block_ps_selfstudy_request', $request)) {
       print_error('inserterror', 'block_ps_selfstudy');
-    }
-   	$courseurl = new moodle_url($CFG->wwwroot.'/blocks/ps_selfstudy/viewrequests.php');
-   	redirect($courseurl);
+  }
+
+
+    //get id of the zipcode in the fields table
+  $zip_id = $DB->get_record('user_info_field', array('shortname'=>'zipcode'), $fields='id', $strictness=IGNORE_MISSING);
+  $zipcodedata = new stdClass();
+  $zipcodedata->userid = $USER->id;
+  $zipcodedata->fieldid = $zip_id->id;
+  $zipcodedata->data = $fromform->zipcode;
+
+  //if there is already a zipcode defined, update it.
+  if($DB->record_exists('user_info_data', array('fieldid'=>$zip_id->id,'userid'=>$USER->id))) {
+    //get the record id
+    $dataid = $DB->get_record('user_info_data', array('fieldid'=>$zip_id->id,'userid'=>$USER->id), $fields='id', $strictness=IGNORE_MISSING);
+    if (!$DB->update_record('user_info_data', array('id'=>$dataid->id,'data'=>$fromform->zipcode))) {
+      print_error('inserterror', 'block_ps_selfstudy');
+  }
+} else {
+        //3. insert a record with the zipcode
+  if (!$DB->insert_record('user_info_data', $zipcodedata)) {
+      print_error('inserterror', 'block_ps_selfstudy');
+  }
+}
+
+
+
+    //redirect to my request page
+$courseurl = new moodle_url($CFG->wwwroot.'/blocks/ps_selfstudy/myrequests.php');
+redirect($courseurl);
 
 } else {
     // form didn't validate or this is the first display
