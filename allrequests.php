@@ -18,7 +18,7 @@ $table->head = array('Student','Email Address', 'Course Title','Request date','S
 $table->data = array();
 
 //get all data from requesttable
-$request = $DB->get_records('block_ps_selfstudy_request', array('request_status'=>'pending'), $sort='', $fields='*', $limitfrom=0, $limitnum=0);
+$request = $DB->get_records('block_ps_selfstudy_request', null, $sort='', $fields='*', $limitfrom=0, $limitnum=0);
 
 //loop the request table
 foreach($request as $value) {
@@ -37,7 +37,12 @@ foreach($request as $value) {
 		$status = "Shipped";
 	}
 
-	$links = '<a href="success.php?id='.$value->id.'&status=1">Delivered</a> - <a href="deleterequest.php?id='.$value->id.'">Delete</a>';
+	//valide links
+	if($value->request_status == 1) {
+		$links = '<a href="deleterequest.php?id='.$value->id.'">Delete</a>';
+	} else {
+		$links = '<a href="success.php?id='.$value->id.'&status=shipped">Delivered</a> - <a href="deleterequest.php?id='.$value->id.'">Delete</a>';
+	}
 	//add the cells to the request table
 	$row = array($fullname,$user->email,$course->course_name,$date,$status,$links);
     $table->data[] = $row;		
@@ -51,5 +56,5 @@ $PAGE->navbar->add('View requests', new moodle_url('/blocks/ps_selfstudy/viewreq
 $site = get_site();
 echo $OUTPUT->header(); //output header
 echo html_writer::table($table);
-echo '<a href="allrequests.php">Click here to see full list</a>';
+echo '<a href="viewrequests.php">Click here to only pending requests</a>';
 echo $OUTPUT->footer();

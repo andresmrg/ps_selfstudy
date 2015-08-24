@@ -8,7 +8,7 @@ class managelinks_form extends moodleform {
     function definition() {
         $mform = & $this->_form;
         $options = array();        
-        $mform->addElement('html', '<a href="createcourse.php">Add a new self-study course</a></br></br>');
+        $mform->addElement('html', '<a href="createcourse.php">Add a new course</a></br></br>');
     }
 
 }

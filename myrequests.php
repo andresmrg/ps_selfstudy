@@ -14,7 +14,7 @@ $PAGE->set_pagelayout('standard');
 
 //create table to hold the data
 $table = new html_table();
-$table->head = array('Course Title','Request date','Status');
+$table->head = array('Course Code','Course Title','Request date','Status');
 $table->data = array();
 
 //get all data from requesttable
@@ -22,15 +22,20 @@ $request = $DB->get_records('block_ps_selfstudy_request', array('student_id'=>$U
 
 //loop the request table
 foreach($request as $value) {
-	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='course_name');
+	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='course_name,course_code');
 
 	//format requested date from timestamp
 	$timestamp = $value->request_date;
 	$date = date("m/d/Y",$timestamp);
-	$status = ucfirst($value->request_status);
+
+	if($value->request_status == 0) {
+		$status = "Pending";
+	} else {
+		$status = "Shipped";
+	}
 
 	//add the cells to the request table
-	$row = array($course->course_name,$date,$status);
+	$row = array($course->course_code,$course->course_name,$date,$status);
     $table->data[] = $row;		
 }
 

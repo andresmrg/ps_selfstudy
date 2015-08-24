@@ -1,7 +1,7 @@
 <?php
     $capabilities = array(
  
-    'block/reminder:myaddinstance' => array(
+    'block/ps_selfstudy:myaddinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
@@ -11,7 +11,7 @@
         'clonepermissionsfrom' => 'moodle/my:manageblocks'
     ),
  
-    'block/reminder:addinstance' => array(
+    'block/ps_selfstudy:addinstance' => array(
         'riskbitmask' => RISK_SPAM | RISK_XSS,
  
         'captype' => 'write',

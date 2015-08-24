@@ -24,7 +24,7 @@ $PAGE->navbar->add('Manage self-study courses', new moodle_url('/blocks/ps_selfs
 
 $site = get_site();
 echo $OUTPUT->header(); //output header
-echo "<h2>Manage self-study courses<br><br></h2>";
+//echo "<h2>Manage self-study courses<br><br></h2>";
 $link_form->display(); //output button to create new courses
 
 // Get the course table.

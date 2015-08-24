@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  * Table class to be put in managecourses.php selfstudy manage course page.
  *  for defining some custom column names and proccessing
@@ -16,8 +18,12 @@ class courselist_table extends table_sql {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
         $columns = array('course_code','course_platform','course_name','course_description','course_hours', 'course_type','course_status','date_created','actions');
+        $this->sortable(true,'course_code', SORT_ASC);
+        $this->collapsible(false);
+        $this->no_sorting('actions');
+        $this->no_sorting('course_description');
         $this->define_columns($columns);
-
+        
         // Define the titles of columns to show in header.
         $headers = array('Course Code','Platform','Course Name', 'Description','Hours', 'Course Type','Status','Date Created','Action');
         $this->define_headers($headers);
