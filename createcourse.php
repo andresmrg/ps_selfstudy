@@ -34,7 +34,7 @@ if($form_page->is_cancelled()) {
    	*/
    	//print_object($fromform);
    	if (!$DB->insert_record('block_ps_selfstudy_course', $fromform)) {
-   		print_error('inserterror', 'block_simplehtml');
+   		print_error('inserterror', 'block_ps_selfstudy');
    	}
    	$courseurl = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
    	redirect($courseurl);
@@ -43,7 +43,6 @@ if($form_page->is_cancelled()) {
     // form didn't validate or this is the first display
    	$site = get_site();
    	echo $OUTPUT->header();
-   	echo "<h2>Add a new course<br><br></h2>";
    	$form_page->display();
    	echo $OUTPUT->footer();
    }

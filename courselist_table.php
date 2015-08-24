@@ -15,11 +15,11 @@ class courselist_table extends table_sql {
     function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code','course_name', 'course_description', 'course_type','course_status','date_created','actions');
+        $columns = array('course_code','course_platform','course_name','course_description','course_hours', 'course_type','course_status','date_created','actions');
         $this->define_columns($columns);
 
         // Define the titles of columns to show in header.
-        $headers = array('Course Code','Course Name', 'Description', 'Course Type','Status','Date Created','Action');
+        $headers = array('Course Code','Platform','Course Name', 'Description','Hours', 'Course Type','Status','Date Created','Action');
         $this->define_headers($headers);
     }
 

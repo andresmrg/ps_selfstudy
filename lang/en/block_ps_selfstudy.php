@@ -24,3 +24,5 @@ $string['zipcode'] = 'Zip/Postal Code';
 $string['address'] = 'Address';
 $string['phone1'] = 'Telephone';
 $string['shipping_note'] = 'Updating your profile and shipping information will also update your profile.';
+$string['field_platform'] = 'Platform';
+$string['field_hours'] = 'Hours';

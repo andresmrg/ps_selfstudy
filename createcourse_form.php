@@ -15,6 +15,12 @@ class createcourse_form extends moodleform {
 		$mform->addElement('text', 'course_code', get_string('field_coursecode', 'block_ps_selfstudy'));
         $mform->setType('course_code', PARAM_NOTAGS);
         $mform->addRule('course_code', null, 'required', null, 'client');
+
+        // add course name
+        $mform->addElement('text', 'course_platform', get_string('field_platform', 'block_ps_selfstudy'));
+        $mform->setType('course_platform', PARAM_NOTAGS);
+        $mform->addRule('course_platform', null, 'required', null, 'client');
+
         $mform->addElement('text', 'course_name', get_string('field_coursename', 'block_ps_selfstudy'));
         $mform->setType('course_name', PARAM_NOTAGS);
         $mform->addRule('course_name', null, 'required', null, 'client');
@@ -23,6 +29,11 @@ class createcourse_form extends moodleform {
         $mform->addElement('textarea', 'course_description', get_string("field_description", "block_ps_selfstudy"), 'wrap="virtual" rows="15" cols="50"');
         $mform->setType('course_description', PARAM_NOTAGS);
         $mform->addRule('course_description', null, 'required', null, 'client');
+
+        //hours
+        $mform->addElement('text', 'course_hours', get_string('field_hours', 'block_ps_selfstudy'));
+        $mform->setType('course_hours', PARAM_NOTAGS);
+        $mform->addRule('course_hours', null, 'required', null, 'client');
 
         //checkbox for link courses, if it is not checked, it is like if it didn't exist
         $mform->addElement('advcheckbox', 'course_type', get_string('field_checkbox', 'block_ps_selfstudy'), 'Select to create a self-study course with link.', array('group' => 1), array(0, 1));
