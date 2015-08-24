@@ -14,7 +14,7 @@ $PAGE->set_pagelayout('standard');
 
 //create table to hold the data
 $table = new html_table();
-$table->head = array('Student', 'Course Title','Request date','Status','Action');
+$table->head = array('Student','Email Address', 'Course Title','Request date','Status','Action');
 $table->data = array();
 
 //get all data from requesttable
@@ -22,7 +22,7 @@ $request = $DB->get_records('block_ps_selfstudy_request', array('request_status'
 
 //loop the request table
 foreach($request as $value) {
-	$user = $DB->get_record('user', array('id'=>$value->student_id), $fields='firstname,lastname');
+	$user = $DB->get_record('user', array('id'=>$value->student_id), $fields='firstname,lastname,email');
 	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='course_name');
 
 	//get firstname and lastname together
@@ -34,7 +34,7 @@ foreach($request as $value) {
 
 	$links = '<a href="success.php?id='.$value->id.'&status=complete">Complete</a> - <a href="deleterequest.php?id='.$value->id.'">Delete</a>';
 	//add the cells to the request table
-	$row = array($fullname,$course->course_name,$date,$status,$links);
+	$row = array($fullname,$user->email,$course->course_name,$date,$status,$links);
     $table->data[] = $row;		
 }
 

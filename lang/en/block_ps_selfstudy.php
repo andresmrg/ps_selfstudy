@@ -13,6 +13,7 @@ $string['field_coursename'] = 'Course Title';
 $string['field_description'] = 'Course Description';
 $string['field_checkbox'] = 'Create course link type';
 $string['field_checkbox_hide'] = 'Hide course';
+$string['field_link'] = 'Course link';
 $string['group_userfields'] = 'Profile Information';
 $string['firstname'] = 'First Name';
 $string['lastname'] = 'Last Name';

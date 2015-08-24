@@ -14,6 +14,7 @@
         <FIELD NAME="course_type" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="course_status" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="course_hours" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="course_link" TYPE="char" LENGTH="1024" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="date_created" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
