@@ -14,7 +14,7 @@ $PAGE->set_pagelayout('standard');
 
 //create table to hold the data
 $table = new html_table();
-$table->head = array('Student','Email Address', 'Course Title','Request date','Status','Action');
+$table->head = array('Course Code','Title','Name','Email Address', 'Address','Phone #','Request date','Status','Action');
 $table->data = array();
 
 //get all data from requesttable
@@ -22,8 +22,8 @@ $request = $DB->get_records('block_ps_selfstudy_request', null, $sort='', $field
 
 //loop the request table
 foreach($request as $value) {
-	$user = $DB->get_record('user', array('id'=>$value->student_id), $fields='firstname,lastname,email');
-	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='course_name');
+	$user = $DB->get_record('user', array('id'=>$value->student_id), $fields='firstname,lastname,email,address,phone1');
+	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='course_name,course_code');
 
 	//get firstname and lastname together
 	$fullname = "$user->firstname $user->lastname";
@@ -44,17 +44,17 @@ foreach($request as $value) {
 		$links = '<a href="success.php?id='.$value->id.'&status=shipped">Delivered</a> - <a href="deleterequest.php?id='.$value->id.'">Delete</a>';
 	}
 	//add the cells to the request table
-	$row = array($fullname,$user->email,$course->course_name,$date,$status,$links);
+	$row = array($course->course_code,$course->course_name,$fullname,$user->email,$user->address,$user->phone1,$date,$status,$links);
     $table->data[] = $row;		
 }
 
 // Define headers
-$PAGE->set_title('View requests');
-$PAGE->set_heading('View requests');
-$PAGE->navbar->add('View requests', new moodle_url('/blocks/ps_selfstudy/viewrequests.php'));
+$PAGE->set_title('View All Requests');
+$PAGE->set_heading('View All Requests');
+//$PAGE->navbar->add('View All Requests', new moodle_url('/blocks/ps_selfstudy/viewrequests.php'));
 
 $site = get_site();
 echo $OUTPUT->header(); //output header
 echo html_writer::table($table);
-echo '<a href="viewrequests.php">Click here to only pending requests</a>';
+echo '<a href="viewrequests.php">Click here to view only pending requests</a>';
 echo $OUTPUT->footer();
