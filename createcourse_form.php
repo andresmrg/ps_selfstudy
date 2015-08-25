@@ -41,7 +41,6 @@ class createcourse_form extends moodleform {
         //link
         $mform->addElement('text', 'course_link', get_string('field_link', 'block_ps_selfstudy'));
         $mform->setType('course_link', PARAM_NOTAGS);
-        $mform->addRule('course_link', null, 'required', null, 'client');
         $mform->disabledIf('course_link', 'course_type');
 
         //checkbox for course status, 0 for active, 1 for hidden
