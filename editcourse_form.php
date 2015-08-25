@@ -12,11 +12,20 @@ class editcourse_form extends moodleform {
         if(isset($_GET['code'])) {
             $code = $_GET['code'];
         }
+        if(isset($_GET['platform'])) {
+            $platform = $_GET['platform'];
+        }
         if(isset($_GET['name'])) {
             $name = $_GET['name'];
         }
         if(isset($_GET['desc'])) {
-            $description = base64_decode($_GET['desc']);
+            $description = base64_decode($_GET['desc']);            
+        }
+        if(isset($_GET['hours'])) {
+            $hours = $_GET['hours'];
+        }
+        if(isset($_GET['link'])) {
+            $link = base64_decode($_GET['link']);
         }
         if(isset($_GET['type'])) {
             $type = $_GET['type'];
@@ -41,6 +50,11 @@ class editcourse_form extends moodleform {
         $mform->addRule('course_code', null, 'required', null, 'client');
         $mform->setDefault('course_code', $code); 
 
+        $mform->addElement('text', 'course_platform', get_string('field_platform', 'block_ps_selfstudy'));
+        $mform->setType('course_platform', PARAM_NOTAGS);
+        $mform->addRule('course_platform', null, 'required', null, 'client');
+        $mform->setDefault('course_platform', $platform); 
+
         // load existing course name
         $mform->addElement('text', 'course_name', get_string('field_coursename', 'block_ps_selfstudy'));
         $mform->setType('course_name', PARAM_NOTAGS);
@@ -53,10 +67,22 @@ class editcourse_form extends moodleform {
         $mform->addRule('course_description', null, 'required', null, 'client');
         $mform->setDefault('course_description', $description);  
 
+        $mform->addElement('text', 'course_hours', get_string('field_hours', 'block_ps_selfstudy'));
+        $mform->setType('course_hours', PARAM_NOTAGS);
+        $mform->addRule('course_hours', null, 'required', null, 'client');
+        $mform->setDefault('course_hours', $hours);  
+
         //checkbox for link courses, if it is not checked, it is like if it didn't exist
         $mform->addElement('advcheckbox', 'course_type', get_string('field_checkbox', 'block_ps_selfstudy'), 'Select to create a self-study course with link.', array('group' => 1), array(0, 1));
         $mform->setDefault('course_type', $type); 
 
+        $mform->disabledIf('course_link', 'course_type');
+        $mform->addElement('text', 'course_link', get_string('field_link', 'block_ps_selfstudy'));
+        $mform->setType('course_link', PARAM_NOTAGS);
+        if($link != '0') {
+            $mform->setDefault('course_link', $link);  
+        }
+        
         //checkbox for link courses, if it is not checked, it is like if it didn't exist
         $mform->addElement('advcheckbox', 'course_status', get_string('field_checkbox_hide', 'block_ps_selfstudy'), 'Select to hide the course by default.', array('group' => 2), array(0, 1));
         $mform->setDefault('course_status', $status);

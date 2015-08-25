@@ -69,10 +69,17 @@ class courselist_table extends table_sql {
         return date("m/d/Y",$date);
     }
     function col_actions($values) {
+        global $DB;
         // Show readable date from timestamp.
         $str = $values->course_description;
         $description = base64_encode($str);
-        return '<a href="editcourse.php?id='.$values->id.'&code='.$values->course_code.'&name='.$values->course_name.'&desc='.$description.'&type='.$values->course_type.'&status='.$values->course_status.'">Edit</a> 
+        
+        $link = $DB->get_record('block_ps_selfstudy_course',array('id'=>$values->id), $fields='course_link');
+        
+        $str2 = $link->course_link;
+        $link = base64_encode($str2);
+
+        return '<a href="editcourse.php?id='.$values->id.'&platform='.$values->course_platform.'&code='.$values->course_code.'&name='.$values->course_name.'&hours='.$values->course_hours.'&link='.$link.'&desc='.$description.'&type='.$values->course_type.'&status='.$values->course_status.'">Edit</a> 
         - <a href="deletecourse.php?id='.$values->id.'" onclick="return check_confirm()">Delete</a>';
     }
     /**
