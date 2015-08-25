@@ -54,6 +54,21 @@ class requestcourse_form extends moodleform {
         // group shipping information
         $mform->addElement('header', 'shipping', get_string('group_shipping', 'block_ps_selfstudy'));
 
+        $mform->addElement('text', 'address', get_string('address', 'block_ps_selfstudy'));
+        $mform->setType('address', PARAM_NOTAGS);
+        $mform->addRule('address', null, 'required', null, 'client');
+        $mform->setDefault('address', $USER->address);
+
+        $mform->addElement('text', 'city', get_string('city', 'block_ps_selfstudy'));
+        $mform->setType('city', PARAM_NOTAGS);
+        $mform->addRule('city', null, 'required', null, 'client');
+        $mform->setDefault('city', $USER->city);
+
+        $mform->addElement('text', 'department', get_string('department', 'block_ps_selfstudy'));
+        $mform->setType('department', PARAM_NOTAGS);
+        $mform->addRule('department', null, 'required', null, 'client');
+        $mform->setDefault('department', $USER->department);
+
         $choices = get_string_manager()->get_list_of_countries();
         $choices = array('' => get_string('selectacountry') . '...') + $choices;
         $mform->addElement('select', 'country', get_string('selectacountry'), $choices);
@@ -64,25 +79,10 @@ class requestcourse_form extends moodleform {
             $mform->setDefault('country', $USER->country);
         }
 
-        $mform->addElement('text', 'department', get_string('department', 'block_ps_selfstudy'));
-        $mform->setType('department', PARAM_NOTAGS);
-        $mform->addRule('department', null, 'required', null, 'client');
-        $mform->setDefault('department', $USER->department);
-
-        $mform->addElement('text', 'city', get_string('city', 'block_ps_selfstudy'));
-        $mform->setType('city', PARAM_NOTAGS);
-        $mform->addRule('city', null, 'required', null, 'client');
-        $mform->setDefault('city', $USER->city);
-
         @$mform->addElement('text', 'zipcode', get_string('zipcode', 'block_ps_selfstudy'));
         @$mform->setType('zipcode', PARAM_NOTAGS);
         $mform->addRule('zipcode', null, 'required', null, 'client');
         @$mform->setDefault('zipcode', $zipcode->data);
-
-        $mform->addElement('text', 'address', get_string('address', 'block_ps_selfstudy'));
-        $mform->setType('address', PARAM_NOTAGS);
-        $mform->addRule('address', null, 'required', null, 'client');
-        $mform->setDefault('address', $USER->address);
 
         $mform->addElement('text', 'phone1', get_string('phone1', 'block_ps_selfstudy'));
         $mform->setType('phone1', PARAM_NOTAGS);

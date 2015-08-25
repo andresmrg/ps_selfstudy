@@ -7,6 +7,9 @@ class block_ps_selfstudy extends block_list {
 	}
 
 	public function get_content() {
+
+		global $USER;
+
 	    if ($this->content !== null) {
 	      return $this->content;
 	    }
@@ -19,8 +22,14 @@ class block_ps_selfstudy extends block_list {
         $url2 = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
         $url3 = new moodle_url('/blocks/ps_selfstudy/myrequests.php');
 
+        $context = context_system::instance();
+        if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id))
         $this->content->items[] = html_writer::link($url1, get_string('link_managecourses', 'block_ps_selfstudy'));
+
+    	if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) 
         $this->content->items[] = html_writer::link($url2, get_string('link_requests', 'block_ps_selfstudy'));
+
+    	if (has_capability('block/ps_selfstudy:myrequests', $context, $USER->id)) 
         $this->content->items[] = html_writer::link($url3, get_string('link_myrequests', 'block_ps_selfstudy'));
 	 
 	    return $this->content;

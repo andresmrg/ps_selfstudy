@@ -9,6 +9,11 @@ require_once('managelinks_form.php');
 require "courselist_table.php";
 global $OUTPUT, $PAGE;
 
+require_login();
+if (isguestuser()) {
+    print_error('guestsarenotallowed');
+}
+
 $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url('/blocks/ps_selfstudy/managecourses.php');
@@ -24,15 +29,15 @@ $PAGE->navbar->add('Manage self-study courses', new moodle_url('/blocks/ps_selfs
 
 $site = get_site();
 echo $OUTPUT->header(); //output header
-//echo "<h2>Manage self-study courses<br><br></h2>";
-$link_form->display(); //output button to create new courses
-
+if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
+	$link_form->display(); //output button to create new courses
 // Get the course table.
 $table->set_sql('*', "{block_ps_selfstudy_course}", '1');
-
 $table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/managecourses.php");
-
 $table->out(10, true); //print table
+} else {
+	print_error('You_cant_access_to_this_page', 'error', '');
+}
 echo $OUTPUT->footer();
 
 

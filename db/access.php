@@ -28,12 +28,32 @@
         'riskbitmask' => RISK_SPAM | RISK_XSS,
  
         'captype' => 'write',
-        'contextlevel' => CONTEXT_BLOCK,
+        'contextlevel' => CONTEXT_SYSTEM,
         'archetypes' => array(
-            'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW
         ),
+
+    ),
+
+    'block/ps_selfstudy:viewrequests' => array(
+        'riskbitmask' => RISK_SPAM | RISK_XSS,
  
-        'clonepermissionsfrom' => 'moodle/site:manageblocks'
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        ),
+
+    ),
+
+    'block/ps_selfstudy:myrequests' => array(
+        'riskbitmask' => RISK_SPAM | RISK_XSS,
+ 
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        ),
+
     ),
 );
