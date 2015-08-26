@@ -15,7 +15,7 @@ global $OUTPUT, $PAGE, $DB, $USER;
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url('/blocks/ps_selfstudy/viewrequests.php');
+$PAGE->set_url('/blocks/ps_selfstudy/myrequests.php');
 $PAGE->set_pagelayout('standard');
 
 //create table to hold the data
@@ -48,9 +48,12 @@ foreach($request as $value) {
 // Define headers
 $PAGE->set_title('My requests');
 $PAGE->set_heading('My requests');
-$PAGE->navbar->add('My requests', new moodle_url('/blocks/ps_selfstudy/viewrequests.php'));
+$PAGE->navbar->add('My requests', new moodle_url('/blocks/ps_selfstudy/myrequests.php'));
 
 $site = get_site();
 echo $OUTPUT->header(); //output header
+if(isset($_GET['success'])) {
+	echo "<div class='alert alert-success'>Order Submitted</div>";
+}
 echo html_writer::table($table);
 echo $OUTPUT->footer();

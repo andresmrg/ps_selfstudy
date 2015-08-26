@@ -11,7 +11,7 @@ global $USER;
 
 $subject = "Course Shipment Your order for $course->course_code $course->course_name has been shipped";
 $message = "
-<p><strong>$USER->firstname $USER->lastname</strong></p>
+<p>$USER->firstname $USER->lastname</p>
 
 <p>You should receive this order within the next week. Be sure come back into the system and indicate the date you complete the course so that your training history can be update.</p>
 
