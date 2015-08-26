@@ -1,14 +1,26 @@
 <?php 
 
 require_once('../../lib/moodlelib.php');
+require_once('../../config.php');
 
-$emaildata = new stdClass();
-$emaildata->touser = 'andrewramos@paradisosolutions.com';
-$emaildata->fromuser = 'andresmao2@gmail.com';
-$emaildata->subject = 'Test email';
-$emaildata->message = 'Here is my message';
-$emaildata->messagehtml = '';
+global $USER;
 
-if(!email_to_user($toUser, $fromUser, $subject, $messageText, $messageHtml, ", ", true)) {
-	echo "error";
+$subject = "subject";
+$message = 'Here is my message';
+
+$user = new stdClass;
+$user->id = $USER->id;
+$user->email = $USER->email;
+$user->mailformat = 1;
+$from->email="andrewramos@paradisosolutions.com";
+$from->firstname="Andrew";
+$from->lastname="Ramos";
+
+if(email_to_user($user, $from, $subject, $message,$message))
+{
+	echo 'Message sended to all recipients';
+}
+else
+{
+	echo 'Message Not send ..please Try again later..';
 }
