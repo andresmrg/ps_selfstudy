@@ -14,15 +14,13 @@ if(isset($_GET['id'])) {
 }
 
 
-$subject = get_string('subject', 'block_ps_selfstudy';
+$subject = 'Course Shipment Your order for Course Code, Course Title has been shipped';
 $message = "
-<b>Dear friend,
+<p><strong>$USER->firstname $USER->lastname</strong></p>
 
-You have requested the a physical copy of the course {@$course->course_name} and you will receive it within the next 2 weeks.
+<p>You should receive this order within the next week. Be sure come back into the system and indicate the date you complete the course so that your training history can be update.</p>
 
-If you have any problem please contact our Shipping Director at email@domain.com
-
-Thank you.
+<p>Thank you</p>
 ";
 
 $user = new stdClass;
