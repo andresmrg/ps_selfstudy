@@ -33,6 +33,21 @@ function xmldb_block_ps_selfstudy_upgrade($oldversion) {
         // Ps_selfstudy savepoint reached.
         upgrade_block_savepoint(true, 2015081905, 'ps_selfstudy');
     }
+
+    if ($oldversion < 2015082507) {
+
+        // Define field id to be added to block_ps_selfstudy_complete.
+        $table = new xmldb_table('block_ps_selfstudy_complete');
+        $field = new xmldb_field('completion_date', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'completion_status');
+        $dbman = $DB->get_manager();
+        // Conditionally launch add field id.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Ps_selfstudy savepoint reached.
+        upgrade_block_savepoint(true, 2015082507, 'ps_selfstudy');
+    }
  
     return $result;
 }
