@@ -28,6 +28,7 @@ $string['phone1'] = 'Phone #';
 $string['shipping_note'] = 'Updating your profile and shipping information will also update your profile.';
 $string['field_platform'] = 'Platform';
 $string['field_hours'] = 'Hours';
+$string['subject'] = 'You have requested a new course';
 $string['ps_selfstudy:managecourses'] = 'Manage self study courses';
 $string['ps_selfstudy:viewrequests'] = 'View requests';
 $string['ps_selfstudy:myrequests'] = 'My requests';

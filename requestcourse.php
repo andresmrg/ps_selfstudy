@@ -94,6 +94,8 @@ if($form_page->is_cancelled()) {
   }
 }
 
+include('sendmessage.php');
+
     //redirect to my request page
 $courseurl = new moodle_url($CFG->wwwroot.'/blocks/ps_selfstudy/myrequests.php');
 redirect($courseurl);
