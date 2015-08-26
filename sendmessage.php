@@ -20,7 +20,7 @@ $message = "
 
 <p>You should receive this order within the next week. Be sure come back into the system and indicate the date you complete the course so that your training history can be update.</p>
 
-<p>Thank you</p>
+<p>Thank you.</p>
 ";
 
 $user = new stdClass;
@@ -29,7 +29,8 @@ $user->email = $USER->email;
 $user->mailformat = 1;
 $from = new stdClass;
 $from->email="noreply@ibm.com";
-$from->firstname="No-Reply";
+$from->firstname="No ";
+$from->firstname="Reply";
 
 if(!email_to_user($user, $from, $subject, $message,$message, ",", false)) {
 	print_error('nopermissiontoviewpage', 'error', '');
