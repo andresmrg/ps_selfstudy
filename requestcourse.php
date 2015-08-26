@@ -4,6 +4,11 @@ require_once('../../config.php');
 require_once('requestcourse_form.php');
 require_once("../../user/lib.php");
 
+require_login();
+if (isguestuser()) {
+    print_error('guestsarenotallowed');
+}
+
 global $OUTPUT, $PAGE, $COURSE, $USER;
 
 $context = context_system::instance();

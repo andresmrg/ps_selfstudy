@@ -5,6 +5,12 @@
  */
 require "../../config.php";
 require "$CFG->libdir/tablelib.php";
+
+require_login();
+if (isguestuser()) {
+    print_error('guestsarenotallowed');
+}
+
 global $OUTPUT, $PAGE, $DB, $USER;
 
 $context = context_system::instance();

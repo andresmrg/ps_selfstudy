@@ -36,7 +36,7 @@ $table->set_sql('*', "{block_ps_selfstudy_course}", '1');
 $table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/managecourses.php");
 $table->out(10, true); //print table
 } else {
-	print_error('You_cant_access_to_this_page', 'error', '');
+	print_error('nopermissiontoviewpage', 'error', '');
 }
 echo $OUTPUT->footer();
 

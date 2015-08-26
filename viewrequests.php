@@ -5,6 +5,12 @@
  */
 require "../../config.php";
 require "$CFG->libdir/tablelib.php";
+
+require_login();
+if (isguestuser()) {
+    print_error('guestsarenotallowed');
+}
+
 global $OUTPUT, $PAGE, $DB;
 
 $context = context_system::instance();
@@ -50,6 +56,10 @@ $PAGE->set_heading('View Pending Requests');
 
 $site = get_site();
 echo $OUTPUT->header(); //output header
-echo html_writer::table($table);
-echo '<a href="allrequests.php">Click here to see full list</a>';
+if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
+	echo html_writer::table($table);
+	echo '<a href="allrequests.php">Click here to see full list</a>';
+} else {
+	print_error('nopermissiontoviewpage', 'error', '');
+}
 echo $OUTPUT->footer();

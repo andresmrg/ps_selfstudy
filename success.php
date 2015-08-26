@@ -1,6 +1,12 @@
 <?php 
 
 require "../../config.php";
+
+require_login();
+if (isguestuser()) {
+    print_error('guestsarenotallowed');
+}
+
 global $DB;
 
 if(isset($_GET['id']) & isset($_GET['status'])) {
@@ -12,5 +18,8 @@ if(isset($_GET['id']) & isset($_GET['status'])) {
    		print_error('inserterror', 'block_ps_selfstudy');
    	}
    	$url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
+   	redirect($url);
+} else {
+	$url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
    	redirect($url);
 }

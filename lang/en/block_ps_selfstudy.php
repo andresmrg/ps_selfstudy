@@ -33,3 +33,5 @@ $string['ps_selfstudy:viewrequests'] = 'View requests';
 $string['ps_selfstudy:myrequests'] = 'My requests';
 $string['ps_selfstudy:addinstance'] = 'Add instance';
 $string['ps_selfstudy:myaddinstance'] = 'My home instance';
+$string['messageprovider:confirmation'] = 'Confirmation of your own quiz submissions';
+$string['messageprovider:submission'] = 'Notification of quiz submissions';

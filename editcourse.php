@@ -3,6 +3,11 @@
 require_once('../../config.php');
 require_once('editcourse_form.php');
 
+require_login();
+if (isguestuser()) {
+  print_error('guestsarenotallowed');
+}
+
 global $OUTPUT, $PAGE;
 
 $context = context_system::instance();
@@ -15,8 +20,6 @@ $form_page = new editcourse_form();
 $PAGE->set_title('Edit self-study course');
 $PAGE->navbar->add('Edit self-study course', new moodle_url('/blocks/ps_selfstudy/editcourse.php'));
 
-require_login();
-
 if($form_page->is_cancelled()) {
     // Cancelled forms redirect to the course main page.
 	$courseurl = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
@@ -28,7 +31,7 @@ if($form_page->is_cancelled()) {
    	2. save into the db
    	3. redirect to the course list page
    	*/
-    
+
     //print_object($fromform);
    	if (!$DB->update_record('block_ps_selfstudy_course', $fromform)) {
    		print_error('inserterror', 'block_ps_selfstudy');
@@ -38,11 +41,16 @@ if($form_page->is_cancelled()) {
 
    } else {
     // form didn't validate or this is the first display
-   	$site = get_site();
-   	echo $OUTPUT->header();
-   	echo "<h2>Edit course<br><br></h2>";
-   	$form_page->display();
-   	echo $OUTPUT->footer();
-   }
+
+    $site = get_site();
+    echo $OUTPUT->header();
+    if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
+      $form_page->display();
+    } else {
+      print_error('nopermissiontoviewpage', 'error', '');
+    }
+    echo $OUTPUT->footer();
+    
+  }
 
 // form didn't validate or this is the first display

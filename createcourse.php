@@ -3,6 +3,11 @@
 require_once('../../config.php');
 require_once('createcourse_form.php');
 
+require_login();
+if (isguestuser()) {
+  print_error('guestsarenotallowed');
+}
+
 global $OUTPUT, $PAGE;
 
 $context = context_system::instance();
@@ -43,8 +48,12 @@ if($form_page->is_cancelled()) {
     // form didn't validate or this is the first display
    	$site = get_site();
    	echo $OUTPUT->header();
-   	$form_page->display();
-   	echo $OUTPUT->footer();
-   }
+    if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
+      $form_page->display();
+      else {
+        print_error('nopermissiontoviewpage', 'error', '');
+      }
+      echo $OUTPUT->footer();
+    }
 
 // form didn't validate or this is the first display
