@@ -30,7 +30,7 @@ $user->mailformat = 1;
 $from = new stdClass;
 $from->email="noreply@ibm.com";
 $from->firstname="No ";
-$from->firstname="Reply";
+$from->lastname="Reply";
 
 if(!email_to_user($user, $from, $subject, $message,$message, ",", false)) {
 	print_error('nopermissiontoviewpage', 'error', '');
