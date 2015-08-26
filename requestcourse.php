@@ -19,7 +19,8 @@ $form_page = new requestcourse_form();
 
 // Define headers
 $PAGE->set_title('Request self-study course');
-$PAGE->navbar->add('Request self-study course', new moodle_url('/blocks/ps_selfstudy/requestcourse.php'));
+$PAGE->set_heading('Request self-study courses');
+//$PAGE->navbar->add('Request self-study course', new moodle_url('/blocks/ps_selfstudy/requestcourse.php'));
 
 if($form_page->is_cancelled()) {
     // Cancelled forms redirect to the course main page.
