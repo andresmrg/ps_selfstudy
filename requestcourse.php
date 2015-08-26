@@ -93,9 +93,6 @@ if($form_page->is_cancelled()) {
       print_error('inserterror', 'block_ps_selfstudy');
   }
 }
-
-include('sendmessage.php');
-
     //redirect to my request page
 $courseurl = new moodle_url($CFG->wwwroot.'/blocks/ps_selfstudy/myrequests.php');
 redirect($courseurl);

@@ -8,13 +8,8 @@ global $USER;
 
 /*PREPARGIN MESSAGE*/
 //get course name
-if(isset($_GET['id'])) {
-   @$courseid = $_GET['id']; 
-   $course = $DB->get_record('block_ps_selfstudy_course', array ('id'=>@$courseid), $fields='*', $strictness=IGNORE_MISSING);
-}
 
-
-$subject = 'Course Shipment Your order for Course Code, Course Title has been shipped';
+$subject = "Course Shipment Your order for $course->course_code $course->course_name has been shipped";
 $message = "
 <p><strong>$USER->firstname $USER->lastname</strong></p>
 
@@ -33,5 +28,5 @@ $from->firstname="No ";
 $from->lastname="Reply";
 
 if(!email_to_user($user, $from, $subject, $message,$message, ",", false)) {
-	print_error('nopermissiontoviewpage', 'error', '');
+	print_error('emailfail', 'error', '');
 }
