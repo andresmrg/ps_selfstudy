@@ -31,19 +31,20 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="course_id" TYPE="foreign" FIELDS="course_id" REFTABLE="block_ps_selfstudy_course" REFFIELDS="id"/>
+        <KEY NAME="student_id" TYPE="foreign" FIELDS="student_id" REFTABLE="user" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
     <TABLE NAME="block_ps_selfstudy_complete" COMMENT="This table holds the information regarding the user completion in the self-study courses.">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="student_id" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="course_id" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="request_id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="completion_status" TYPE="char" LENGTH="30" NOTNULL="false" DEFAULT="incomplete" SEQUENCE="false"/>
         <FIELD NAME="completion_date" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="request_id" TYPE="foreign" FIELDS="request_id" REFTABLE="block_ps_selfstudy_request" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
   </TABLES>

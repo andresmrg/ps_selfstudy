@@ -64,6 +64,72 @@ function xmldb_block_ps_selfstudy_upgrade($oldversion) {
         // Ps_selfstudy savepoint reached.
         upgrade_block_savepoint(true, 2015082508, 'ps_selfstudy');
     }
+
+    if ($oldversion < 2015082512) {
+
+        // Define key course_id (foreign) to be added to block_ps_selfstudy_request.
+        $table = new xmldb_table('block_ps_selfstudy_request');
+        $key = new xmldb_key('course_id', XMLDB_KEY_FOREIGN, array('course_id'), 'block_ps_selfstudy_course', array('id'));
+
+        // Launch add key course_id.
+        $dbman->add_key($table, $key);
+
+        // Ps_selfstudy savepoint reached.
+        upgrade_block_savepoint(true, 2015082512, 'ps_selfstudy');
+    }
+    if ($oldversion < 2015082513) {
+
+        // Define key student_id (foreign) to be added to block_ps_selfstudy_request.
+        $table = new xmldb_table('block_ps_selfstudy_request');
+        $key = new xmldb_key('student_id', XMLDB_KEY_FOREIGN, array('student_id'), 'user', array('id'));
+
+        // Launch add key student_id.
+        $dbman->add_key($table, $key);
+
+        // Ps_selfstudy savepoint reached.
+        upgrade_block_savepoint(true, 2015082513, 'ps_selfstudy');
+    }
+    if ($oldversion < 2015082514) {
+
+        // Define field request_id to be dropped from block_ps_selfstudy_complete.
+        $table = new xmldb_table('block_ps_selfstudy_complete');
+        $field = new xmldb_field('course_id');
+
+        // Conditionally launch drop field request_id.
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+
+        // Ps_selfstudy savepoint reached.
+        upgrade_block_savepoint(true, 2015082514, 'ps_selfstudy');
+    }
+    if ($oldversion < 2015082515) {
+
+        // Define field request_id to be dropped from block_ps_selfstudy_complete.
+        $table = new xmldb_table('block_ps_selfstudy_complete');
+        $field = new xmldb_field('student_id');
+
+        // Conditionally launch drop field request_id.
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->drop_field($table, $field);
+        }
+
+        // Ps_selfstudy savepoint reached.
+        upgrade_block_savepoint(true, 2015082515, 'ps_selfstudy');
+    }
+    if ($oldversion < 2015082516) {
+
+        // Define key request_id (foreign) to be added to block_ps_selfstudy_complete.
+        $table = new xmldb_table('block_ps_selfstudy_complete');
+        $key = new xmldb_key('request_id', XMLDB_KEY_FOREIGN, array('request_id'), 'block_ps_selfstudy_request', array('id'));
+
+        // Launch add key request_id.
+        $dbman->add_key($table, $key);
+
+        // Ps_selfstudy savepoint reached.
+        upgrade_block_savepoint(true, 2015082516, 'ps_selfstudy');
+    }
+
  
     return $result;
 }
