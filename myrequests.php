@@ -92,8 +92,8 @@ foreach($completionlist as $value) {
 }
 
 // Define headers
-$PAGE->set_title('My requests & courses');
-$PAGE->set_heading('My requests & courses');
+$PAGE->set_title(get_string('myrequests','block_ps_selfstudy'));
+$PAGE->set_heading(get_string('myrequests','block_ps_selfstudy'));
 //$PAGE->navbar->add('My requests', new moodle_url('/blocks/ps_selfstudy/myrequests.php'));
 
 $site = get_site();
@@ -101,21 +101,21 @@ echo $OUTPUT->header(); //output header
 if(isset($_GET['success'])) {
 	$success = $_GET['success'];
 	if($success == 'yes') {
-		echo "<div class='alert alert-success'>Order Submitted</div>";	
+		echo '<div class="alert alert-success">'.get_string('ordersubmitted','block_ps_selfstudy').'</div>';	
 	} else {
-		echo "<div class='alert alert-success'>Course Marked as Completed</div>";	 
+		echo '<div class="alert alert-success">'.get_string('completecourse','block_ps_selfstudy').'</div>';	 
 	}	
 }
 if($table->data) {
-echo "<h3>CD Courses</h3>";
+echo get_string('tablerequest','block_ps_selfstudy');
 echo html_writer::table($table);
 } 
 if($table_link->data) {
-echo "<h3>Link Courses</h3>";
+echo get_string('tablelink','block_ps_selfstudy');
 echo html_writer::table($table_link);	
 }
 if($table_history->data) {
-echo "<h3>History</h3>";
+echo get_string('tablehistory','block_ps_selfstudy');
 echo html_writer::table($table_history);	
 }
 if(!$table->data && !$table_link->data && !$table_history->data) {
