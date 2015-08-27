@@ -37,7 +37,7 @@ $completionlist = $DB->get_records('block_ps_selfstudy_complete', array('student
 $request = $DB->get_records('block_ps_selfstudy_request', array('student_id'=>$USER->id), $sort='', $fields='*', $limitfrom=0, $limitnum=0);
 //loop the request records to form the requests list and the link list
 foreach($request as $value) {
-	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='id,course_name,course_code,course_link');
+	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='id,course_name,course_code,course_link,course_type');
 
 	//format requested date from timestamp
 	$timestamp = $value->request_date;
@@ -54,7 +54,7 @@ foreach($request as $value) {
 	}
 
 	//if it is course link type, add to second table, if not, add it to the request table
-	if(!$course->course_link == 0) {
+	if($course->course_type == 1) {
 		//if the course was completed => skip it.
 		if($DB->record_exists('block_ps_selfstudy_complete', array('request_id'=>$value->id))) {
 			continue;
