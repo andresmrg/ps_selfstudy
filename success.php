@@ -24,14 +24,16 @@ if(isset($_GET['id']) && isset($_GET['status']) && isset($_GET['courseid'])) {
  include('sendmessage.php');
  $url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
  redirect($url);
-} else if (isset($_GET['cid'])) {
-
+} else if (isset($_GET['cid']) && isset($_GET['rid'])) {
+  //Success when a user mark a course as completed
   $courseid = $_GET['cid'];
+  $requestid = $_GET['rid'];
   $today = time();
 
   $completion = new stdClass();
   $completion->student_id = $USER->id;
   $completion->course_id = $courseid;
+  $completion->request_id = $requestid;
   $completion->completion_status = "completed";
   $completion->completion_date = $today;
 
@@ -41,7 +43,7 @@ if(isset($_GET['id']) && isset($_GET['status']) && isset($_GET['courseid'])) {
   $url = new moodle_url('/blocks/ps_selfstudy/myrequests.php?success=top');
   redirect($url);
 } else if (isset($_GET['id'])) {
-
+  //Success when student request a course
   $courseid = $_GET['id'];
   $today = time();
     $request = new stdClass();

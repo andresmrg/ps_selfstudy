@@ -34,3 +34,4 @@ $string['ps_selfstudy:viewrequests'] = 'View requests';
 $string['ps_selfstudy:myrequests'] = 'My requests';
 $string['ps_selfstudy:addinstance'] = 'Add instance';
 $string['ps_selfstudy:myaddinstance'] = 'My home instance';
+$string['nopendingrequests'] = '<h3>You don\'t have any pending course request.</h3>';
