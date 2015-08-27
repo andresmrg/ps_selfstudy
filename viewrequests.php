@@ -24,7 +24,7 @@ $table->head = array('Course Code','Title','Name','Email Address', 'Address','Ph
 $table->data = array();
 
 //get all data from requesttable
-$request = $DB->get_records('block_ps_selfstudy_request', array('request_status'=>'pending'), $sort='', $fields='*', $limitfrom=0, $limitnum=0);
+$request = $DB->get_records('block_ps_selfstudy_request', array('request_status'=>'0'), $sort='', $fields='*', $limitfrom=0, $limitnum=0);
 
 //loop the request table
 foreach($request as $value) {
