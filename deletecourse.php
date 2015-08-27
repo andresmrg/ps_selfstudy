@@ -11,6 +11,7 @@ if (isguestuser()) {
 	print_error('guestsarenotallowed');
 }
 global $DB;
+$context = context_system::instance();
 
 if(isset($_GET['id'])) {
 	$id = $_GET['id'];
@@ -26,13 +27,13 @@ if(isset($_GET['id'])) {
 		$requestlist = $DB->get_records('block_ps_selfstudy_request', array('course_id'=>$id), $sort='', $fields='id', $limitfrom=0, $limitnum=0);
 		if($requestlist) {
 			foreach($requestlist as $field) {
-				if (!$DB->delete_records('block_ps_selfstudy_request', array('id' => $requestlist->id)) {
+				if (!$DB->delete_records('block_ps_selfstudy_request', array('id' => $requestlist->id))) {
 					print_error('inserterror', 'block_ps_selfstudy');
 				}
 				//Delete all completions with this requests if any
 				$completionid = $DB->get_record('block_ps_selfstudy_complete', array('request_id'=>$requestlist->id), $fields='id');
 				if($completionid) {
-					if (!$DB->delete_records('block_ps_selfstudy_complete', array('id' => $completionid->id)) {
+					if (!$DB->delete_records('block_ps_selfstudy_complete', array('id' => $completionid->id))) {
 						print_error('inserterror', 'block_ps_selfstudy');
 					}
 				}
