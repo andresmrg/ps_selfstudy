@@ -40,10 +40,10 @@ if(isset($_GET['id']) && isset($_GET['status']) && isset($_GET['courseid'])) {
   if (!$DB->insert_record('block_ps_selfstudy_complete', $completion)) {
     print_error('cannotsavedata', 'error', '');
   }
-  $url = new moodle_url('/blocks/ps_selfstudy/myrequests.php?success=top');
+  $url = new moodle_url('/blocks/ps_selfstudy/myrequests.php?success=completed');
   redirect($url);
 } else if (isset($_GET['id'])) {
-  //Success when student request a course
+  //Success when a user request a link type course
   $courseid = $_GET['id'];
   $today = time();
     $request = new stdClass();
