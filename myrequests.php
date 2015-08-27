@@ -23,13 +23,17 @@ $PAGE->set_pagelayout('standard');
 $table = new html_table();
 $table->head = array('Course Code','Course Title','Request date','Status','Completion');
 $table->data = array();
+/**** TABLE LINK TYPE REQUESTS ****/
+//create table to list the status of my requests
+$table_link = new html_table();
+$table_link->head = array('Course Code','Course Title','Link','Request date','Completion');
+$table_link->data = array();
 
 //get all data from requesttable
 $request = $DB->get_records('block_ps_selfstudy_request', array('student_id'=>$USER->id), $sort='', $fields='*', $limitfrom=0, $limitnum=0);
-
 //loop the request table
 foreach($request as $value) {
-	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='id,course_name,course_code');
+	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='id,course_name,course_code,course_link');
 
 	//format requested date from timestamp
 	$timestamp = $value->request_date;
@@ -44,37 +48,38 @@ foreach($request as $value) {
 	}
 
 	//add the cells to the request table
-	$row = array($course->course_code,$course->course_name,$date,$status,$completion);
-    $table->data[] = $row;		
+	if(!$course->course_link == 0) {
+		$completion = '<a href="success.php?cid='.$course->id.'">Complete</a>';
+		$row1 = array($course->course_code,$course->course_name,$course->course_link,$date,$completion);
+    	$table_link->data[] = $row1;
+	} else {
+		$row = array($course->course_code,$course->course_name,$date,$status,$completion);
+    	$table->data[] = $row;
+	}
+			
 }
 
 /**** TABLE HISTORY ****/
 //create table to list the status of my requests
 $table_history = new html_table();
-$table_history->head = array('Course Code','Course Title','Request date','Status','Completion');
+$table_history->head = array('Course Code','Course Title','Completion date','Status');
 $table_history->data = array();
 
-//get all data from requesttable
-$request = $DB->get_records('block_ps_selfstudy_request', array('student_id'=>$USER->id), $sort='', $fields='*', $limitfrom=0, $limitnum=0);
+//get all data from _complete table
+$completionlist = $DB->get_records('block_ps_selfstudy_complete', array('student_id'=>$USER->id), $sort='', $fields='*', $limitfrom=0, $limitnum=0);
 
 //loop the request table_history
-foreach($request as $value) {
+foreach($completionlist as $value) {
 	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='course_name,course_code');
 
 	//format requested date from timestamp
-	$timestamp = $value->request_date;
+	$timestamp = $value->completion_date;
 	$date = date("m/d/Y",$timestamp);
 
-	if($value->request_status == 0) {
-		$status = "Pending";
-		$completion = '';
-	} else {
-		$completion = '<a href="#">Complete</a>';
-		$status = "Shipped";
-	}
+	$status = ucfirst($value->completion_status);
 
 	//add the cells to the request table
-	$row = array($course->course_code,$course->course_name,$date,$status,$completion);
+	$row = array($course->course_code,$course->course_name,$date,$status);
     $table_history->data[] = $row;		
 }
 
@@ -86,9 +91,16 @@ $PAGE->navbar->add('My requests', new moodle_url('/blocks/ps_selfstudy/myrequest
 $site = get_site();
 echo $OUTPUT->header(); //output header
 if(isset($_GET['success'])) {
-	echo "<div class='alert alert-success'>Order Submitted</div>";
+	$success = $_GET['success'];
+	if($success == 'yes') {
+		echo "<div class='alert alert-success'>Order Submitted</div>";	
+	} else {
+		echo "<div class='alert alert-success'>Course Marked as Completed</div>";	 
+	}	
 }
 echo html_writer::table($table);
+echo "<h2>Link Courses</h2>";
+echo html_writer::table($table_link);
 echo "<h2>History</h2>";
 echo html_writer::table($table_history);
 echo $OUTPUT->footer();

@@ -10,9 +10,7 @@ if (isguestuser()) {
 global $DB, $USER;
 
 //Success when the course has been shipped
-if(isset($_GET['id']) & isset($_GET['status']) & isset($_GET['courseid'])) {
-
-  echo "got here";
+if(isset($_GET['id']) && isset($_GET['status']) && isset($_GET['courseid'])) {
 
 	$id = $_GET['id'];
 	$status = $_GET['status'];
@@ -26,15 +24,7 @@ if(isset($_GET['id']) & isset($_GET['status']) & isset($_GET['courseid'])) {
  include('sendmessage.php');
  $url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
  redirect($url);
-} else {
-  $url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
-  redirect($url);
-}
-
-//Success when the user has marked as completed a course
-if(isset($_GET['cid'])) {
-
-  echo "got here";
+} else if (isset($_GET['cid'])) {
 
   $courseid = $_GET['cid'];
   $today = time();
@@ -48,8 +38,23 @@ if(isset($_GET['cid'])) {
   if (!$DB->insert_record('block_ps_selfstudy_complete', $completion)) {
     print_error('cannotsavedata', 'error', '');
   }
-  $url = new moodle_url('/blocks/ps_selfstudy/myrequests.php?success=yes');
+  $url = new moodle_url('/blocks/ps_selfstudy/myrequests.php?success=top');
   redirect($url);
+} else if (isset($_GET['id'])) {
+
+  $courseid = $_GET['id'];
+  $today = time();
+    $request = new stdClass();
+    $request->student_id = $USER->id;
+    $request->course_id = $courseid;
+    $request->request_date = $today;  
+
+  if (!$DB->insert_record('block_ps_selfstudy_request', $request)) {
+      print_error('inserterror', 'block_ps_selfstudy');
+  }
+ $url = new moodle_url('/blocks/ps_selfstudy/myrequests.php?success=yes');
+ redirect($url);
+
 } else {
  $url = new moodle_url('/blocks/ps_selfstudy/myrequests.php');
  redirect($url);

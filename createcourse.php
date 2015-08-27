@@ -50,10 +50,10 @@ if($form_page->is_cancelled()) {
    	echo $OUTPUT->header();
     if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
       $form_page->display();
-      else {
-        print_error('nopermissiontoviewpage', 'error', '');
-      }
-      echo $OUTPUT->footer();
+    } else {
+      print_error('nopermissiontoviewpage', 'error', '');
     }
+    echo $OUTPUT->footer();
+  }
 
 // form didn't validate or this is the first display
