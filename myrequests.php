@@ -60,8 +60,13 @@ foreach($request as $value) {
 		if($DB->record_exists('block_ps_selfstudy_complete', array('request_id'=>$value->id))) {
 			continue;
 		} else {
+			//Display blank if doesn't have a link
+			$link = $course->course_link;
+			if($link == '0')
+				$link = "";
+			//create completion button and table
 			$completion = '<a href="success.php?rid='.$value->id.'">Complete</a>';
-			$row1 = array($course->course_code,$course->course_name,$course->course_link,$date,$completion);
+			$row1 = array($course->course_code,$course->course_name,$link,$date,$completion);
     		$table_link->data[] = $row1;
 		}
 	} else {
