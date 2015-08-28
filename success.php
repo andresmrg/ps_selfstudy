@@ -20,7 +20,7 @@ if(isset($_GET['id']) && isset($_GET['status']) && isset($_GET['courseid'])) {
 
   //get user data to send email.
   $userid = $DB->get_record('block_ps_selfstudy_request', array('id'=>$id), $fields='student_id');
-  $user = $DB->get_record('user', array('id'=>$userid->student_id), $fields='firstname,lastname');
+  $user = $DB->get_record('user', array('id'=>$userid->student_id), $fields='firstname,lastname,email');
 
   if (!$DB->update_record('block_ps_selfstudy_request', array('id'=>$id,'request_status'=>$status))) {
    print_error('inserterror', 'block_ps_selfstudy');

@@ -10,7 +10,7 @@ require_once("{$CFG->libdir}/moodlelib.php");
 $subject = "Course Shipment Your order for $course->course_code $course->course_name has been shipped";
 
 $userinfo = new stdClass;
-$userinfo->id = $userid;
+$userinfo->id = $userid->student_id;
 $userinfo->email = $user->email;
 $userinfo->firstname = $user->firstname;
 $userinfo->lastname = $user->lastname;
