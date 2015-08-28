@@ -21,7 +21,7 @@ $from->firstname="No ";
 $from->lastname="Reply";
 
 $message = "
-<p>$userinfo->firstname $userinfo->lastname</p>
+<p>Hello $userinfo->firstname $userinfo->lastname,</p>
 
 <p>You should receive this order within the next week. Be sure come back into the system and indicate the date you complete the course so that your training history can be update.</p>
 
