@@ -8,7 +8,7 @@ if (isguestuser()) {
 }
 
 global $DB;
-
+$context = context_system::instance();
 //Get course ID
 if(isset($_GET['id'])) {
 
@@ -16,8 +16,15 @@ if(isset($_GET['id'])) {
 
 	if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
       //Delete course record
-		if (!$DB->delete_records('block_ps_selfstudy_request', ['id' => $id])) {
+		if (!$DB->delete_records('block_ps_selfstudy_request', array('id' => $id))) {
 			print_error('inserterror', 'block_ps_selfstudy');
+		}
+		//Delete all completions with this requests if any
+		$completionid = $DB->get_record('block_ps_selfstudy_complete', array('request_id'=>$id), $fields='id');
+		if($completionid) {
+			if (!$DB->delete_records('block_ps_selfstudy_complete', array('id' => $completionid->id))) {
+				print_error('inserterror', 'block_ps_selfstudy');
+			}
 		}
 		$url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
 		redirect($url);
