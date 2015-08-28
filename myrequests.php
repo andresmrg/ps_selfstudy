@@ -101,7 +101,6 @@ foreach($request as $value) {
 // Define headers
 $PAGE->set_title(get_string('myrequests','block_ps_selfstudy'));
 $PAGE->set_heading(get_string('myrequests','block_ps_selfstudy'));
-//$PAGE->navbar->add('My requests', new moodle_url('/blocks/ps_selfstudy/myrequests.php'));
 
 $site = get_site();
 echo $OUTPUT->header(); //output header
@@ -113,19 +112,23 @@ if(isset($_GET['success'])) {
 		echo '<div class="alert alert-success">'.get_string('completecourse','block_ps_selfstudy').'</div>';	 
 	}	
 }
-if($table->data) {
-echo get_string('tablerequest','block_ps_selfstudy');
-echo html_writer::table($table);
-} 
-if($table_link->data) {
-echo get_string('tablelink','block_ps_selfstudy');
-echo html_writer::table($table_link);	
-}
-if($table_history->data) {
-echo get_string('tablehistory','block_ps_selfstudy');
-echo html_writer::table($table_history);	
-}
-if(!$table->data && !$table_link->data && !$table_history->data) {
-	echo get_string('nopendingrequests','block_ps_selfstudy');
+if (has_capability('block/ps_selfstudy:myrequests', $context, $USER->id)) {
+	if($table->data) {
+	echo get_string('tablerequest','block_ps_selfstudy');
+	echo html_writer::table($table);
+	} 
+	if($table_link->data) {
+	echo get_string('tablelink','block_ps_selfstudy');
+	echo html_writer::table($table_link);	
+	}
+	if($table_history->data) {
+	echo get_string('tablehistory','block_ps_selfstudy');
+	echo html_writer::table($table_history);	
+	}
+	if(!$table->data && !$table_link->data && !$table_history->data) {
+		echo get_string('nopendingrequests','block_ps_selfstudy');
+	}
+} else {
+	print_error('nopermissiontoviewpage', 'error', '');
 }
 echo $OUTPUT->footer();
