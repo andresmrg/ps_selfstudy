@@ -28,7 +28,7 @@ $request = $DB->get_records('block_ps_selfstudy_request', array('request_status'
 
 //loop the request table
 foreach($request as $value) {
-	$user = $DB->get_record('user', array('id'=>$value->student_id), $fields='firstname,lastname,email,address,phone1');
+	$user = $DB->get_record('user', array('id'=>$value->student_id), $fields='firstname,lastname,email,address,department,country,phone1');
 	$course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$value->course_id), $fields='id,course_name,course_code');
 
 	//get firstname and lastname together
@@ -42,10 +42,14 @@ foreach($request as $value) {
 	} else {
 		$status = "Shipped";
 	}
+	//get zipcode
+    $zip_id = $DB->get_record('user_info_field', array ('shortname'=>'zipcode'), $fields='id', $strictness=IGNORE_MISSING);        
+    $zipcode = $DB->get_record('user_info_data', array ('userid'=>$value->student_id,'fieldid'=>$zip_id->id), $fields='data', $strictness=IGNORE_MISSING);
+	$fulladdress = "$user->address - $user->department - $zipcode->data - $user->country";
 
 	$links = '<a href="success.php?id='.$value->id.'&status=1&courseid='.$course->id.'">Delivered</a> - <a href="deleterequest.php?id='.$value->id.'">Delete</a>';
 	//add the cells to the request table
-	$row = array($course->course_code,$course->course_name,$fullname,$user->email,$user->address,$user->phone1,$date,$status,$links);
+	$row = array($course->course_code,$course->course_name,$fullname,$user->email,$fulladdress,$user->phone1,$date,$status,$links);
     $table->data[] = $row;		
 }
 
