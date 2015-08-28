@@ -18,6 +18,10 @@ if(isset($_GET['id']) && isset($_GET['status']) && isset($_GET['courseid'])) {
 
   $course = $DB->get_record('block_ps_selfstudy_course', array('id'=>$courseid), $fields='course_name,course_code');
 
+  //get user data to send email.
+  $userid = $DB->get_record('block_ps_selfstudy_request', array('id'=>$id), $fields='student_id');
+  $user = $DB->get_record('user', array('id'=>$userid->student_id), $fields='firstname,lastname');
+
   if (!$DB->update_record('block_ps_selfstudy_request', array('id'=>$id,'request_status'=>$status))) {
    print_error('inserterror', 'block_ps_selfstudy');
  }
