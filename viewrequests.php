@@ -57,8 +57,12 @@ $PAGE->set_heading('View Pending Requests');
 $site = get_site();
 echo $OUTPUT->header(); //output header
 if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
-	echo html_writer::table($table);
-	echo '<a href="allrequests.php">Click here to see full list</a>';
+	if($table->data) {
+		echo html_writer::table($table);
+	} else {
+		echo get_string('nopendingrequests','block_ps_selfstudy');
+	}
+	echo '<a href="allrequests.php">'.get_string('clickfulllist','block_ps_selfstudy').'</a>';
 } else {
 	print_error('nopermissiontoviewpage', 'error', '');
 }

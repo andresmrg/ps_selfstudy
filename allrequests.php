@@ -39,15 +39,12 @@ foreach($request as $value) {
 
 	if($value->request_status == 0) {
 		$status = "Pending";
-	} else {
+		$links = '<a href="success.php?id='.$value->id.'&status=shipped">Delivered</a> - <a href="deleterequest.php?id='.$value->id.'">Delete</a>';
+	} else if($value->request_status == 1) {
 		$status = "Shipped";
-	}
-
-	//valide links
-	if($value->request_status == 1) {
 		$links = '<a href="deleterequest.php?id='.$value->id.'">Delete</a>';
 	} else {
-		$links = '<a href="success.php?id='.$value->id.'&status=shipped">Delivered</a> - <a href="deleterequest.php?id='.$value->id.'">Delete</a>';
+		continue;
 	}
 	//add the cells to the request table
 	$row = array($course->course_code,$course->course_name,$fullname,$user->email,$user->address,$user->phone1,$date,$status,$links);

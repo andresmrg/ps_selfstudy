@@ -41,3 +41,4 @@ $string['tablerequest'] = '<h3>Physical Courses Status</h3>';
 $string['tablelink'] = '<h3>Link Courses Status</h3>';
 $string['tablehistory'] = '<h3>History</h3>';
 $string['myrequests'] = 'My requests & courses';
+$string['clickfulllist'] = 'Click here to see full list';
