@@ -47,7 +47,7 @@ if(isset($_GET['id']) && isset($_GET['status']) && isset($_GET['courseid'])) {
     $request->student_id = $USER->id;
     $request->course_id = $courseid;
     $request->request_date = $today;
-    $request->request_status = 1;  
+    $request->request_status = 2;  
 
   if (!$DB->insert_record('block_ps_selfstudy_request', $request)) {
       print_error('inserterror', 'block_ps_selfstudy');
