@@ -47,12 +47,13 @@ class viewrequests_table extends table_sql {
      * @return $string Return username with link to profile or username only
      *     when downloading.
      */
-    function col_username($values) {
+    function col_firstname($values) {
         // If the data is being downloaded than we don't want to show HTML.
         if ($this->is_downloading()) {
-            return $values->username;
+            $fullname = "$values->firstname $values->lastname";
+            return $fullname;
         } else {
-            return '<a href="$CFG->wwwroot/../../../user/profile.php?id='.$values->id.'">'.$values->username.'</a>';
+            return '<a href="$CFG->wwwroot/../../../user/profile.php?id='.$values->student_id.'">'.$values->firstname." ".$values->lastname.'</a>';
         }
     }
 
