@@ -47,8 +47,9 @@ class requestcourse_form extends moodleform {
 
         
         $mform->addElement('text', 'email', get_string("email", "block_ps_selfstudy"));
-        $mform->setType('email', PARAM_NOTAGS);
+        $mform->setType('email', PARAM_EMAIL);
         $mform->addRule('email', null, 'required', null, 'client');
+        $mform->addRule('email', null, 'email', null, 'client');
         $mform->setDefault('email', $USER->email);  
 
         // group shipping information
@@ -67,6 +68,7 @@ class requestcourse_form extends moodleform {
         $mform->addElement('text', 'department', get_string('department', 'block_ps_selfstudy'));
         $mform->setType('department', PARAM_NOTAGS);
         $mform->addRule('department', null, 'required', null, 'client');
+        $mform->addRule('department', null, 'lettersonly', null, 'client');
         $mform->setDefault('department', $USER->department);
 
         $choices = get_string_manager()->get_list_of_countries();
@@ -79,14 +81,16 @@ class requestcourse_form extends moodleform {
             $mform->setDefault('country', $USER->country);
         }
 
-        @$mform->addElement('text', 'zipcode', get_string('zipcode', 'block_ps_selfstudy'));
-        @$mform->setType('zipcode', PARAM_NOTAGS);
-        $mform->addRule('zipcode', null, 'required', null, 'client');
+        @$mform->addElement('text', 'zipcode', get_string('zipcode', 'block_ps_selfstudy'),'maxlength="6" minlength="5"');
+        @$mform->setType('zipcode', PARAM_INT);
+        $mform->addRule('zipcode', null, 'numeric',null,'client');
+        $mform->addRule('zipcode', null, 'required',null,'client');
         @$mform->setDefault('zipcode', $zipcode->data);
 
-        $mform->addElement('text', 'phone1', get_string('phone1', 'block_ps_selfstudy'));
-        $mform->setType('phone1', PARAM_NOTAGS);
-        $mform->addRule('phone1', null, 'required', null, 'client');
+        $mform->addElement('text', 'phone1', get_string('phone1', 'block_ps_selfstudy'),'maxlength="10" minlength="5"');
+        $mform->setType('phone1', PARAM_INT);
+        $mform->addRule('phone1', null, 'numeric',null,'client');
+        $mform->addRule('phone1', null, 'required',null,'client');
         $mform->setDefault('phone1', $USER->phone1);
         
         $this->add_action_buttons(true, get_string('submitbutton', 'block_ps_selfstudy'));
