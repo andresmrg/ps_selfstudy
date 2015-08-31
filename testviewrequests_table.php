@@ -17,7 +17,14 @@ class testviewrequests_table extends table_sql {
     function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code','course_name','firstname','email','address', 'phone1','request_date','request_status','actions');
+        $columns = array('course_code','course_name','firstname','email','address', 'phone1','request_date','request_status');
+        // Define the titles of columns to show in header.
+        $headers = array('Course Code','Title','Name', 'Email Address','Address', 'Phone #','Request date','Status');
+        
+        if (!$this->is_downloading()) {
+            $columns[] = 'actions';
+            $headers[] = 'Action';
+        }
 
         global $DB;
         
@@ -25,12 +32,11 @@ class testviewrequests_table extends table_sql {
         $this->sortable(true,'course_code', SORT_ASC);
         $this->collapsible(false);
         $this->no_sorting('actions');
-        //$this->no_sorting('course_description');
-        $this->define_columns($columns);
         
-        // Define the titles of columns to show in header.
-        $headers = array('Course Code','Title','Name', 'Email Address','Address', 'Phone #','Request date','Status','Action');
+        $this->define_columns($columns);
         $this->define_headers($headers);
+        
+        
     }
 
     /**
@@ -74,13 +80,13 @@ class testviewrequests_table extends table_sql {
         return date("m/d/Y",$date);
     }
     function col_actions($values) {
-
-        if($values->request_status == 0) {
-            return '<a href="success.php?id='.$values->id.'&status=1&courseid='.$values->course_id.'">Delivered</a> - <a href="deleterequest.php?id='.$values->id.'">Delete</a>';
-        } else {
-            return '<a href="deleterequest.php?id='.$values->id.'">Delete</a>';
-        }
-        
+        if (!$this->is_downloading()) {
+            if($values->request_status == 0) {
+                return '<a href="success.php?id='.$values->id.'&status=1&courseid='.$values->course_id.'">Delivered</a> - <a href="deleterequest.php?id='.$values->id.'">Delete</a>';
+            } else {
+                return '<a href="deleterequest.php?id='.$values->id.'">Delete</a>';
+            }
+        } 
         //- <a href="deletecourse.php?id='.$values->id.'" onclick="return check_confirm()">Delete</a>';
     }
     /**
