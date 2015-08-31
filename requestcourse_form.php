@@ -89,6 +89,6 @@ class requestcourse_form extends moodleform {
         $mform->addRule('phone1', null, 'required', null, 'client');
         $mform->setDefault('phone1', $USER->phone1);
         
-        $this->add_action_buttons();
+        $this->add_action_buttons(true, get_string('submitbutton', 'block_ps_selfstudy'));
     }
 }

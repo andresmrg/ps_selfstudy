@@ -42,3 +42,5 @@ $string['tablelink'] = '<h3>Link Courses Status</h3>';
 $string['tablehistory'] = '<h3>History</h3>';
 $string['myrequests'] = 'My requests & courses';
 $string['clickfulllist'] = 'Click here to see full list';
+$string['clickpendinglist'] = 'Click here to view only pending requests';
+$string['submitbutton'] = 'Submit';
