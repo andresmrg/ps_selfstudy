@@ -82,16 +82,16 @@ class requestcourse_form extends moodleform {
         }
 
         @$mform->addElement('text', 'zipcode', get_string('zipcode', 'block_ps_selfstudy'),'maxlength="6" minlength="5"');
-        @$mform->setType('zipcode', PARAM_INT);
-        $mform->addRule('zipcode', null, 'numeric',null,'client');
+        @$mform->setType('zipcode', PARAM_NOTAGS);
         $mform->addRule('zipcode', null, 'required',null,'client');
         @$mform->setDefault('zipcode', $zipcode->data);
 
-        $mform->addElement('text', 'phone1', get_string('phone1', 'block_ps_selfstudy'),'maxlength="10" minlength="5"');
+        $mform->addElement('text', 'phone1', get_string('phone1', 'block_ps_selfstudy'),'maxlength="13" minlength="5"');
         $mform->setType('phone1', PARAM_INT);
         $mform->addRule('phone1', null, 'numeric',null,'client');
         $mform->addRule('phone1', null, 'required',null,'client');
         $mform->setDefault('phone1', $USER->phone1);
+        $mform->addHelpButton('phone1', 'phone1', 'block_ps_selfstudy');
         
         $this->add_action_buttons(true, get_string('submitbutton', 'block_ps_selfstudy'));
     }
