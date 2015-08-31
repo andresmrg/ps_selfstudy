@@ -17,11 +17,11 @@ class testviewrequests_table extends table_sql {
     function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code','course_name','firstname','email','address', 'phone1','course_status','date_created','actions');
+        $columns = array('course_code','course_name','firstname','email','address', 'phone1','request_date','request_status','actions');
 
         global $DB;
         
-        print_object($columns);
+        //print_object($columns);
         $this->sortable(true,'course_code', SORT_ASC);
         $this->collapsible(false);
         $this->no_sorting('actions');
@@ -50,41 +50,38 @@ class testviewrequests_table extends table_sql {
         }
     }
 
-    function col_course_type($values) {
-        //print_object($values);
-        // If the value is 0, show Phisical copy, else, Link course.
-        if($values->course_type == 0) {
-            return "Phisical Copy";    
+    function col_address($values) {
+        global $DB;
+        //display fulladdress
+        $zip_id = $DB->get_record('user_info_field', array ('shortname'=>'zipcode'), $fields='id', $strictness=IGNORE_MISSING);        
+        $zipcode = $DB->get_record('user_info_data', array ('userid'=>$values->student_id,'fieldid'=>$zip_id->id), $fields='data', $strictness=IGNORE_MISSING);
+
+        $fulladdress = "$values->address - $values->department - $zipcode->data - $values->country";
+
+        return $fulladdress;
+    }
+    function col_request_status($values) {
+        // If the value is 0, show Pending status.
+        if($values->request_status == 0) {
+            return "Pending";    
         } else {
-            return "Link Course";
+            return "Shipped";
         }
     }
-    function col_course_status($values) {
-        // If the value is 0, show Active copy, else, Disable.
-        if($values->course_status == 0) {
-            return "Active";    
-        } else {
-            return "Disable";
-        }
-    }
-    function col_date_created($values) {
+    function col_request_date($values) {
         // Show readable date from timestamp.
-        $date = $values->date_created;
+        $date = $values->request_date;
         return date("m/d/Y",$date);
     }
     function col_actions($values) {
-        global $DB;
-        // Show readable date from timestamp.
-        $str = $values->course_description;
-        $description = base64_encode($str);
-        
-        $link = $DB->get_record('block_ps_selfstudy_course',array('id'=>$values->id), $fields='course_link');
-        
-        $str2 = $link->course_link;
-        $link = base64_encode($str2);
 
-        return '<a href="editcourse.php?id='.$values->id.'&platform='.$values->course_platform.'&code='.$values->course_code.'&name='.$values->course_name.'&hours='.$values->course_hours.'&link='.$link.'&desc='.$description.'&type='.$values->course_type.'&status='.$values->course_status.'">Edit</a> 
-        - <a href="deletecourse.php?id='.$values->id.'" onclick="return check_confirm()">Delete</a>';
+        if($values->request_status == 0) {
+            return '<a href="success.php?id='.$values->id.'&status=1&courseid='.$values->course_id.'">Delivered</a> - <a href="deleterequest.php?id='.$values->id.'">Delete</a>';
+        } else {
+            return '<a href="deleterequest.php?id='.$values->id.'">Delete</a>';
+        }
+        
+        //- <a href="deletecourse.php?id='.$values->id.'" onclick="return check_confirm()">Delete</a>';
     }
     /**
      * This function is called for each data row to allow processing of
