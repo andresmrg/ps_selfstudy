@@ -51,7 +51,7 @@ if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
 		$link = '<br><a href="viewrequests.php?show=all">'.get_string('clickfulllist','block_ps_selfstudy').'</a>';
 	}
 	$table->set_sql($fields, $from, $sqlconditions);
-	$table->out(10, true); //print table
+	$table->out(30, true); //print table
 	if (!$table->is_downloading()) {
 		echo $link;
 	}

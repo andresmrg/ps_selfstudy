@@ -34,7 +34,7 @@ if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
 // Get the course table.
 $table->set_sql('*', "{block_ps_selfstudy_course}", '1');
 $table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/managecourses.php");
-$table->out(10, true); //print table
+$table->out(30, true); //print table
 } else {
 	print_error('nopermissiontoviewpage', 'error', '');
 }
