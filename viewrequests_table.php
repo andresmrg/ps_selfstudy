@@ -5,7 +5,7 @@
  * Table class to be put in managecourses.php selfstudy manage course page.
  *  for defining some custom column names and proccessing
  */
-class testviewrequests_table extends table_sql {
+class viewrequests_table extends table_sql {
 
     //GLOBAL $CFG;
 
