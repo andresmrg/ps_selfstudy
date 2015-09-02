@@ -36,8 +36,8 @@ if($filterform->is_cancelled()) {
 	//WHEN FORM IS SUBMITTED
 	if (!$table->is_downloading()) {
 	//Define headers
-		$PAGE->set_title('View Requests');
-		$PAGE->set_heading('View Requests');
+		$PAGE->set_title(get_string('title_viewrequests','block_ps_selfstudy'));
+		$PAGE->set_heading(get_string('title_viewrequests','block_ps_selfstudy'));
 		$site = get_site();
 		echo $OUTPUT->header(); //output header
 		$filterform->display();
@@ -69,8 +69,8 @@ if($filterform->is_cancelled()) {
 	//FIRST TIME
 	if (!$table->is_downloading()) {
 	//Define headers
-		$PAGE->set_title('View Requests');
-		$PAGE->set_heading('View Requests');
+		$PAGE->set_title(get_string('title_viewrequests','block_ps_selfstudy'));
+		$PAGE->set_heading(get_string('title_viewrequests','block_ps_selfstudy'));
 		$site = get_site();
 		echo $OUTPUT->header(); //output header
 		$filterform->display();

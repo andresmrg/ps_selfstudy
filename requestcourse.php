@@ -18,7 +18,7 @@ $PAGE->set_pagelayout('standard');
 $form_page = new requestcourse_form();
 
 // Define headers
-$PAGE->set_title('Request self-study course');
+$PAGE->set_title(get_string('title_requestcourse','block_ps_selfstudy'));
 $PAGE->set_heading('Request self-study courses');
 //$PAGE->navbar->add('Request self-study course', new moodle_url('/blocks/ps_selfstudy/requestcourse.php'));
 

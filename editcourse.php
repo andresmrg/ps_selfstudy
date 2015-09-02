@@ -17,7 +17,7 @@ $PAGE->set_pagelayout('standard');
 $form_page = new editcourse_form();
 
 // Define headers
-$PAGE->set_title('Edit self-study course');
+$PAGE->set_title(get_string('title_editcourse','block_ps_selfstudy'));
 
 if($form_page->is_cancelled()) {
     // Cancelled forms redirect to the course main page.

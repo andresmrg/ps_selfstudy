@@ -22,10 +22,8 @@ $link_form = new managelinks_form();
 $table = new courselist_table('uniqueid');
 
 // Define headers
-$PAGE->set_title('Manage self-study courses');
+$PAGE->set_title(get_string('title_managecourses','block_ps_selfstudy'));
 $PAGE->set_heading('Manage self-study courses');
-$PAGE->navbar->add('Manage self-study courses', new moodle_url('/blocks/ps_selfstudy/managecourses.php'));
-
 
 $site = get_site();
 echo $OUTPUT->header(); //output header

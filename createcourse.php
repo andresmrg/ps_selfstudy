@@ -21,8 +21,7 @@ $toform['date_created'] = $today;
 $form_page->set_data($toform);
 
 // Define headers
-$PAGE->set_title('Create a new self-study course');
-$PAGE->navbar->add('Create a new self-study course', new moodle_url('/blocks/ps_selfstudy/createcourse.php'));
+$PAGE->set_title(get_string('title_createcourse','block_ps_selfstudy'));
 
 require_login();
 
