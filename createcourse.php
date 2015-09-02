@@ -32,12 +32,7 @@ if($form_page->is_cancelled()) {
 
 } else if ($fromform = $form_page->get_data()) {
     // We need to add code to appropriately act on and store the submitted data
-   	/*
-   	1. get the data from the form
-   	2. save into the db
-   	3. redirect to the course list page
-   	*/
-   	//print_object($fromform);
+
    	if (!$DB->insert_record('block_ps_selfstudy_course', $fromform)) {
    		print_error('inserterror', 'block_ps_selfstudy');
    	}

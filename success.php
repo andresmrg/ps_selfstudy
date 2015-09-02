@@ -56,8 +56,15 @@ if(isset($_GET['id']) && isset($_GET['status']) && isset($_GET['courseid'])) {
   if (!$DB->insert_record('block_ps_selfstudy_request', $request)) {
       print_error('inserterror', 'block_ps_selfstudy');
   }
- $url = new moodle_url('/blocks/ps_selfstudy/myrequests.php?success=yes');
- redirect($url);
+
+  $link = $DB->get_record('block_ps_selfstudy_course', array('id'=>$courseid), $fields='course_link');
+  $url = $link->course_link;
+  if (!preg_match("~^(ht)tps?://~i", $url)) {
+    $url = "http://" . $url;
+  }
+  $externalurl = new moodle_url($url);
+  //$url = new moodle_url('/blocks/ps_selfstudy/myrequests.php?success=yes');
+  redirect($externalurl);
 
 } else {
  $url = new moodle_url('/blocks/ps_selfstudy/myrequests.php');
