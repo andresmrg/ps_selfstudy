@@ -41,6 +41,7 @@ if($filterform->is_cancelled()) {
 		$site = get_site();
 		echo $OUTPUT->header(); //output header
 		$filterform->display();
+		echo "<hr>";
 	}
 
 	if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
@@ -73,6 +74,7 @@ if($filterform->is_cancelled()) {
 		$site = get_site();
 		echo $OUTPUT->header(); //output header
 		$filterform->display();
+		echo "<hr>";
 	}
 
 	if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
