@@ -16,7 +16,7 @@ if (isguestuser()) {
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url('/blocks/ps_selfstudy/viewrequests.php');
+$PAGE->set_url('/blocks/ps_selfstudy/viewallrequests.php');
 $PAGE->set_pagelayout('standard');
 $filterform = new filter_form();
 
@@ -27,7 +27,7 @@ $table->is_downloading($download, 'view_requests', 'Requests');
 
 if($filterform->is_cancelled()) {
 
-	$courseurl = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
+	$courseurl = new moodle_url('/blocks/ps_selfstudy/viewallrequests.php');
   	redirect($courseurl);
 
 } else if ($fromform = $filterform->get_data()) {
@@ -36,8 +36,8 @@ if($filterform->is_cancelled()) {
 	//WHEN FORM IS SUBMITTED
 	if (!$table->is_downloading()) {
 	//Define headers
-		$PAGE->set_title('View Requests');
-		$PAGE->set_heading('View Requests');
+		$PAGE->set_title('View All Requests');
+		$PAGE->set_heading('View All Requests');
 		$site = get_site();
 		echo $OUTPUT->header(); //output header
 		$filterform->display();
@@ -48,9 +48,9 @@ if($filterform->is_cancelled()) {
 		//sql to get all requests
 		$fields = 'r.id,c.course_code,c.course_name,u.firstname,u.lastname,u.email,u.address,u.department,u.country,u.phone1,r.student_id,r.course_id,r.request_date,r.request_status';
 		$from = "{block_ps_selfstudy_request} as r JOIN {block_ps_selfstudy_course} c ON (c.id=r.course_id) JOIN {user} u ON(u.id=r.student_id)";
-		$sqlconditions .= 'r.request_status = 0';
-		$table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/viewrequests.php");
-		$link = '<br><a href="viewallrequests.php">'.get_string('clickfulllist','block_ps_selfstudy').'</a>';
+		$sqlconditions .= 'r.request_status != 2';
+		$table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/viewallrequests.php");
+		$link = '<br><a href="viewrequests.php">'.get_string('clickpendinglist','block_ps_selfstudy').'</a>';
 		$table->set_sql($fields, $from, $sqlconditions);
 		$table->out(30, true); //print table
 		if (!$table->is_downloading()) {
@@ -63,16 +63,18 @@ if($filterform->is_cancelled()) {
 		echo $OUTPUT->footer();
 	}
 
+
 } else {
 
 	//FIRST TIME
 	if (!$table->is_downloading()) {
 	//Define headers
-		$PAGE->set_title('View Requests');
-		$PAGE->set_heading('View Requests');
+		$PAGE->set_title('View All Requests');
+		$PAGE->set_heading('View All Requests');
 		$site = get_site();
 		echo $OUTPUT->header(); //output header
 		$filterform->display();
+		echo "<hr>";
 	}
 
 	if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
@@ -80,9 +82,9 @@ if($filterform->is_cancelled()) {
 		//sql to get all requests
 		$fields = 'r.id,c.course_code,c.course_name,u.firstname,u.lastname,u.email,u.address,u.department,u.country,u.phone1,r.student_id,r.course_id,r.request_date,r.request_status';
 		$from = "{block_ps_selfstudy_request} as r JOIN {block_ps_selfstudy_course} c ON (c.id=r.course_id) JOIN {user} u ON(u.id=r.student_id)";
-		$sqlconditions = 'r.request_status = 0';
-		$table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/viewrequests.php");
-		$link = '<br><a href="viewallrequests.php">'.get_string('clickfulllist','block_ps_selfstudy').'</a>';
+		$sqlconditions = 'r.request_status != 2';
+		$table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/viewallrequests.php");
+		$link = '<br><a href="viewrequests.php">'.get_string('clickpendinglist','block_ps_selfstudy').'</a>';
 		$table->set_sql($fields, $from, $sqlconditions);
 		$table->out(30, true); //print table
 		//print_object($table);

@@ -44,5 +44,7 @@ $string['myrequests'] = 'My requests & courses';
 $string['clickfulllist'] = 'Click here to see full list';
 $string['clickpendinglist'] = 'Click here to view only pending requests';
 $string['submitbutton'] = 'Submit';
+$string['resetbutton'] = 'Reset Filter';
 $string['phone1_help'] = 'Do not include spaces or special characters, only numbers';
 $string['phone1'] = 'Phone #';
+$string['field_filtercode'] = 'Filter by Code';
