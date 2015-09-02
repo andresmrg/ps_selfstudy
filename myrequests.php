@@ -64,6 +64,7 @@ foreach($request as $value) {
 			$link = $course->course_link;
 			if($link == '0')
 				$link = "";
+			//$link = '<a href="'.$link.'" target="_blank">'.$link.'</a>';
 			//create completion button and table
 			$completion = '<a href="success.php?rid='.$value->id.'">Complete</a>';
 			$row1 = array($course->course_code,$course->course_name,$link,$date,$completion);
