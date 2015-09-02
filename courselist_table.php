@@ -50,7 +50,7 @@ class courselist_table extends table_sql {
         //print_object($values);
         // If the value is 0, show Phisical copy, else, Link course.
         if($values->course_type == 0) {
-            return "Phisical Copy";    
+            return "Physical Copy";    
         } else {
             return "Link Course";
         }
