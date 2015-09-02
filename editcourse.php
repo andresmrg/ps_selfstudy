@@ -26,31 +26,24 @@ if($form_page->is_cancelled()) {
 
 } else if ($fromform = $form_page->get_data()) {
     // We need to add code to appropriately act on and store the submitted data
-   	/*
-   	1. get the data from the form
-   	2. save into the db
-   	3. redirect to the course list page
-   	*/
+  if (!$DB->update_record('block_ps_selfstudy_course', $fromform)) {
+   print_error('inserterror', 'block_ps_selfstudy');
+ }
+ $courseurl = new moodle_url('/blocks/ps_selfstudy/managecourses.php?success=edited');
+ redirect($courseurl);
 
-    //print_object($fromform);
-   	if (!$DB->update_record('block_ps_selfstudy_course', $fromform)) {
-   		print_error('inserterror', 'block_ps_selfstudy');
-   	}
-   	$courseurl = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
-   	redirect($courseurl);
-
-   } else {
+} else {
     // form didn't validate or this is the first display
 
-    $site = get_site();
-    echo $OUTPUT->header();
-    if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
-      $form_page->display();
-    } else {
-      print_error('nopermissiontoviewpage', 'error', '');
-    }
-    echo $OUTPUT->footer();
-    
+  $site = get_site();
+  echo $OUTPUT->header();
+  if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
+    $form_page->display();
+  } else {
+    print_error('nopermissiontoviewpage', 'error', '');
   }
+  echo $OUTPUT->footer();
+  
+}
 
 // form didn't validate or this is the first display

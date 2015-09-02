@@ -48,3 +48,5 @@ $string['resetbutton'] = 'Reset Filter';
 $string['phone1_help'] = 'Do not include spaces or special characters, only numbers';
 $string['phone1'] = 'Phone #';
 $string['field_filtercode'] = 'Filter by Code';
+$string['course_deleted'] = 'Course deleted successfully';
+$string['course_edited'] = 'Course edited successfully';

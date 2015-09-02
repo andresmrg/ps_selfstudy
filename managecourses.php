@@ -30,11 +30,20 @@ $PAGE->navbar->add('Manage self-study courses', new moodle_url('/blocks/ps_selfs
 $site = get_site();
 echo $OUTPUT->header(); //output header
 if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
+
+	if(isset($_GET['success'])) {
+		$success = $_GET['success'];
+		if($success == 'del') {
+			echo '<div class="alert alert-success">'.get_string('course_deleted','block_ps_selfstudy').'</div>';	
+		} else {
+			echo '<div class="alert alert-success">'.get_string('course_edited','block_ps_selfstudy').'</div>';	
+		}
+	}
 	$link_form->display(); //output button to create new courses
-// Get the course table.
-$table->set_sql('*', "{block_ps_selfstudy_course}", '1');
-$table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/managecourses.php");
-$table->out(30, true); //print table
+	// Get the course table.
+	$table->set_sql('*', "{block_ps_selfstudy_course}", '1');
+	$table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/managecourses.php");
+	$table->out(30, true); //print table
 } else {
 	print_error('nopermissiontoviewpage', 'error', '');
 }

@@ -40,7 +40,7 @@ if(isset($_GET['id'])) {
 			}
 		}
 		//Redirect to manage course page.
-		$url = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
+		$url = new moodle_url('/blocks/ps_selfstudy/managecourses.php?success=del');
 		redirect($url);
 	} else {
 		print_error('nopermissiontoviewpage', 'error', '');

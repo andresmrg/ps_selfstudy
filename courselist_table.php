@@ -80,7 +80,7 @@ class courselist_table extends table_sql {
         $link = base64_encode($str2);
 
         return '<a href="editcourse.php?id='.$values->id.'&platform='.$values->course_platform.'&code='.$values->course_code.'&name='.$values->course_name.'&hours='.$values->course_hours.'&link='.$link.'&desc='.$description.'&type='.$values->course_type.'&status='.$values->course_status.'">Edit</a> 
-        - <a href="deletecourse.php?id='.$values->id.'" onclick="return check_confirm()">Delete</a>';
+        - <a href="deletecourse.php?id='.$values->id.'">Delete</a>';
     }
     /**
      * This function is called for each data row to allow processing of
