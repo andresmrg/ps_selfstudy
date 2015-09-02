@@ -26,8 +26,14 @@ if(isset($_GET['id'])) {
 				print_error('inserterror', 'block_ps_selfstudy');
 			}
 		}
-		$url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
-		redirect($url);
+		if(isset($_GET['page'])) {
+			$url = new moodle_url('/blocks/ps_selfstudy/viewallrequests.php');
+			redirect($url);
+		} else {
+			$url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
+			redirect($url);
+		}
+		
 	} else {
 		print_error('nopermissiontoviewpage', 'error', '');
 	}

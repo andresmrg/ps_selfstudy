@@ -85,7 +85,7 @@ class viewrequests_table extends table_sql {
             if($values->request_status == 0) {
                 return '<a href="success.php?id='.$values->id.'&status=1&courseid='.$values->course_id.'">Delivered</a> - <a href="deleterequest.php?id='.$values->id.'">Delete</a>';
             } else {
-                return '<a href="deleterequest.php?id='.$values->id.'">Delete</a>';
+                return '<a href="deleterequest.php?id='.$values->id.'&page=all">Delete</a>';
             }
         } 
         //- <a href="deletecourse.php?id='.$values->id.'" onclick="return check_confirm()">Delete</a>';
