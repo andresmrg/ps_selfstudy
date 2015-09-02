@@ -52,7 +52,7 @@ echo "
 <script>
     function check_confirm()
     {
-        var c = confirm('Are you sure want to delete this course?');
+        var c = confirm('IMPORTANT: If you delete this course, all requests and completion records related to this course will be deleted. Do you want to proceed?');
         if (c) {
             return true;
         }
