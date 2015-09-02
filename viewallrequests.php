@@ -23,7 +23,7 @@ $filterform = new filter_form();
 $download = optional_param('download', '', PARAM_ALPHA);
 
 $table = new viewrequests_table('uniqueid');
-$table->is_downloading($download, 'view_requests', 'Requests');
+$table->is_downloading($download, 'view_all_requests', 'All Requests');
 
 if($filterform->is_cancelled()) {
 
