@@ -29,6 +29,7 @@ require_login();
 if($form_page->is_cancelled()) {
     // Cancelled forms redirect to the course main page.
 	$courseurl = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
+  redirect($courseurl);
 
 } else if ($fromform = $form_page->get_data()) {
     // We need to add code to appropriately act on and store the submitted data
@@ -55,5 +56,3 @@ if($form_page->is_cancelled()) {
     }
     echo $OUTPUT->footer();
   }
-
-// form didn't validate or this is the first display
