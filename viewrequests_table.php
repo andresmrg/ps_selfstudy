@@ -17,9 +17,9 @@ class viewrequests_table extends table_sql {
     function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code','course_name','firstname','email','address', 'phone1','request_date','request_status');
+        $columns = array('course_code','course_name','firstname','email','address','address2','city','department','zipcode','country','phone1','request_date','request_status');
         // Define the titles of columns to show in header.
-        $headers = array('Course Code','Title','Name', 'Email Address','Address', 'Phone #','Request date','Status');
+        $headers = array('Course Code','Title','Name', 'Email Address','Address 1','Address 2','City','State','Zip','Country','Phone #','Request date','Status');
         
         if (!$this->is_downloading()) {
             $columns[] = 'actions';
@@ -57,16 +57,24 @@ class viewrequests_table extends table_sql {
         }
     }
 
-    function col_address($values) {
+    function col_address2($values) {
+        global $DB;
+        
+        $address2_id = $DB->get_record('user_info_field', array ('shortname'=>'address2'), $fields='id', $strictness=IGNORE_MISSING);        
+        $address2 = $DB->get_record('user_info_data', array ('userid'=>$values->student_id,'fieldid'=>$address2_id->id), $fields='data', $strictness=IGNORE_MISSING);
+
+        return $address2->data;
+    }
+
+    function col_zipcode($values) {
         global $DB;
         //display fulladdress
         $zip_id = $DB->get_record('user_info_field', array ('shortname'=>'zipcode'), $fields='id', $strictness=IGNORE_MISSING);        
         $zipcode = $DB->get_record('user_info_data', array ('userid'=>$values->student_id,'fieldid'=>$zip_id->id), $fields='data', $strictness=IGNORE_MISSING);
 
-        $fulladdress = "$values->address - $values->department - $zipcode->data - $values->country";
-
-        return $fulladdress;
+        return $zipcode->data;
     }
+
     function col_request_status($values) {
         // If the value is 0, show Pending status.
         if($values->request_status == 0) {
