@@ -48,6 +48,22 @@ if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
 	print_error('nopermissiontoviewpage', 'error', '');
 }
 echo $OUTPUT->footer();
+echo "
+<script>
+    function check_confirm()
+    {
+        var c = confirm('Are you sure want to delete this course?');
+        if (c) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    ('#linkContainer').on('click', 'a', function() {
+    });
+</script>
+";
 
 
 

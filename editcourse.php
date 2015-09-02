@@ -18,7 +18,6 @@ $form_page = new editcourse_form();
 
 // Define headers
 $PAGE->set_title('Edit self-study course');
-$PAGE->navbar->add('Edit self-study course', new moodle_url('/blocks/ps_selfstudy/editcourse.php'));
 
 if($form_page->is_cancelled()) {
     // Cancelled forms redirect to the course main page.
@@ -43,7 +42,7 @@ if($form_page->is_cancelled()) {
     print_error('nopermissiontoviewpage', 'error', '');
   }
   echo $OUTPUT->footer();
-  
+
 }
 
 // form didn't validate or this is the first display
