@@ -6,7 +6,7 @@ require_once("../../user/lib.php");
 
 require_login();
 if (isguestuser()) {
-    print_error('guestsarenotallowed');
+  print_error('guestsarenotallowed');
 }
 
 global $OUTPUT, $PAGE, $COURSE, $USER;
@@ -25,6 +25,7 @@ $PAGE->set_heading(get_string('title_requestcourses','block_ps_selfstudy'));
 if($form_page->is_cancelled()) {
     // Cancelled forms redirect to the course main page.
 	$courseurl = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
+  redirect($courseurl);
 
 } else if ($fromform = $form_page->get_data()) {
     // We need to add code to appropriately act on and store the submitted data
@@ -53,13 +54,13 @@ if($form_page->is_cancelled()) {
     // Override old $USER session variable if needed.
     if ($USER->id == $user->id) {
         // Override old $USER session variable if needed.
-        foreach ((array)$user as $variable => $value) {
-            if ($variable === 'description' or $variable === 'password') {
+      foreach ((array)$user as $variable => $value) {
+        if ($variable === 'description' or $variable === 'password') {
                 // These are not set for security nad perf reasons.
-                continue;
-            }
-            $USER->$variable = $value;
+          continue;
         }
+        $USER->$variable = $value;
+      }
     }
 
     $today = time();
@@ -71,38 +72,61 @@ if($form_page->is_cancelled()) {
     //2. store the request data in the request table
     if (!$DB->insert_record('block_ps_selfstudy_request', $request)) {
       print_error('inserterror', 'block_ps_selfstudy');
-  }
+    }
 
 
     //get id of the zipcode in the fields table
-  $zip_id = $DB->get_record('user_info_field', array('shortname'=>'zipcode'), $fields='id', $strictness=IGNORE_MISSING);
-  $zipcodedata = new stdClass();
-  $zipcodedata->userid = $USER->id;
-  $zipcodedata->fieldid = $zip_id->id;
-  $zipcodedata->data = $fromform->zipcode;
+    $zip_id = $DB->get_record('user_info_field', array('shortname'=>'zipcode'), $fields='id', $strictness=IGNORE_MISSING);
+    $zipcodedata = new stdClass();
+    $zipcodedata->userid = $USER->id;
+    $zipcodedata->fieldid = $zip_id->id;
+    $zipcodedata->data = $fromform->zipcode;
+
+    //get id of the zipcode in the fields table
+    $address2_id = $DB->get_record('user_info_field', array('shortname'=>'address2'), $fields='id', $strictness=IGNORE_MISSING);
+    $address2data = new stdClass();
+    $address2data->userid = $USER->id;
+    $address2data->fieldid = $address2_id->id;
+    $address2data->data = $fromform->address2;
 
   //if there is already a zipcode defined, update it.
-  if($DB->record_exists('user_info_data', array('fieldid'=>$zip_id->id,'userid'=>$USER->id))) {
+    if($DB->record_exists('user_info_data', array('fieldid'=>$zip_id->id,'userid'=>$USER->id))) {
     //get the record id
-    $dataid = $DB->get_record('user_info_data', array('fieldid'=>$zip_id->id,'userid'=>$USER->id), $fields='id', $strictness=IGNORE_MISSING);
-    if (!$DB->update_record('user_info_data', array('id'=>$dataid->id,'data'=>$fromform->zipcode))) {
-      print_error('inserterror', 'block_ps_selfstudy');
-  }
-} else {
+      $dataid = $DB->get_record('user_info_data', array('fieldid'=>$zip_id->id,'userid'=>$USER->id), $fields='id', $strictness=IGNORE_MISSING);
+      if (!$DB->update_record('user_info_data', array('id'=>$dataid->id,'data'=>$fromform->zipcode))) {
+        print_error('inserterror', 'block_ps_selfstudy');
+      }
+    } else {
         //3. insert a record with the zipcode
-  if (!$DB->insert_record('user_info_data', $zipcodedata)) {
-      print_error('inserterror', 'block_ps_selfstudy');
-  }
-}
+      if (!$DB->insert_record('user_info_data', $zipcodedata)) {
+        print_error('inserterror', 'block_ps_selfstudy');
+      }
+    }
+
+
+  //if there is already a zipcode defined, update it.
+    if($DB->record_exists('user_info_data', array('fieldid'=>$address2_id->id,'userid'=>$USER->id))) {
+      //get the record id
+        $addressdataid = $DB->get_record('user_info_data', array('fieldid'=>$address2_id->id,'userid'=>$USER->id), $fields='id', $strictness=IGNORE_MISSING);
+        if (!$DB->update_record('user_info_data', array('id'=>$addressdataid->id,'data'=>$fromform->address2))) {
+          print_error('inserterror', 'block_ps_selfstudy');
+        }
+    } else {
+        //3. insert a record with the zipcode
+        if (!$DB->insert_record('user_info_data', $address2data)) {
+          print_error('inserterror', 'block_ps_selfstudy');
+        }
+    }
+
 //echo "<script>alert('Order Submitted');</script>";
     //redirect to my request page
-$courseurl = new moodle_url($CFG->wwwroot.'/blocks/ps_selfstudy/myrequests.php?success=yes');
-redirect($courseurl);
+      $url = new moodle_url($CFG->wwwroot.'/blocks/ps_selfstudy/myrequests.php?success=yes');
+      redirect($url);
 
-} else {
-    // form didn't validate or this is the first display
-  $site = get_site();
-  echo $OUTPUT->header();
-  $form_page->display();
-  echo $OUTPUT->footer();
-}
+  } else {
+  // form didn't validate or this is the first display
+    $site = get_site();
+    echo $OUTPUT->header();
+    $form_page->display();
+    echo $OUTPUT->footer();
+  }

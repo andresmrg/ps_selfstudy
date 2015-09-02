@@ -9,8 +9,8 @@ class requestcourse_form extends moodleform {
         global $USER, $CFG, $DB;
 
         if(!isset($_GET['id'])) {
-            $homeurl = new moodle_url($CFG->wwwroot);
-            redirect($homeurl);
+            //$homeurl = new moodle_url($CFG->wwwroot);
+            //redirect($homeurl);
         } else {
             $courseid = $_GET['id']; 
         }
