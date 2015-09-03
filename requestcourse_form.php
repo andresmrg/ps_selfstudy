@@ -67,7 +67,7 @@ class requestcourse_form extends moodleform {
         @$mform->addElement('text', 'address2', get_string('address2', 'block_ps_selfstudy'));
         @$mform->setType('address2', PARAM_NOTAGS);
         @$mform->addRule('address2', null, 'required',null,'client');
-        @$mform->setDefault('address2', $USER->address2);
+        @$mform->setDefault('address2', $address2->data);
         
         $mform->addElement('text', 'city', get_string('city', 'block_ps_selfstudy'));
         $mform->setType('city', PARAM_NOTAGS);
