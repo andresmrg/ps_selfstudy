@@ -6,7 +6,7 @@ Self study management block
 The Self study management block gives you the ability to create a manage physical and link courses
 and will allow your students to request a physical copy of a course.
 
-This block requires another block named "ps_availablecourses"
+This block requires another block called "ps_availablecourses"
 
 Features
 --------
@@ -32,12 +32,6 @@ Install:
     	- Create a text input type with shortname "address2"
     4. go to the home page and turn editing on
     5. add the block Self-study.
-
-Contribute
-----------
-
-- Issue Tracker: github.com/andrewmrg/ps_selfstudy/issues
-- Source Code: github.com/andrewmrg/ps_selfstudy
 
 Support
 -------
