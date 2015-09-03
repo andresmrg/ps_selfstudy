@@ -17,9 +17,9 @@ class viewrequests_table extends table_sql {
     function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code','course_name','firstname','email','address','address2','city','department','zipcode','country','phone1','request_date','request_status');
+        $columns = array('course_code','course_name','email','firstname','address','address2','city','department','zipcode','country','phone1','request_date','request_status');
         // Define the titles of columns to show in header.
-        $headers = array('Course Code','Title','Name', 'Email Address','Address 1','Address 2','City','State','Zip','Country','Phone #','Request date','Status');
+        $headers = array('Course Code','Title','Email Address','Name','Address 1','Address 2','City','State','Zip','Country','Phone #','Request date','Status');
         
         if (!$this->is_downloading()) {
             $columns[] = 'actions';
