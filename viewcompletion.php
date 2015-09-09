@@ -33,7 +33,7 @@ $table_completion->is_downloading($download, 'complete_history', 'History');
 		$site = get_site();
 		echo $OUTPUT->header(); //output header
 		
-		echo "<hr>";
+		//echo "<hr>";
 	}
 
 	if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
