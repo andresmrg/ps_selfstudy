@@ -66,7 +66,6 @@ class requestcourse_form extends moodleform {
 
         @$mform->addElement('text', 'address2', get_string('address2', 'block_ps_selfstudy'));
         @$mform->setType('address2', PARAM_NOTAGS);
-        @$mform->addRule('address2', null, 'required',null,'client');
         @$mform->setDefault('address2', $address2->data);
         
         $mform->addElement('text', 'city', get_string('city', 'block_ps_selfstudy'));
@@ -96,12 +95,10 @@ class requestcourse_form extends moodleform {
         }
 
     
-        $mform->addElement('text', 'phone1', get_string('phone1', 'block_ps_selfstudy'),'maxlength="13" minlength="5"');
-        $mform->setType('phone1', PARAM_INT);
-        $mform->addRule('phone1', null, 'numeric',null,'client');
+        $mform->addElement('text', 'phone1', get_string('phone1', 'block_ps_selfstudy'),'maxlength="20" minlength="5"');
+        $mform->setType('phone1', PARAM_NOTAGS);
         $mform->addRule('phone1', null, 'required',null,'client');
         $mform->setDefault('phone1', $USER->phone1);
-        $mform->addHelpButton('phone1', 'phone1', 'block_ps_selfstudy');
         
         $this->add_action_buttons(true, get_string('submitbutton', 'block_ps_selfstudy'));
     }
