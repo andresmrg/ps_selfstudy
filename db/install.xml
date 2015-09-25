@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/ps_selfstudy/db" VERSION="20150827" COMMENT="XMLDB file for Moodle blocks/ps_selfstudy"
+<XMLDB PATH="blocks/ps_selfstudy/db" VERSION="20150925" COMMENT="XMLDB file for Moodle blocks/ps_selfstudy"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="block_ps_selfstudy_course" COMMENT="Holds all courses basic information, type 0 means phisical copy, 1 is link type course, status 0 means active, 1 means hide">
+    <TABLE NAME="block_ps_selfstudy_course" COMMENT="Holds all courses basic information, type 0 means physical copy, 1 is link type course, status 0 means active, 1 means hide">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="course_code" TYPE="char" LENGTH="30" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="description_link" TYPE="char" LENGTH="1024" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="course_platform" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="course_name" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="course_description" TYPE="text" NOTNULL="true" SEQUENCE="false"/>

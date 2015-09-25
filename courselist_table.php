@@ -37,13 +37,18 @@ class courselist_table extends table_sql {
      * @return $string Return username with link to profile or username only
      *     when downloading.
      */
-    function col_username($values) {
+    function col_course_code($values) {
         // If the data is being downloaded than we don't want to show HTML.
-        if ($this->is_downloading()) {
-            return $values->username;
+
+        global $DB;
+        $desc_link = $DB->get_record('block_ps_selfstudy_course',array('id'=>$values->id), $fields='description_link');
+
+        if(!empty($desc_link) && $desc_link->description_link !== NULL && $desc_link->description_link !== "") {
+            return '<a href="'.$desc_link->description_link.'" target="_blank">'.$values->course_code.'</a>';
         } else {
-            return '<a href="$CFG->wwwroot/../../../user/profile.php?id='.$values->id.'">'.$values->username.'</a>';
+            return $values->course_code;
         }
+
     }
 
     function col_course_type($values) {

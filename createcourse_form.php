@@ -11,12 +11,16 @@ class createcourse_form extends moodleform {
         // add group for text areas
         //$mform->addElement('header', 'displayinfo', get_string('text_coursename', 'block_ps_selfstudy'));
 
-		// add course name
+		//add course name
 		$mform->addElement('text', 'course_code', get_string('field_coursecode', 'block_ps_selfstudy'));
         $mform->setType('course_code', PARAM_NOTAGS);
         $mform->addRule('course_code', null, 'required', null, 'client');
 
-        // add course name
+        //add description link
+        $mform->addElement('text', 'description_link', get_string('field_description_link', 'block_ps_selfstudy'));
+        $mform->setType('description_link', PARAM_NOTAGS);
+
+        //add course name
         $mform->addElement('text', 'course_platform', get_string('field_platform', 'block_ps_selfstudy'));
         $mform->setType('course_platform', PARAM_NOTAGS);
         $mform->addRule('course_platform', null, 'required', null, 'client');

@@ -5,6 +5,7 @@ require_once("{$CFG->libdir}/formslib.php");
 class editcourse_form extends moodleform {
 
     function definition() {
+        global $DB;
 
         if(isset($_GET['id'])) {
             $id = $_GET['id'];    
@@ -50,6 +51,15 @@ class editcourse_form extends moodleform {
         $mform->addRule('course_code', null, 'required', null, 'client');
         $mform->setDefault('course_code', $code); 
 
+        // load existing course code
+        $desc_link = $DB->get_record('block_ps_selfstudy_course',array('id'=>$id),$fields="description_link");
+
+        $mform->addElement('text', 'description_link', get_string('field_coursecode', 'block_ps_selfstudy'));
+        $mform->setType('description_link', PARAM_NOTAGS);
+        if(!empty($desc_link)) {
+            $mform->setDefault('description_link', $desc_link->description_link); 
+        }
+        
         $mform->addElement('text', 'course_platform', get_string('field_platform', 'block_ps_selfstudy'));
         $mform->setType('course_platform', PARAM_NOTAGS);
         $mform->addRule('course_platform', null, 'required', null, 'client');

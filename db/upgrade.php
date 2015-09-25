@@ -130,6 +130,21 @@ function xmldb_block_ps_selfstudy_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2015082516, 'ps_selfstudy');
     }
 
+    if ($oldversion < 2015092500) {
+
+        // Define field description_link to be added to block_ps_selfstudy_course.
+        $table = new xmldb_table('block_ps_selfstudy_course');
+        $field = new xmldb_field('description_link', XMLDB_TYPE_CHAR, '1024', null, null, null, null, 'course_code');
+
+        // Conditionally launch add field description_link.
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Ps_selfstudy savepoint reached.
+        upgrade_block_savepoint(true, 2015082517, 'ps_selfstudy');
+    }
+
  
     return $result;
 }
