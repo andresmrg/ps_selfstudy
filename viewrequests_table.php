@@ -17,7 +17,7 @@ class viewrequests_table extends table_sql {
     function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code','course_name','email','firstname','address','address2','city','department','zipcode','country','phone1','request_date','request_status');
+        $columns = array('course_code','course_name','email','firstname','address','address2','city','state','zipcode','country','phone1','request_date','request_status');
         // Define the titles of columns to show in header.
         $headers = array('Course Code','Title','Email Address','Name','Address 1','Address 2','City','State','Zip','Country','Phone #','Request date','Status');
         
@@ -73,6 +73,15 @@ class viewrequests_table extends table_sql {
         $zipcode = $DB->get_record('user_info_data', array ('userid'=>$values->student_id,'fieldid'=>$zip_id->id), $fields='data', $strictness=IGNORE_MISSING);
 
         return $zipcode->data;
+    }
+
+    function col_state($values) {
+        global $DB;
+        //display fulladdress
+        $state_id = $DB->get_record('user_info_field', array ('shortname'=>'state'), $fields='id', $strictness=IGNORE_MISSING);        
+        $state = $DB->get_record('user_info_data', array ('userid'=>$values->student_id,'fieldid'=>$state_id->id), $fields='data', $strictness=IGNORE_MISSING);
+
+        return $state->data;
     }
 
     function col_request_status($values) {

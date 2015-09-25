@@ -42,7 +42,6 @@ if($form_page->is_cancelled()) {
     $profile->lastname         = $fromform->lastname;
     $profile->email         = $fromform->email;
     $profile->country         = $fromform->country;
-    $profile->department         = $fromform->department;
     $profile->city         = $fromform->city;
     $profile->address         = $fromform->address;
     $profile->phone1         = $fromform->phone1;
@@ -82,12 +81,19 @@ if($form_page->is_cancelled()) {
     $zipcodedata->fieldid = $zip_id->id;
     $zipcodedata->data = $fromform->zipcode;
 
-    //get id of the zipcode in the fields table
+    //get id of the address2 in the fields table
     $address2_id = $DB->get_record('user_info_field', array('shortname'=>'address2'), $fields='id', $strictness=IGNORE_MISSING);
     $address2data = new stdClass();
     $address2data->userid = $USER->id;
     $address2data->fieldid = $address2_id->id;
     $address2data->data = $fromform->address2;
+
+    //get id of the state in the fields table
+    $state_id = $DB->get_record('user_info_field', array('shortname'=>'state'), $fields='id', $strictness=IGNORE_MISSING);
+    $statedata = new stdClass();
+    $statedata->userid = $USER->id;
+    $statedata->fieldid = $state_id->id;
+    $statedata->data = $fromform->state;
 
   //if there is already a zipcode defined, update it.
     if($DB->record_exists('user_info_data', array('fieldid'=>$zip_id->id,'userid'=>$USER->id))) {
@@ -104,7 +110,7 @@ if($form_page->is_cancelled()) {
     }
 
 
-  //if there is already a zipcode defined, update it.
+    //if there is already a zipcode defined, update it.
     if($DB->record_exists('user_info_data', array('fieldid'=>$address2_id->id,'userid'=>$USER->id))) {
       //get the record id
         $addressdataid = $DB->get_record('user_info_data', array('fieldid'=>$address2_id->id,'userid'=>$USER->id), $fields='id', $strictness=IGNORE_MISSING);
@@ -114,6 +120,20 @@ if($form_page->is_cancelled()) {
     } else {
         //3. insert a record with the zipcode
         if (!$DB->insert_record('user_info_data', $address2data)) {
+          print_error('inserterror', 'block_ps_selfstudy');
+        }
+    }
+
+    //if there is already a state defined, update it.
+    if($DB->record_exists('user_info_data', array('fieldid'=>$state_id->id,'userid'=>$USER->id))) {
+      //get the record id
+        $statedataid = $DB->get_record('user_info_data', array('fieldid'=>$state_id->id,'userid'=>$USER->id), $fields='id', $strictness=IGNORE_MISSING);
+        if (!$DB->update_record('user_info_data', array('id'=>$statedataid->id,'data'=>$fromform->state))) {
+          print_error('inserterror', 'block_ps_selfstudy');
+        }
+    } else {
+        //3. insert a record with the state
+        if (!$DB->insert_record('user_info_data', $statedata)) {
           print_error('inserterror', 'block_ps_selfstudy');
         }
     }

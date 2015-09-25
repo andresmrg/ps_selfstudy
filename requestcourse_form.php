@@ -20,15 +20,6 @@ class requestcourse_form extends moodleform {
         $course = $DB->get_record('block_ps_selfstudy_course', array ('id'=>@$courseid), $fields='*', $strictness=IGNORE_MISSING);
         $mform->addElement('html','<p>You are requesting a copy of the course <strong>'.@$course->course_name.'</strong></p>');
         
-        //get zipcode
-        $zip_id = $DB->get_record('user_info_field', array ('shortname'=>'zipcode'), $fields='id', $strictness=IGNORE_MISSING); 
-        $zipcode = $DB->get_record('user_info_data', array ('userid'=>$USER->id,'fieldid'=>$zip_id->id), $fields='data', $strictness=IGNORE_MISSING);
-
-        //get address2
-        $address2_id = $DB->get_record('user_info_field', array ('shortname'=>'address2'), $fields='id', $strictness=IGNORE_MISSING);    
-        $address2 = $DB->get_record('user_info_data', array ('userid'=>$USER->id,'fieldid'=>$address2_id->id), $fields='data', $strictness=IGNORE_MISSING);
-
-
         // group user profile fields
         $mform->addElement('header', 'displayinfo', get_string('group_userfields', 'block_ps_selfstudy'));
 
@@ -64,25 +55,47 @@ class requestcourse_form extends moodleform {
         $mform->addRule('address', null, 'required', null, 'client');
         $mform->setDefault('address', $USER->address);
 
-        @$mform->addElement('text', 'address2', get_string('address2', 'block_ps_selfstudy'));
-        @$mform->setType('address2', PARAM_NOTAGS);
-        @$mform->setDefault('address2', $address2->data);
+        //get address2
+        $address2_id = $DB->get_record('user_info_field', array ('shortname'=>'address2'), $fields='id', $strictness=IGNORE_MISSING);    
+        if(!empty($address2_id)) {
+            $address2 = $DB->get_record('user_info_data', array ('userid'=>$USER->id,'fieldid'=>$address2_id->id), $fields='data', $strictness=IGNORE_MISSING);
+            $mform->addElement('text', 'address2', get_string('address2', 'block_ps_selfstudy'));
+            $mform->setType('address2', PARAM_NOTAGS);
+
+            if(!empty($address2)) {
+                $mform->setDefault('address2', $address2->data);
+            }
+        }
         
         $mform->addElement('text', 'city', get_string('city', 'block_ps_selfstudy'));
         $mform->setType('city', PARAM_NOTAGS);
         $mform->addRule('city', null, 'required', null, 'client');
         $mform->setDefault('city', $USER->city);
 
-        $mform->addElement('text', 'department', get_string('department', 'block_ps_selfstudy'));
-        $mform->setType('department', PARAM_NOTAGS);
-        $mform->addRule('department', null, 'required', null, 'client');
-        $mform->addRule('department', null, 'lettersonly', null, 'client');
-        $mform->setDefault('department', $USER->department);
+        //get state
+        $state_id = $DB->get_record('user_info_field', array ('shortname'=>'state'), $fields='id', $strictness=IGNORE_MISSING);    
+        if(!empty($state_id)) {
+            $state = $DB->get_record('user_info_data', array ('userid'=>$USER->id,'fieldid'=>$state_id->id), $fields='data', $strictness=IGNORE_MISSING);
+            $mform->addElement('text', 'state', get_string('state', 'block_ps_selfstudy'));
+            $mform->setType('state', PARAM_NOTAGS);
+            $mform->addRule('state', null, 'required',null,'client');
+            if(!empty($state)) {
+                $mform->setDefault('state', $state->data);
+            }
+        }
+        
+        //get zipcode
+        $zip_id = $DB->get_record('user_info_field', array ('shortname'=>'zipcode'), $fields='id', $strictness=IGNORE_MISSING); 
+        if(!empty($zip_id)) {
+            $zipcode = $DB->get_record('user_info_data', array ('userid'=>$USER->id,'fieldid'=>$zip_id->id), $fields='data', $strictness=IGNORE_MISSING);
+            $mform->addElement('text', 'zipcode', get_string('zipcode', 'block_ps_selfstudy'),'maxlength="7" minlength="5"');
+            $mform->setType('zipcode', PARAM_NOTAGS);
+            $mform->addRule('zipcode', null, 'required',null,'client');
 
-        @$mform->addElement('text', 'zipcode', get_string('zipcode', 'block_ps_selfstudy'),'maxlength="6" minlength="5"');
-        @$mform->setType('zipcode', PARAM_NOTAGS);
-        @$mform->addRule('zipcode', null, 'required',null,'client');
-        @$mform->setDefault('zipcode', $zipcode->data);
+            if(!empty($zipcode)) {
+                $mform->setDefault('zipcode', $zipcode->data);
+            }
+        }
 
         $choices = get_string_manager()->get_list_of_countries();
         $choices = array('' => get_string('selectacountry') . '...') + $choices;

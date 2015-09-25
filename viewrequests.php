@@ -46,8 +46,10 @@ if($filterform->is_cancelled()) {
 
 	if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
 
+
+
 		//sql to get all requests
-		$fields = 'r.id,c.course_code,c.course_name,u.firstname,u.lastname,u.email,u.address,u.department,u.country,u.city,u.phone1,r.student_id,r.course_id,r.request_date,r.request_status';
+		$fields = 'r.id,c.course_code,c.course_name,u.firstname,u.lastname,u.email,u.address,u.country,u.city,u.phone1,r.student_id,r.course_id,r.request_date,r.request_status';
 		$from = "{block_ps_selfstudy_request} as r JOIN {block_ps_selfstudy_course} c ON (c.id=r.course_id) JOIN {user} u ON(u.id=r.student_id)";
 		$sqlconditions .= 'r.request_status = 0';
 		$table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/viewrequests.php");
@@ -80,7 +82,7 @@ if($filterform->is_cancelled()) {
 	if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
 
 		//sql to get all requests
-		$fields = 'r.id,c.course_code,c.course_name,u.firstname,u.lastname,u.email,u.address,u.department,u.country,u.city,u.phone1,r.student_id,r.course_id,r.request_date,r.request_status';
+		$fields = 'r.id,c.course_code,c.course_name,u.firstname,u.lastname,u.email,u.address,u.country,u.city,u.phone1,r.student_id,r.course_id,r.request_date,r.request_status';
 		$from = "{block_ps_selfstudy_request} as r JOIN {block_ps_selfstudy_course} c ON (c.id=r.course_id) JOIN {user} u ON(u.id=r.student_id)";
 		$sqlconditions = 'r.request_status = 0';
 		$table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/viewrequests.php");
