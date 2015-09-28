@@ -60,4 +60,4 @@ $string['title_viewrequests'] = 'View requests';
 $string['title_viewallrequests'] = 'View all requests';
 $string['title_viewcompletion'] = 'Completion history';
 $string['completionhistory'] = 'Completion History';
-$string['field_description_link'] = 'Full Description Link';
+$string['field_description_link'] = 'Code Link';

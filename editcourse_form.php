@@ -54,7 +54,7 @@ class editcourse_form extends moodleform {
         // load existing course code
         $desc_link = $DB->get_record('block_ps_selfstudy_course',array('id'=>$id),$fields="description_link");
 
-        $mform->addElement('text', 'description_link', get_string('field_coursecode', 'block_ps_selfstudy'));
+        $mform->addElement('text', 'description_link', get_string('field_description_link', 'block_ps_selfstudy'));
         $mform->setType('description_link', PARAM_NOTAGS);
         if(!empty($desc_link)) {
             $mform->setDefault('description_link', $desc_link->description_link); 
