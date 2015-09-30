@@ -17,9 +17,9 @@ class completion_table extends table_sql {
     function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code','course_name','email','firstname','completion_date','completion_status');
+        $columns = array('course_code','course_name','empctry','email','firstname','completion_date','completion_status');
         // Define the titles of columns to show in header.
-        $headers = array('Course Code','Title','Email Address','Name','Completion Date','Completion Status');
+        $headers = array('Course Code','Title','EmpSerial/CC','Email Address','Name','Completion Date','Completion Status');
         
         /*if (!$this->is_downloading()) {
             $columns[] = 'actions';
@@ -56,6 +56,21 @@ class completion_table extends table_sql {
             return '<a href="$CFG->wwwroot/../../../user/profile.php?id='.$values->student_id.'">'.$values->firstname." ".$values->lastname.'</a>';
         }
     }
+
+    function col_empctry($values) {
+        global $DB;
+        // If the data is being downloaded than we don't want to show HTML.
+        $empctry_id = $DB->get_record('user_info_field', array ('shortname'=>'empctry'), $fields='id', $strictness=IGNORE_MISSING); 
+        if(!empty($empctry_id)) {
+            $empctry = $DB->get_record('user_info_data', array ('userid'=>$values->student_id,'fieldid'=>$empctry_id->id), $fields='data', $strictness=IGNORE_MISSING);
+            if(!empty($empctry)) {
+                return $empctry->data;
+            } else {
+                return "";
+            }
+        }
+    }
+
 
     function col_completion_status($values) {
         // If the value is 0, show Pending status.
