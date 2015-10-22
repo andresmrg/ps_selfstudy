@@ -43,6 +43,7 @@ $table_completion->is_downloading($download, 'complete_history', 'History');
 		$from = "{block_ps_selfstudy_complete} as x JOIN {block_ps_selfstudy_request} r ON (r.id=x.request_id) JOIN {block_ps_selfstudy_course} c ON (c.id=r.course_id) JOIN {user} u ON(u.id=r.student_id)";
 		$sqlconditions = "x.completion_status = 'completed'";
 		$table_completion->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/viewcompletion.php");
+		$table_completion->no_sorting('empctry');
 		//$link = '<br><a href="viewrequests.php">'.get_string('clickpendinglist','block_ps_selfstudy').'</a>';
 		$table_completion->set_sql($fields, $from, $sqlconditions);
 		$table_completion->out(30, true); //print table
