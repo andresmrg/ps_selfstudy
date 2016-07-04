@@ -1,69 +1,77 @@
 <?php
-
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Table class to be put in managecourses.php selfstudy manage course page.
- *  for defining some custom column names and proccessing
+ * This table displays the user's completions.
+ * @package    block_ps_selfstudy
+ * @copyright  2015 Andres Ramos
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class completion_table extends table_sql {
-
-    //GLOBAL $CFG;
 
     /**
      * Constructor
      * @param int $uniqueid all tables have to have a unique id, this is used
      *      as a key when storing table properties like sort order in the session.
      */
-    function __construct($uniqueid) {
+    public function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code','course_name','empctry','email','firstname','completion_date','completion_status');
+        $columns = array('course_code', 'course_name', 'empctry', 'email',
+                'firstname', 'completion_date', 'completion_status');
         // Define the titles of columns to show in header.
-        $headers = array('Course Code','Title','EmpSerial/CC','Email Address','Name','Completion Date','Completion Status');
-        
-        /*if (!$this->is_downloading()) {
-            $columns[] = 'actions';
-            $headers[] = 'Action';
-        }*/
+        $headers = array('Course Code', 'Title', 'EmpSerial/CC', 'Email Address', 'Name',
+                    'Completion Date', 'Completion Status');
 
-        global $DB;
-        
-        //print_object($columns);
-        $this->sortable(true,'course_code', SORT_ASC);
+        $this->sortable(true, 'course_code', SORT_ASC);
         $this->collapsible(false);
-        //$this->no_sorting('actions');
-        
         $this->define_columns($columns);
         $this->define_headers($headers);
-        
-        
     }
 
     /**
-     * This function is called for each data row to allow processing of the
-     * username value.
-     *
-     * @param object $values Contains object with all the values of record.
-     * @return $string Return username with link to profile or username only
-     *     when downloading.
+     * Generate the display of the user's full name column.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
      */
-    function col_firstname($values) {
+    public function col_firstname($values) {
         // If the data is being downloaded than we don't want to show HTML.
         if ($this->is_downloading()) {
             $fullname = "$values->firstname $values->lastname";
             return $fullname;
         } else {
-            return '<a href="$CFG->wwwroot/../../../user/profile.php?id='.$values->student_id.'">'.$values->firstname." ".$values->lastname.'</a>';
+            return '<a href="$CFG->wwwroot/../../../user/profile.php?id='.$values->student_id.'">
+                '.$values->firstname." ".$values->lastname.'</a>';
         }
     }
 
-    function col_empctry($values) {
+    /**
+     * Generate the display of the user's custom profile field EmpSerialCC.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_empctry($values) {
         global $DB;
         // If the data is being downloaded than we don't want to show HTML.
-        $empctry_id = $DB->get_record('user_info_field', array ('shortname'=>'empctry'), $fields='id', $strictness=IGNORE_MISSING); 
-        if(!empty($empctry_id)) {
-            $empctry = $DB->get_record('user_info_data', array ('userid'=>$values->student_id,'fieldid'=>$empctry_id->id), $fields='data', $strictness=IGNORE_MISSING);
-            if(!empty($empctry)) {
+        $empctryid = $DB->get_record('user_info_field', array('shortname' => 'empctry'),
+                $fields = 'id', $strictness = IGNORE_MISSING);
+        if (!empty($empctryid)) {
+            $empctry = $DB->get_record('user_info_data', array('userid' => $values->student_id,
+                    'fieldid' => $empctryid->id), $fields = 'data', $strictness = IGNORE_MISSING);
+            if (!empty($empctry)) {
                 return $empctry->data;
             } else {
                 return "";
@@ -71,27 +79,26 @@ class completion_table extends table_sql {
         }
     }
 
-
-    function col_completion_status($values) {
+    /**
+     * Generate the display of the user's completion status.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_completion_status($values) {
         // If the value is 0, show Pending status.
-        if($values->completion_status == "completed") {
-            return "Completed";    
+        if ($values->completion_status == "completed") {
+            return "Completed";
         }
-    }
-    function col_completion_date($values) {
-        // Show readable date from timestamp.
-        $date = $values->completion_date;
-        return date("m/d/Y",$date);
     }
 
     /**
-     * This function is called for each data row to allow processing of
-     * columns which do not have a *_cols function.
-     * @return string return processed value. Return NULL if no change has
-     *     been made.
+     * Generate the display of the user's completion date.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
      */
-    function other_cols($colname, $value) {
-        // For security reasons we don't want to show the password hash.
-
+    public function col_completion_date($values) {
+        // Show readable date from timestamp.
+        $date = $values->completion_date;
+        return date("m/d/Y", $date);
     }
 }

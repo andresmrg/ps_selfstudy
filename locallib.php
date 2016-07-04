@@ -15,14 +15,35 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Contains the functions to be executed on actions.php
  *
  * @package    block_ps_selfstudy
  * @copyright  2015 Andres Ramos
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2015102404;  // YYYYMMDDHH (year, month, day, 24-hr time).
-$plugin->requires = 2010112400; // YYYYMMDDHH (This is the release version for Moodle 2.0).
+/**
+ * Delete a request
+ * @param integer $requestid
+ * @return true if was deleted successfully, false otherwise
+ */
+function delete_request($requestid) {
+    global $DB;
+
+    // Delete course record.
+    if (!$DB->delete_records('block_ps_selfstudy_request', array('id' => $requestid))) {
+        return false;
+    }
+
+    // Delete all completions with this requests if any.
+    $completionid = $DB->get_record('block_ps_selfstudy_complete', array('request_id' => $requestid), $fields = 'id');
+    if ($completionid) {
+        if (!$DB->delete_records('block_ps_selfstudy_complete', array('id' => $completionid->id))) {
+            return false;
+        }
+        
+    }
+    return true;
+
+}

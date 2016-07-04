@@ -1,22 +1,42 @@
 <?php
- 
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Upgrade handler file.
+ *
+ * @package    block_ps_selfstudy
+ * @copyright  Andres Ramos
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 function xmldb_block_ps_selfstudy_upgrade($oldversion) {
     global $CFG, $DB;
- 
-    $result = TRUE;
 
- $dbman = $DB->get_manager();
- if ($oldversion < 2015081905) {
+    $result = true;
+
+    $dbman = $DB->get_manager();
+    if ($oldversion < 2015081905) {
 
         // Define field course_platform to be added to block_ps_selfstudy_course.
         $table = new xmldb_table('block_ps_selfstudy_course');
-        $table_request = new xmldb_table('block_ps_selfstudy_request');
+        $tablerequest = new xmldb_table('block_ps_selfstudy_request');
         $field1 = new xmldb_field('course_platform', XMLDB_TYPE_CHAR, '40', null, XMLDB_NOTNULL, null, null, 'course_code');
         $field2 = new xmldb_field('course_hours', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'course_status');
         $field3 = new xmldb_field('course_link', XMLDB_TYPE_CHAR, '1024', null, XMLDB_NOTNULL, null, '0', 'course_hours');
         $field4 = new xmldb_field('request_status', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'request_date');
-        
-        
+
         // Conditionally launch add field course_platform.
         if (!$dbman->field_exists($table, $field1)) {
             $dbman->add_field($table, $field1);
@@ -27,9 +47,9 @@ function xmldb_block_ps_selfstudy_upgrade($oldversion) {
         if (!$dbman->field_exists($table, $field3)) {
             $dbman->add_field($table, $field3);
         }
-        $dbman->change_field_type($table_request, $field4);
-        $dbman->change_field_precision($table_request, $field4);
-        $dbman->change_field_default($table_request, $field4);
+        $dbman->change_field_type($tablerequest, $field4);
+        $dbman->change_field_precision($tablerequest, $field4);
+        $dbman->change_field_default($tablerequest, $field4);
 
         // Ps_selfstudy savepoint reached.
         upgrade_block_savepoint(true, 2015081905, 'ps_selfstudy');
@@ -50,7 +70,7 @@ function xmldb_block_ps_selfstudy_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2015082507, 'ps_selfstudy');
     }
 
-     if ($oldversion < 2015082508) {
+    if ($oldversion < 2015082508) {
 
         // Define field request_id to be added to block_ps_selfstudy_complete.
         $table = new xmldb_table('block_ps_selfstudy_complete');
@@ -145,7 +165,17 @@ function xmldb_block_ps_selfstudy_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2015082517, 'ps_selfstudy');
     }
 
- 
+    if ($oldversion < 2015102404) {
+
+        // Changing type of field course_hours on table block_ps_selfstudy_course to char.
+        $table = new xmldb_table('block_ps_selfstudy_course');
+        $field = new xmldb_field('course_hours', XMLDB_TYPE_CHAR, '10', null, XMLDB_NOTNULL, null, '0', 'course_status');
+
+        // Launch change of type for field course_hours.
+        $dbman->change_field_type($table, $field);
+        // Ps_selfstudy savepoint reached.
+        upgrade_block_savepoint(true, 2015102404, 'ps_selfstudy');
+    }
+
     return $result;
 }
-?>

@@ -1,4 +1,27 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Strings for component 'block_ps_selfstudy', language 'en'
+ *
+ * @package   block_ps_selfstudy
+ * @copyright 2015 Andres Ramos
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 $string['pluginname'] = 'Self-Study Block';
 $string['selfstudy'] = 'Self-Study';
 $string['selfstudy:addinstance'] = 'Add a new Self-Study block';
@@ -52,6 +75,7 @@ $string['phone1'] = 'Phone #';
 $string['field_filtercode'] = 'Filter by Code';
 $string['course_deleted'] = 'Course deleted successfully';
 $string['course_edited'] = 'Course edited successfully';
+$string['course_duplicated'] = 'The course code already exist';
 $string['title_createcourse'] = 'Create a course';
 $string['title_editcourse'] = 'Edit a course';
 $string['title_managecourses'] = 'Manage self-study courses';
@@ -59,5 +83,6 @@ $string['title_requestcourses'] = 'Requests self-study courses';
 $string['title_viewrequests'] = 'View requests';
 $string['title_viewallrequests'] = 'View all requests';
 $string['title_viewcompletion'] = 'Completion history';
+$string['title_viewcancellation'] = 'CANCELLATIONS HISTORY';
 $string['completionhistory'] = 'Completion History';
 $string['field_description_link'] = 'Code Link';

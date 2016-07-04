@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/ps_selfstudy/db" VERSION="20150925" COMMENT="XMLDB file for Moodle blocks/ps_selfstudy"
+<XMLDB PATH="blocks/ps_selfstudy/db" VERSION="20151023" COMMENT="XMLDB file for Moodle blocks/ps_selfstudy"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -14,7 +14,7 @@
         <FIELD NAME="course_description" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
         <FIELD NAME="course_type" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="course_status" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-        <FIELD NAME="course_hours" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="course_hours" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="course_link" TYPE="char" LENGTH="1024" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="date_created" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>

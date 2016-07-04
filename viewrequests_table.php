@@ -1,42 +1,58 @@
 <?php
-
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Table class to be put in managecourses.php selfstudy manage course page.
- *  for defining some custom column names and proccessing
+ * Table class to be put in managecourses.php selfstudy manage course page
+ * for defining some custom column names and proccessing.
+ *
+ * @package block_ps_selfstudy
+ * @copyright 2015 Andres Ramos
  */
 class viewrequests_table extends table_sql {
-
-    //GLOBAL $CFG;
 
     /**
      * Constructor
      * @param int $uniqueid all tables have to have a unique id, this is used
      *      as a key when storing table properties like sort order in the session.
      */
-    function __construct($uniqueid) {
+    public function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code','course_name','email','firstname','address','address2','city','state','zipcode','country','phone1','request_date','request_status');
+        $columns = array('course_code', 'course_name', 'email', 'firstname', 'address',
+            'address2', 'city', 'state', 'zipcode', 'country', 'phone1', 'request_date', 'request_status'
+        );
         // Define the titles of columns to show in header.
-        $headers = array('Course Code','Title','Email Address','Name','Address 1','Address 2','City','State','Zip','Country','Phone #','Request date','Status');
-        
+        $headers = array('Course Code', 'Title', 'Email Address', 'Name', 'Address 1',
+            'Address 2', 'City', 'State', 'Zip', 'Country', 'Phone #', 'Request date', 'Status'
+        );
+
         if (!$this->is_downloading()) {
             $columns[] = 'actions';
             $headers[] = 'Action';
         }
 
         global $DB;
-        
-        //print_object($columns);
-        $this->sortable(true,'course_code', SORT_ASC);
+
+        $this->sortable(true, 'course_code', SORT_ASC);
         $this->collapsible(false);
         $this->no_sorting('actions');
-        
+
         $this->define_columns($columns);
         $this->define_headers($headers);
-        
-        
+
     }
 
     /**
@@ -47,74 +63,120 @@ class viewrequests_table extends table_sql {
      * @return $string Return username with link to profile or username only
      *     when downloading.
      */
-    function col_firstname($values) {
+    public function col_firstname($values) {
         // If the data is being downloaded than we don't want to show HTML.
         if ($this->is_downloading()) {
             $fullname = "$values->firstname $values->lastname";
             return $fullname;
         } else {
-            return '<a href="$CFG->wwwroot/../../../user/profile.php?id='.$values->student_id.'">'.$values->firstname." ".$values->lastname.'</a>';
+            return '<a href="$CFG->wwwroot/../../../user/profile.php?id='.$values->student_id.'">
+            '.$values->firstname." ".$values->lastname.'</a>';
         }
     }
 
-    function col_address2($values) {
+    /**
+     * Generate the display of the address 2.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_address2($values) {
         global $DB;
-        
-        $address2_id = $DB->get_record('user_info_field', array ('shortname'=>'address2'), $fields='id', $strictness=IGNORE_MISSING);        
-        $address2 = $DB->get_record('user_info_data', array ('userid'=>$values->student_id,'fieldid'=>$address2_id->id), $fields='data', $strictness=IGNORE_MISSING);
 
-        return $address2->data;
+        $address2id = $DB->get_record(
+            'user_info_field', array('shortname' => 'address2'), $fields = 'id', $strictness = IGNORE_MISSING
+        );
+        $address2 = $DB->get_record(
+            'user_info_data', array('userid' => $values->student_id, 'fieldid' => $address2id->id),
+            $fields = 'data', $strictness = IGNORE_MISSING
+        );
+        if ($address2) {
+            return $address2->data;
+        }
+        return "-";
     }
 
-    function col_zipcode($values) {
+    /**
+     * Generate the display of the zipcode.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_zipcode($values) {
         global $DB;
-        //display fulladdress
-        $zip_id = $DB->get_record('user_info_field', array ('shortname'=>'zipcode'), $fields='id', $strictness=IGNORE_MISSING);        
-        $zipcode = $DB->get_record('user_info_data', array ('userid'=>$values->student_id,'fieldid'=>$zip_id->id), $fields='data', $strictness=IGNORE_MISSING);
 
-        return $zipcode->data;
+        $zipid = $DB->get_record(
+            'user_info_field', array ('shortname' => 'zipcode'), $fields = 'id', $strictness = IGNORE_MISSING
+        );
+        $zipcode = $DB->get_record(
+            'user_info_data',
+            array('userid' => $values->student_id, 'fieldid' => $zipid->id),
+            $fields = 'data', $strictness = IGNORE_MISSING
+        );
+
+        if ($zipcode) {
+            return $zipcode->data;
+        }
+        return "-";
     }
 
-    function col_state($values) {
+    /**
+     * Generate the display of the state.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_state($values) {
         global $DB;
-        //display fulladdress
-        $state_id = $DB->get_record('user_info_field', array ('shortname'=>'state'), $fields='id', $strictness=IGNORE_MISSING);        
-        $state = $DB->get_record('user_info_data', array ('userid'=>$values->student_id,'fieldid'=>$state_id->id), $fields='data', $strictness=IGNORE_MISSING);
-
-        return $state->data;
+        // Display full address.
+        $stateid = $DB->get_record(
+            'user_info_field', array('shortname' => 'state'), $fields = 'id', $strictness = IGNORE_MISSING
+        );
+        $state = $DB->get_record(
+            'user_info_data', array('userid' => $values->student_id, 'fieldid' => $stateid->id),
+            $fields = 'data', $strictness = IGNORE_MISSING
+        );
+        if ($state) {
+            return $state->data;
+        }
+        return "-";
     }
 
-    function col_request_status($values) {
+    /**
+     * Generate the display of the request status.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_request_status($values) {
         // If the value is 0, show Pending status.
-        if($values->request_status == 0) {
-            return "Pending";    
+        if ($values->request_status == 0) {
+            return "Pending";
         } else {
             return "Shipped";
         }
     }
-    function col_request_date($values) {
+
+    /**
+     * Generate the display of the request date.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_request_date($values) {
         // Show readable date from timestamp.
         $date = $values->request_date;
-        return date("m/d/Y",$date);
+        return date("m/d/Y", $date);
     }
-    function col_actions($values) {
+
+    /**
+     * Generate the display of the action links.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_actions($values) {
         if (!$this->is_downloading()) {
-            if($values->request_status == 0) {
-                return '<a href="success.php?id='.$values->id.'&status=1&courseid='.$values->course_id.'">Delivered</a> - <a href="deleterequest.php?id='.$values->id.'">Delete</a>';
+            if ($values->request_status == 0) {
+                return '<a href="success.php?id='.$values->id.'&status=1&courseid='.$values->course_id.'">
+                Delivered</a> - <a href="deleterequest.php?id='.$values->id.'">Delete</a>';
             } else {
                 return '<a href="deleterequest.php?id='.$values->id.'&page=all">Delete</a>';
             }
-        } 
-        //- <a href="deletecourse.php?id='.$values->id.'" onclick="return check_confirm()">Delete</a>';
-    }
-    /**
-     * This function is called for each data row to allow processing of
-     * columns which do not have a *_cols function.
-     * @return string return processed value. Return NULL if no change has
-     *     been made.
-     */
-    function other_cols($colname, $value) {
-        // For security reasons we don't want to show the password hash.
-
+        }
     }
 }

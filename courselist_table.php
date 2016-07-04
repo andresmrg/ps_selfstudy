@@ -1,105 +1,127 @@
 <?php
-
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Table class to be put in managecourses.php selfstudy manage course page.
- *  for defining some custom column names and proccessing
+ * This files display the table of all courses created.
+ * @package     block_ps_selfstudy
+ * @copyright   2015 Andres Ramos
  */
 class courselist_table extends table_sql {
 
-    //GLOBAL $CFG;
-
     /**
      * Constructor
-     * @param int $uniqueid all tables have to have a unique id, this is used
+     * @param int $uniqueid all tables have to have a unique id,  this is used
      *      as a key when storing table properties like sort order in the session.
      */
-    function __construct($uniqueid) {
+    public function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code','course_platform','course_name','course_description','course_hours', 'course_type','course_status','date_created','actions');
-        $this->sortable(true,'course_code', SORT_ASC);
+        $columns = array('course_code', 'course_platform', 'course_name', 'course_description',
+                'course_hours', 'course_type', 'course_status', 'date_created', 'actions');
+        $this->sortable(true, 'course_code',  SORT_ASC);
         $this->collapsible(false);
         $this->no_sorting('actions');
         $this->no_sorting('course_description');
         $this->define_columns($columns);
-        
+
         // Define the titles of columns to show in header.
-        $headers = array('Course Code','Platform','Course Name', 'Description','Hours', 'Course Type','Status','Date Created','Action');
+        $headers = array('Course Code', 'Platform', 'Course Name', 'Description',
+                'Hours', 'Course Type', 'Status', 'Date Created', 'Action');
         $this->define_headers($headers);
     }
 
     /**
-     * This function is called for each data row to allow processing of the
-     * username value.
-     *
-     * @param object $values Contains object with all the values of record.
-     * @return $string Return username with link to profile or username only
-     *     when downloading.
+     * Generate the display of the course code.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
      */
-    function col_course_code($values) {
+    public function col_course_code($values) {
         // If the data is being downloaded than we don't want to show HTML.
 
         global $DB;
-        $desc_link = $DB->get_record('block_ps_selfstudy_course',array('id'=>$values->id), $fields='description_link');
-        $url = $desc_link->description_link;
-        
-        if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
+        $descriptionlink = $DB->get_record('block_ps_selfstudy_course', array('id' => $values->id), $fields = 'description_link');
+        $url = $descriptionlink->description_link;
+
+        if (!preg_match("~^(?:f|ht)tps?://~i",  $url)) {
             $url = "http://" . $url;
         }
 
-        if(!empty($desc_link) && $desc_link->description_link !== NULL && $desc_link->description_link !== "") {
-            return '<a href="'.$desc_link->description_link.'" target="_blank">'.$values->course_code.'</a>';
+        if (!empty($descriptionlink) && $descriptionlink->description_link !== null && $descriptionlink->description_link !== "") {
+            return '<a href="'.$descriptionlink->description_link.'" target="_blank">'.$values->course_code.'</a>';
         } else {
             return $values->course_code;
         }
 
     }
 
-    function col_course_type($values) {
-        //print_object($values);
-        // If the value is 0, show Phisical copy, else, Link course.
-        if($values->course_type == 0) {
-            return "Physical Copy";    
+    /**
+     * Generate the display of the course type.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_course_type($values) {
+        // If the value is 0,  show Phisical copy,  else,  Link course.
+        if ($values->course_type == 0) {
+            return "Physical Copy";
         } else {
             return "Link Course";
         }
     }
-    function col_course_status($values) {
-        // If the value is 0, show Active copy, else, Disable.
-        if($values->course_status == 0) {
-            return "Active";    
+
+    /**
+     * Generate the display of the course status.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_course_status($values) {
+        // If the value is 0,  show Active copy,  else,  Disable.
+        if ($values->course_status == 0) {
+            return "Active";
         } else {
             return "Disable";
         }
     }
-    function col_date_created($values) {
+
+    /**
+     * Generate the display of the date's course creation.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_date_created($values) {
         // Show readable date from timestamp.
         $date = $values->date_created;
-        return date("m/d/Y",$date);
+        return date("M d,  Y", $date);
     }
-    function col_actions($values) {
+
+    /**
+     * Generate the display of the action's links.
+     * @param object $values the table row being output.
+     * @return string HTML content to go inside the td.
+     */
+    public function col_actions($values) {
         global $DB;
         // Show readable date from timestamp.
         $str = $values->course_description;
         $description = base64_encode($str);
-        
-        $link = $DB->get_record('block_ps_selfstudy_course',array('id'=>$values->id), $fields='course_link');
-        
+
+        $link = $DB->get_record('block_ps_selfstudy_course', array('id' => $values->id), $fields = 'course_link');
         $str2 = $link->course_link;
         $link = base64_encode($str2);
 
-        return '<a href="editcourse.php?id='.$values->id.'&platform='.$values->course_platform.'&code='.$values->course_code.'&name='.$values->course_name.'&hours='.$values->course_hours.'&link='.$link.'&desc='.$description.'&type='.$values->course_type.'&status='.$values->course_status.'">Edit</a> 
-        - <a href="deletecourse.php?id='.$values->id.'" onclick="return check_confirm()">Delete</a>';
-    }
-    /**
-     * This function is called for each data row to allow processing of
-     * columns which do not have a *_cols function.
-     * @return string return processed value. Return NULL if no change has
-     *     been made.
-     */
-    function other_cols($colname, $value) {
-        // For security reasons we don't want to show the password hash.
-
+        return '<a href="editcourse.php?id=' . $values->id . '">Edit</a>
+        - <a href="deletecourse.php?id='.$values->id.'" onclick="return checkConfirm()">Delete</a>';
     }
 }
