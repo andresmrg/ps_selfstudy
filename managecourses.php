@@ -22,7 +22,7 @@
  */
 require_once(__DIR__ . '/../../config.php');
 require($CFG->libdir . '/tablelib.php');
-require('courselist_table.php');
+require('managecourses_table.php');
 require_once('filter_form.php');
 global $OUTPUT, $PAGE;
 
@@ -38,7 +38,7 @@ $context = context_system::instance();
 $PAGE->set_context($context);
 $PAGE->set_url('/blocks/ps_selfstudy/managecourses.php');
 $PAGE->set_pagelayout('standard');
-$table = new courselist_table('uniqueid');
+$table = new managecourses_table('uniqueid');
 $filterform = new filter_form();
 
 // Define headers.

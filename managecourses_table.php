@@ -19,7 +19,7 @@
  * @package     block_ps_selfstudy
  * @copyright   2015 Andres Ramos
  */
-class courselist_table extends table_sql {
+class managecourses_table extends table_sql {
 
     /**
      * Constructor
@@ -112,16 +112,9 @@ class courselist_table extends table_sql {
      * @return string HTML content to go inside the td.
      */
     public function col_actions($values) {
-        global $DB;
-        // Show readable date from timestamp.
-        $str = $values->course_description;
-        $description = base64_encode($str);
-
-        $link = $DB->get_record('block_ps_selfstudy_course', array('id' => $values->id), $fields = 'course_link');
-        $str2 = $link->course_link;
-        $link = base64_encode($str2);
 
         return '<a href="editcourse.php?id=' . $values->id . '">Edit</a>
         - <a href="action.php?action=deletecourse&courseid='.$values->id.'" onclick="return checkConfirm()">Delete</a>';
+
     }
 }
