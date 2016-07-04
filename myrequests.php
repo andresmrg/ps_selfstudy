@@ -43,7 +43,7 @@ $PAGE->set_pagelayout('standard');
 $table = new html_table();
 $table->head = array(
     get_string('coursecode', 'block_ps_selfstudy'),
-    get_string('coursetitle', 'block_ps_selfstudy'),
+    get_string('coursename', 'block_ps_selfstudy'),
     get_string('requestdate', 'block_ps_selfstudy'),
     get_string('status', 'block_ps_selfstudy'),
     get_string('completion', 'block_ps_selfstudy')
@@ -53,7 +53,7 @@ $table->data = array();
 $tablelinktype = new html_table();
 $tablelinktype->head = array(
     get_string('coursecode', 'block_ps_selfstudy'),
-    get_string('coursetitle', 'block_ps_selfstudy'),
+    get_string('coursename', 'block_ps_selfstudy'),
     get_string('link', 'block_ps_selfstudy'),
     get_string('requestdate', 'block_ps_selfstudy'),
     get_string('completion', 'block_ps_selfstudy')
@@ -63,7 +63,7 @@ $tablelinktype->data = array();
 $tablehistory = new html_table();
 $tablehistory->head = array(
     get_string('coursecode', 'block_ps_selfstudy'),
-    get_string('coursetitle', 'block_ps_selfstudy'),
+    get_string('coursename', 'block_ps_selfstudy'),
     get_string('completiondate', 'block_ps_selfstudy'),
     get_string('status', 'block_ps_selfstudy')
 );

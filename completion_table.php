@@ -55,6 +55,7 @@ class completion_table extends table_sql {
      * @return string HTML content to go inside the td.
      */
     public function col_firstname($values) {
+        global $CFG;
         // If the data is being downloaded than we don't want to show HTML.
         if ($this->is_downloading()) {
             $fullname = "$values->firstname $values->lastname";

@@ -68,7 +68,7 @@ if ($filterform->is_cancelled()) {
     if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
 
         // SQL to get all requests.
-        $fields = " r.id, 
+        $fields = " r.id,
                     c.course_code,
                     c.course_name,
                     u.firstname,
@@ -83,8 +83,8 @@ if ($filterform->is_cancelled()) {
                     r.course_id,
                     r.request_date, r.request_status";
         $from = "   {block_ps_selfstudy_request} r
-               JOIN {block_ps_selfstudy_course} c ON c.id = r.course_id
-               JOIN {user} u ON u.id = r.student_id 
+                JOIN {block_ps_selfstudy_course} c ON c.id = r.course_id
+                JOIN {user} u ON u.id = r.student_id
                 AND u.deleted = 0";
         $sqlconditions .= 'r.request_status != 2';
         $table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/viewallrequests.php");

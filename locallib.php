@@ -42,7 +42,7 @@ function delete_request($requestid) {
         if (!$DB->delete_records('block_ps_selfstudy_complete', array('id' => $completionid->id))) {
             return false;
         }
-        
+
     }
     return true;
 
@@ -55,12 +55,12 @@ function delete_request($requestid) {
  */
 function deliver_request($requestid) {
     global $DB;
-    
+
     // Update the request status to 1, meaning it has been delivered.
     if (!$DB->update_record('block_ps_selfstudy_request', array('id' => $requestid, 'request_status' => '1'))) {
         return false;
     }
-    
+
     // Notify the user that his/her course has been delivered.
     $sql = "SELECT  course_name AS coursename,
                     course_code AS coursecode,
@@ -85,7 +85,7 @@ function deliver_request($requestid) {
  */
 function delete_course_request($courseid) {
     global $DB;
-    
+
     // Delete the course record.
     if (!$DB->delete_records('block_ps_selfstudy_course', array('id' => $courseid))) {
         return false;

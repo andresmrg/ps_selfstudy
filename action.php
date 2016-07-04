@@ -36,35 +36,35 @@ switch ($action) {
     case 'deleterequest':
 
         $result = delete_request($requestid);
-        if($result) {
+        if ($result) {
             // Redirect the user to the page where the deletion was made.
             $url = new moodle_url($CFG->wwwroot . '/blocks/ps_selfstudy/viewrequests.php');
             redirect($url);
         }
         break;
-    
+
     case 'deliver':
-        
+
         $result = deliver_request($requestid);
-        if($result) {
+        if ($result) {
             $url = new moodle_url($CFG->wwwroot . '/blocks/ps_selfstudy/viewrequests.php');
             redirect($url);
         }
         break;
 
     case 'deletecourse':
-        
+
         $result = delete_course_request($courseid);
-        if($result) {
+        if ($result) {
             $url = new moodle_url($CFG->wwwroot . '/blocks/ps_selfstudy/managecourses.php?success=del');
             redirect($url);
         }
         break;
-        
+
     case 'completecourse':
-        
+
         $result = complete_course_request($requestid);
-        if($result) {
+        if ($result) {
             $url = new moodle_url($CFG->wwwroot . '/blocks/ps_selfstudy/myrequests.php?success=completed');
             redirect($url);
         }
@@ -83,7 +83,7 @@ switch ($action) {
         $result = add_course_request($request);
 
         // Get the course link and redirect the user.
-        if($result) {
+        if ($result) {
             $link = $DB->get_record('block_ps_selfstudy_course', array('id' => $courseid), $fields = 'course_link');
             $url = $link->course_link;
             if (!preg_match("~^(ht)tps?://~i", $url)) {
