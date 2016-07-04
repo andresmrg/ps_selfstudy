@@ -47,3 +47,98 @@ function delete_request($requestid) {
     return true;
 
 }
+
+/**
+ * Deliver a request
+ * @param integer $requestid
+ * @return true if the request status was updated successfully, false otherwise
+ */
+function deliver_request($requestid) {
+    global $DB;
+    
+    // Update the request status to 1, meaning it has been delivered.
+    if (!$DB->update_record('block_ps_selfstudy_request', array('id' => $requestid, 'request_status' => '1'))) {
+        return false;
+    }
+    
+    // Notify the user that his/her course has been delivered.
+    $sql = "SELECT  course_name AS coursename,
+                    course_code AS coursecode,
+                    request.student_id AS student_id,
+                    firstname,
+                    lastname,
+                    email
+              FROM  {block_ps_selfstudy_request} request
+              JOIN  {block_ps_selfstudy_course} course ON course.id = request.course_id
+              JOIN  {user} u ON u.id = student_id
+             WHERE  request.id = ?";
+    $requestinfo = $DB->get_record_sql($sql, array($requestid));
+    notify_user($requestinfo);
+    return true;
+}
+
+/**
+ * Delete a course request and requests and completion associated.
+ * @param   int $courseid with coursename,coursecode
+ *          firstname,lastname and email of the user.
+ * @return  true if was deleted successfully, false otherwise
+ */
+function delete_course_request($courseid) {
+    global $DB;
+    
+    // Delete the course record.
+    if (!$DB->delete_records('block_ps_selfstudy_course', array('id' => $courseid))) {
+        return false;
+    }
+
+    // Delete all requests related to this course if any.
+    $requestlist = $DB->get_records(
+            'block_ps_selfstudy_request',
+            array('course_id' => $courseid), $sort = '', $fields = 'id'
+    );
+    if ($requestlist) {
+        foreach ($requestlist as $request) {
+            delete_request($request->id);
+        }
+    }
+    return true;
+}
+
+/**
+ * Notify the user that a request was updated.
+ * @param   object $requestinfo with coursename,coursecode
+ *          firstname,lastname and email of the user.
+ * @return  true if was deleted successfully, false otherwise
+ */
+function notify_user($requestinfo) {
+    global $CFG;
+
+    $subject = "Course Shipment Your order for $requestinfo->coursecode $requestinfo->coursename has been shipped";
+
+    $userinfo = new stdClass;
+    $userinfo->id = $requestinfo->student_id;
+    $userinfo->email = $requestinfo->email;
+    $userinfo->firstname = $requestinfo->firstname;
+    $userinfo->lastname = $requestinfo->lastname;
+    $userinfo->mailformat = 1;
+    $userinfo->maildisplay = true;
+    $userinfo->firstnamephonetic = '';
+    $userinfo->lastnamephonetic = '';
+    $userinfo->middlename = '';
+    $userinfo->alternatename = '';
+    $from = new stdClass;
+    $from->email = "noreply@ibm.com";
+    $from->firstname = "No ";
+    $from->lastname = "Reply";
+
+    $message = "
+        <p>Hello $userinfo->firstname $userinfo->lastname,</p>
+
+        <p>You should receive this order within the next week. Be sure to come back into
+        the EPS system <a href='{$CFG->wwwroot}/blocks/ps_selfstudy/myrequests.php'>$CFG->wwwroot</a>
+        and indicate the date you complete the course so that your training history can be updated.</p>
+
+        <p>Thank you.</p>
+    ";
+    email_to_user($userinfo, $from, $subject, $message, $message, ",", false);
+}

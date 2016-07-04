@@ -189,7 +189,6 @@ if ($formpage->is_cancelled()) {
 } else {
 
     // Form didn't validate or this is the first display.
-    $site = get_site();
     echo $OUTPUT->header();
     $formpage->display();
     echo $OUTPUT->footer();

@@ -172,10 +172,10 @@ class viewrequests_table extends table_sql {
     public function col_actions($values) {
         if (!$this->is_downloading()) {
             if ($values->request_status == 0) {
-                return '<a href="success.php?id='.$values->id.'&status=1&courseid='.$values->course_id.'">
-                Delivered</a> - <a href="deleterequest.php?id='.$values->id.'">Delete</a>';
+                return '<a href="action.php?action=deliver&requestid='.$values->id.'">
+                Delivered</a> - <a href="action.php?action=deleterequest&requestid='.$values->id.'">Delete</a>';
             } else {
-                return '<a href="deleterequest.php?id='.$values->id.'&page=all">Delete</a>';
+                return '<a href="action.php?action=deleterequest&requestid='.$values->id.'">Delete</a>';
             }
         }
     }

@@ -28,23 +28,37 @@ require_once($CFG->dirroot . '/blocks/ps_selfstudy/locallib.php');
 $action     = optional_param('action',  0,  PARAM_NOTAGS);
 $requestid  = optional_param('requestid', 0, PARAM_NOTAGS);
 $page       = optional_param('page', 0, PARAM_NOTAGS);
+$courseid   = optional_param('courseid', 0, PARAM_NOTAGS);
 
 switch ($action) {
     case 'deleterequest':
+
         $result = delete_request($requestid);
-        
         if($result) {
             // Redirect the user to the page where the deletion was made.
-            if ($page) {
-                $url = new moodle_url('/blocks/ps_selfstudy/viewallrequests.php');
-                redirect($url);
-            } else {
-                $url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
-                redirect($url);
-            }
+            $url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
+            redirect($url);
         }
         break;
     
+    case 'deliver':
+        
+        $result = deliver_request($requestid);
+        if($result) {
+            $url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
+            redirect($url);
+        }
+        break;
+
+    case 'deletecourse':
+        
+        $result = delete_course_request($courseid);
+        if($result) {
+            $url = new moodle_url('/blocks/ps_selfstudy/managecourses.php?success=del');
+            redirect($url);
+        }
+        break;
+
     default:
         # code...
         break;

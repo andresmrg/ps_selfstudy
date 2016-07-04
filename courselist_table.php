@@ -122,6 +122,6 @@ class courselist_table extends table_sql {
         $link = base64_encode($str2);
 
         return '<a href="editcourse.php?id=' . $values->id . '">Edit</a>
-        - <a href="deletecourse.php?id='.$values->id.'" onclick="return checkConfirm()">Delete</a>';
+        - <a href="action.php?action=deletecourse&courseid='.$values->id.'" onclick="return checkConfirm()">Delete</a>';
     }
 }
