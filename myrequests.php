@@ -52,7 +52,13 @@ $tablehistory = new html_table();
 $tablehistory->head = array('Course Code', 'Course Title', 'Completion date', 'Status');
 $tablehistory->data = array();
 
-$querysql = "SELECT *
+$querysql = "SELECT request.id AS id,
+                    request.request_date,
+                    request.request_status,
+                    course.course_code,
+                    course.course_name,
+                    course.course_type,
+                    course.course_link
                FROM {block_ps_selfstudy_request} request
                JOIN {block_ps_selfstudy_course} course ON course.id = request.course_id
               WHERE student_id = ?";
@@ -72,7 +78,7 @@ foreach ($request as $value) {
         $completion = '';
     } else {
         // ... Otherwise, display shipped and show the completion link.
-        $completion = '<a href="success.php?rid= '.$value->id.'">Complete</a>';
+        $completion = '<a href="action.php?action=completecourse&requestid= '.$value->id.'">Complete</a>';
         $status = "Shipped";
     }
 
@@ -90,7 +96,7 @@ foreach ($request as $value) {
             }
 
             // Create completion button and table.
-            $completion = '<a href="success.php?rid= '.$value->id.'">Complete</a>';
+            $completion = '<a href="action.php?action=completecourse&requestid= '.$value->id.'">Complete</a>';
             $row1 = array($value->course_code, $value->course_name, $link, $date, $completion);
             $tablelinktype->data[] = $row1;
         }
@@ -132,7 +138,6 @@ $PAGE->set_title(get_string('myrequests', 'block_ps_selfstudy'));
 $PAGE->set_heading(get_string('myrequests', 'block_ps_selfstudy'));
 $PAGE->navbar->add(get_string('myrequests', 'block_ps_selfstudy'));
 
-$site = get_site();
 echo $OUTPUT->header(); // Output header.
 if (!empty($success)) {
 

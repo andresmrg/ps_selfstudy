@@ -105,6 +105,41 @@ function delete_course_request($courseid) {
 }
 
 /**
+ * Complete a course request.
+ * @param   int $requestid
+ * @return  true if was deleted successfully, false otherwise
+ */
+function complete_course_request($requestid) {
+    global $DB;
+
+    // Success when a user mark a course as completed.
+    $today = time();
+    $completion = new stdClass();
+    $completion->request_id = $requestid;
+    $completion->completion_status = "completed";
+    $completion->completion_date = $today;
+
+    if (!$DB->insert_record('block_ps_selfstudy_complete', $completion)) {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Add a new course request.
+ * @param   object $request with all fields
+ * @return  true if was added successfully, false otherwise
+ */
+function add_course_request($request) {
+    global $DB;
+    
+    if (!$DB->insert_record('block_ps_selfstudy_request', $request)) {
+        return false;
+    }
+    return true;
+}
+
+/**
  * Notify the user that a request was updated.
  * @param   object $requestinfo with coursename,coursecode
  *          firstname,lastname and email of the user.

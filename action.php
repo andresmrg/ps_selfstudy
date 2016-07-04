@@ -25,6 +25,8 @@
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/blocks/ps_selfstudy/locallib.php');
 
+global $CFG;
+
 $action     = optional_param('action',  0,  PARAM_NOTAGS);
 $requestid  = optional_param('requestid', 0, PARAM_NOTAGS);
 $page       = optional_param('page', 0, PARAM_NOTAGS);
@@ -36,7 +38,7 @@ switch ($action) {
         $result = delete_request($requestid);
         if($result) {
             // Redirect the user to the page where the deletion was made.
-            $url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
+            $url = new moodle_url($CFG->wwwroot . '/blocks/ps_selfstudy/viewrequests.php');
             redirect($url);
         }
         break;
@@ -45,7 +47,7 @@ switch ($action) {
         
         $result = deliver_request($requestid);
         if($result) {
-            $url = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
+            $url = new moodle_url($CFG->wwwroot . '/blocks/ps_selfstudy/viewrequests.php');
             redirect($url);
         }
         break;
@@ -54,12 +56,48 @@ switch ($action) {
         
         $result = delete_course_request($courseid);
         if($result) {
-            $url = new moodle_url('/blocks/ps_selfstudy/managecourses.php?success=del');
+            $url = new moodle_url($CFG->wwwroot . '/blocks/ps_selfstudy/managecourses.php?success=del');
+            redirect($url);
+        }
+        break;
+        
+    case 'completecourse':
+        
+        $result = complete_course_request($requestid);
+        if($result) {
+            $url = new moodle_url($CFG->wwwroot . '/blocks/ps_selfstudy/myrequests.php?success=completed');
             redirect($url);
         }
         break;
 
+    case 'go':
+
+        // Success when a user request a link type course.
+        $today = time();
+        $request = new stdClass();
+        $request->student_id = $USER->id;
+        $request->course_id = $courseid;
+        $request->request_date = $today;
+        $request->request_status = 2;
+
+        $result = add_course_request($request);
+
+        // Get the course link and redirect the user.
+        if($result) {
+            $link = $DB->get_record('block_ps_selfstudy_course', array('id' => $courseid), $fields = 'course_link');
+            $url = $link->course_link;
+            if (!preg_match("~^(ht)tps?://~i", $url)) {
+                $url = "http://" . $url;
+            }
+            $externalurl = new moodle_url($url);
+            redirect($externalurl);
+        }
+        break;
+
     default:
-        # code...
+
+        // Redirect to myrequest page.
+        $url = new moodle_url($CFG->wwwroot . '/blocks/ps_selfstudy/myrequests.php');
+        redirect($url);
         break;
 }
