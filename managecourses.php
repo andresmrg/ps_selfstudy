@@ -112,13 +112,13 @@ if ($filterform->is_cancelled()) {
         echo "<hr>";
         echo html_writer::link(
             new moodle_url('/blocks/ps_selfstudy/createcourse.php'),
-            "Add a New Course", array("class" => "btn btn-default")
+            get_string('addnewcourse',  'block_ps_selfstudy'), array("class" => "btn btn-default")
         );
         echo "<br><br>";
 
         // Get the course table.
         $table->set_sql('*', "{block_ps_selfstudy_course}", '1');
-        $table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/managecourses.php");
+        $table->define_baseurl($CFG->wwwroot . "/blocks/ps_selfstudy/managecourses.php");
         $table->out(30, true); // Print table.
 
     } else {

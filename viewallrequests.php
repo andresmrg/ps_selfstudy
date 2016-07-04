@@ -41,10 +41,11 @@ $filterform = new filter_form();
 $download = optional_param('download', '', PARAM_ALPHA);
 
 $table = new viewrequests_table('uniqueid');
-$table->is_downloading($download, 'view_all_requests', 'All Requests');
+$table->is_downloading($download, 'view_all_requests', get_string('allrequests',  'block_ps_selfstudy'));
 
 if ($filterform->is_cancelled()) {
 
+    // Redirect to all requests page.
     $courseurl = new moodle_url('/blocks/ps_selfstudy/viewallrequests.php');
     redirect($courseurl);
 
@@ -53,6 +54,7 @@ if ($filterform->is_cancelled()) {
     $sqlconditions = "course_code = '".$fromform->filter_code."' AND ";
 
     if (!$table->is_downloading()) {
+
         // Define headers.
         $PAGE->set_title(get_string('title_viewallrequests', 'block_ps_selfstudy'));
         $PAGE->set_heading(get_string('title_viewallrequests', 'block_ps_selfstudy'));
@@ -66,12 +68,24 @@ if ($filterform->is_cancelled()) {
     if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
 
         // SQL to get all requests.
-        $fields = "r.id, c.course_code, c.course_name, u.firstname, u.lastname, u.email,
-                u.address, u.department, u.country, u.city, u.phone1, r.student_id, r.course_id,
-                r.request_date, r.request_status";
-        $from = "{block_ps_selfstudy_request} as r
-                JOIN {block_ps_selfstudy_course} c ON c.id = r.course_id
-                JOIN {user} u ON u.id = r.student_id AND u.deleted = 0";
+        $fields = " r.id, 
+                    c.course_code,
+                    c.course_name,
+                    u.firstname,
+                    u.lastname,
+                    u.email,
+                    u.address,
+                    u.department,
+                    u.country,
+                    u.city,
+                    u.phone1,
+                    r.student_id,
+                    r.course_id,
+                    r.request_date, r.request_status";
+        $from = "   {block_ps_selfstudy_request} r
+               JOIN {block_ps_selfstudy_course} c ON c.id = r.course_id
+               JOIN {user} u ON u.id = r.student_id 
+                AND u.deleted = 0";
         $sqlconditions .= 'r.request_status != 2';
         $table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/viewallrequests.php");
         $link = '<br><a href="viewrequests.php">'.get_string('clickpendinglist', 'block_ps_selfstudy').'</a>';
@@ -105,12 +119,24 @@ if ($filterform->is_cancelled()) {
     if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
 
         // SQL to get all requests.
-        $fields = "r.id, c.course_code, c.course_name, u.firstname, u.lastname,
-                u.email, u.address, u.department, u.country, u.city, u.phone1, r.student_id,
-                r.course_id, r.request_date, r.request_status";
-        $from = "{block_ps_selfstudy_request} as r
-                JOIN {block_ps_selfstudy_course} c ON c.id = r.course_id
-                JOIN {user} u ON u.id = r.student_id AND u.deleted = 0";
+        $fields = "r.id,
+                    c.course_code,
+                    c.course_name,
+                    u.firstname,
+                    u.lastname,
+                    u.email,
+                    u.address,
+                    u.department,
+                    u.country,
+                    u.city,
+                    u.phone1,
+                    r.student_id,
+                    r.course_id,
+                    r.request_date,
+                    r.request_status";
+        $from = "   {block_ps_selfstudy_request} as r
+               JOIN {block_ps_selfstudy_course} c ON c.id = r.course_id
+               JOIN {user} u ON u.id = r.student_id AND u.deleted = 0";
         $sqlconditions = 'r.request_status != 2';
         $table->define_baseurl("$CFG->wwwroot/blocks/ps_selfstudy/viewallrequests.php");
         $link = '<br><a href="viewrequests.php">'.get_string('clickpendinglist', 'block_ps_selfstudy').'</a>';

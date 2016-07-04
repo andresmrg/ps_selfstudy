@@ -94,7 +94,7 @@ class editcourse_form extends moodleform {
         $mform->addElement(
             'advcheckbox', 'course_type',
             get_string('field_checkbox', 'block_ps_selfstudy'),
-            'Select to create a self-study course with link.', array('group' => 1), array(0, 1)
+            get_string('createcoursewithlink',  'block_ps_selfstudy'), array('group' => 1), array(0, 1)
         );
         if (!empty($course->course_type)) {
             $mform->setDefault('course_type', $course->course_type);
@@ -111,7 +111,7 @@ class editcourse_form extends moodleform {
         $mform->addElement(
             'advcheckbox', 'course_status',
             get_string('field_checkbox_hide', 'block_ps_selfstudy'),
-            'Select to hide the course by default.', array('group' => 2), array(0, 1)
+            get_string('hidecoursebydefault',  'plugintitle'), array('group' => 2), array(0, 1)
         );
         @$mform->setDefault('course_status', $course->course_status);
 

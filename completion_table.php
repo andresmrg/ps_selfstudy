@@ -33,8 +33,15 @@ class completion_table extends table_sql {
         $columns = array('course_code', 'course_name', 'empctry', 'email',
                 'firstname', 'completion_date', 'completion_status');
         // Define the titles of columns to show in header.
-        $headers = array('Course Code', 'Title', 'EmpSerial/CC', 'Email Address', 'Name',
-                    'Completion Date', 'Completion Status');
+        $headers = array(
+            get_string('coursecode', 'block_ps_selfstudy'),
+            get_string('title',  'block_ps_selfstudy'),
+            get_string('empserial',  'block_ps_selfstudy'),
+            get_string('email',  'block_ps_selfstudy'),
+            get_string('name',  'block_ps_selfstudy'),
+            get_string('completiondate',  'block_ps_selfstudy'),
+            get_string('completionstatus',  'block_ps_selfstudy')
+        );
 
         $this->sortable(true, 'course_code', SORT_ASC);
         $this->collapsible(false);
@@ -53,7 +60,7 @@ class completion_table extends table_sql {
             $fullname = "$values->firstname $values->lastname";
             return $fullname;
         } else {
-            return '<a href="$CFG->wwwroot/../../../user/profile.php?id='.$values->student_id.'">
+            return '<a href="' . $CFG->wwwroot . '/../../../user/profile.php?id='.$values->student_id.'">
                 '.$values->firstname." ".$values->lastname.'</a>';
         }
     }
@@ -87,7 +94,7 @@ class completion_table extends table_sql {
     public function col_completion_status($values) {
         // If the value is 0, show Pending status.
         if ($values->completion_status == "completed") {
-            return "Completed";
+            return get_string('completed',  'block_ps_selfstudy');
         }
     }
 

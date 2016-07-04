@@ -41,15 +41,32 @@ $PAGE->set_pagelayout('standard');
 
 /**** TABLE LIST OF PHYSICAL REQUESTS ****/
 $table = new html_table();
-$table->head = array('Course Code', 'Course Title', 'Request date', 'Status', 'Completion');
+$table->head = array(
+    get_string('coursecode', 'block_ps_selfstudy'),
+    get_string('coursetitle', 'block_ps_selfstudy'),
+    get_string('requestdate', 'block_ps_selfstudy'),
+    get_string('status', 'block_ps_selfstudy'),
+    get_string('completion', 'block_ps_selfstudy')
+);
 $table->data = array();
 /**** TABLE LINK TYPE REQUESTS ****/
 $tablelinktype = new html_table();
-$tablelinktype->head = array('Course Code', 'Course Title', 'Link', 'Request date', 'Completion');
+$tablelinktype->head = array(
+    get_string('coursecode', 'block_ps_selfstudy'),
+    get_string('coursetitle', 'block_ps_selfstudy'),
+    get_string('link', 'block_ps_selfstudy'),
+    get_string('requestdate', 'block_ps_selfstudy'),
+    get_string('completion', 'block_ps_selfstudy')
+);
 $tablelinktype->data = array();
 /**** TABLE HISTORY ****/
 $tablehistory = new html_table();
-$tablehistory->head = array('Course Code', 'Course Title', 'Completion date', 'Status');
+$tablehistory->head = array(
+    get_string('coursecode', 'block_ps_selfstudy'),
+    get_string('coursetitle', 'block_ps_selfstudy'),
+    get_string('completiondate', 'block_ps_selfstudy'),
+    get_string('status', 'block_ps_selfstudy')
+);
 $tablehistory->data = array();
 
 $querysql = "SELECT request.id AS id,
@@ -78,7 +95,8 @@ foreach ($request as $value) {
         $completion = '';
     } else {
         // ... Otherwise, display shipped and show the completion link.
-        $completion = '<a href="action.php?action=completecourse&requestid= '.$value->id.'">Complete</a>';
+        $completion = '<a href="action.php?action=completecourse&requestid= '.$value->id.'">
+        ' . get_string('complete', 'block_ps_selfstudy') . '</a>';
         $status = "Shipped";
     }
 
@@ -96,7 +114,8 @@ foreach ($request as $value) {
             }
 
             // Create completion button and table.
-            $completion = '<a href="action.php?action=completecourse&requestid= '.$value->id.'">Complete</a>';
+            $completion = '<a href="action.php?action=completecourse&requestid= '.$value->id.'">
+            ' . get_string('complete', 'block_ps_selfstudy') . '</a>';
             $row1 = array($value->course_code, $value->course_name, $link, $date, $completion);
             $tablelinktype->data[] = $row1;
         }

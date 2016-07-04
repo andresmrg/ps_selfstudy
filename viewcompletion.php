@@ -39,7 +39,7 @@ $PAGE->set_pagelayout('standard');
 $download = optional_param('download', '', PARAM_ALPHA);
 
 $tablecompletion = new completion_table('uniqueid');
-$tablecompletion->is_downloading($download, 'complete_history', 'History');
+$tablecompletion->is_downloading($download, 'complete_history', get_string('history', 'block_ps_selfstudy'));
 
 if (!$tablecompletion->is_downloading()) {
     // Define headers.

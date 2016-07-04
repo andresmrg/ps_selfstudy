@@ -71,7 +71,7 @@ class createcourse_form extends moodleform {
         $mform->addElement(
             'advcheckbox', 'course_type',
             get_string('field_checkbox', 'block_ps_selfstudy'),
-            'Select to create a self-study course with link.', array('group' => 1), array(0, 1)
+            get_string('createcoursewithlink',  'block_ps_selfstudy'), array('group' => 1), array(0, 1)
         );
 
         // Link.
@@ -83,7 +83,7 @@ class createcourse_form extends moodleform {
         $mform->addElement(
             'advcheckbox', 'course_status',
             get_string('field_checkbox_hide', 'block_ps_selfstudy'),
-            'Select to hide the course by default.', array('group' => 2), array(0, 1)
+            get_string('hidecoursebydefault',  'block_ps_selfstudy'), array('group' => 2), array(0, 1)
         );
 
         // Add time.
@@ -95,7 +95,6 @@ class createcourse_form extends moodleform {
 
     /**
      * This function is to validate the course code is not saved twice.
-     *
      * @return array
      * @author Andres Ramos
      * @param array $data Contains the form values.
@@ -105,7 +104,7 @@ class createcourse_form extends moodleform {
 
         $errors = array();
         if ($DB->record_exists('block_ps_selfstudy_course', array('course_code' => $data['course_code']))) {
-            $errors['course_code'] = get_string("course_duplicated", "block_ps_selfstudy");
+            $errors['course_code'] = get_string('course_duplicated", "block_ps_selfstudy');
         }
 
         return $errors;

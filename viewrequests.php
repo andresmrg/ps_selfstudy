@@ -40,7 +40,7 @@ $filterform = new filter_form();
 $download = optional_param('download', '', PARAM_ALPHA);
 
 $table = new viewrequests_table('uniqueid');
-$table->is_downloading($download, 'view_requests', 'Requests');
+$table->is_downloading($download, 'view_requests', get_string('requests',  'block_ps_selfstudy'));
 
 if ($filterform->is_cancelled()) {
 
@@ -65,9 +65,21 @@ if ($filterform->is_cancelled()) {
     if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
 
         // SQL to get all requests.
-        $fields = 'r.id,c.course_code,c.course_name,u.firstname,u.lastname,u.email,
-                u.address, u.country, u.city, u.phone1, r.student_id, r.course_id, r.request_date, r.request_status';
-        $from = "{block_ps_selfstudy_request} as r
+        $fields = 'r.id,
+                    c.course_code,
+                    c.course_name,
+                    u.firstname,
+                    u.lastname,
+                    u.email,
+                    u.address,
+                    u.country,
+                    u.city,
+                    u.phone1,
+                    r.student_id,
+                    r.course_id,
+                    r.request_date,
+                    r.request_status';
+        $from = "   {block_ps_selfstudy_request} as r
                 JOIN {block_ps_selfstudy_course} c ON (c.id=r.course_id)
                 JOIN {user} u ON(u.id=r.student_id)";
         $sqlconditions .= 'r.request_status = 0';
@@ -101,9 +113,21 @@ if ($filterform->is_cancelled()) {
     if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
 
         // SQL to get all requests.
-        $fields = 'r.id,c.course_code,c.course_name,u.firstname,u.lastname,
-            u.email, u.address, u.country, u.city, u.phone1, r.student_id, r.course_id, r.request_date, r.request_status';
-        $from = "{block_ps_selfstudy_request} as r
+        $fields = 'r.id,
+                    c.course_code,
+                    c.course_name,
+                    u.firstname,
+                    u.lastname,
+                    u.email,
+                    u.address,
+                    u.country,
+                    u.city,
+                    u.phone1,
+                    r.student_id,
+                    r.course_id,
+                    r.request_date,
+                    r.request_status';
+        $from = "   {block_ps_selfstudy_request} as r
                 JOIN {block_ps_selfstudy_course} c ON (c.id=r.course_id)
                 JOIN {user} u ON(u.id=r.student_id)";
         $sqlconditions = 'r.request_status = 0';

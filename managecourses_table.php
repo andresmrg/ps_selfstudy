@@ -38,8 +38,17 @@ class managecourses_table extends table_sql {
         $this->define_columns($columns);
 
         // Define the titles of columns to show in header.
-        $headers = array('Course Code', 'Platform', 'Course Name', 'Description',
-                'Hours', 'Course Type', 'Status', 'Date Created', 'Action');
+        $headers = array(
+            get_string('coursecode',  'block_ps_selfstudy'),
+            get_string('platform',  'block_ps_selfstudy'),
+            get_string('coursename',  'block_ps_selfstudy'),
+            get_string('description',  'block_ps_selfstudy'),
+            get_string('hours',  'block_ps_selfstudy'),
+            get_string('coursetype',  'block_ps_selfstudy'),
+            get_string('status',  'block_ps_selfstudy'),
+            get_string('datecreated',  'block_ps_selfstudy'),
+            get_string('action',  'block_ps_selfstudy')
+        );
         $this->define_headers($headers);
     }
 
@@ -75,9 +84,9 @@ class managecourses_table extends table_sql {
     public function col_course_type($values) {
         // If the value is 0,  show Phisical copy,  else,  Link course.
         if ($values->course_type == 0) {
-            return "Physical Copy";
+            return get_string('physicalcourse',  'block_ps_selfstudy');
         } else {
-            return "Link Course";
+            return get_string('linkcourse', 'block_ps_selfstudy');
         }
     }
 
@@ -89,9 +98,9 @@ class managecourses_table extends table_sql {
     public function col_course_status($values) {
         // If the value is 0,  show Active copy,  else,  Disable.
         if ($values->course_status == 0) {
-            return "Active";
+            return get_string('active', 'block_ps_selfstudy');
         } else {
-            return "Disable";
+            return get_string('disable', 'Disable');
         }
     }
 
@@ -114,7 +123,8 @@ class managecourses_table extends table_sql {
     public function col_actions($values) {
 
         return '<a href="editcourse.php?id=' . $values->id . '">Edit</a>
-        - <a href="action.php?action=deletecourse&courseid='.$values->id.'" onclick="return checkConfirm()">Delete</a>';
+        - <a href="action.php?action=deletecourse&courseid=' . $values->id . '" onclick="return checkConfirm()">
+        ' . get_string('delete', 'block_ps_selfstudy') . '</a>';
 
     }
 }

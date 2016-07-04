@@ -44,7 +44,7 @@ class requestcourse_form extends moodleform {
             'block_ps_selfstudy_course',
             array ('id' => $courseid), $fields = '*', $strictness = IGNORE_MISSING
         );
-        $mform->addElement('html', '<p>You are requesting a copy of the course <strong>'.@$course->course_name.'</strong></p>');
+        $mform->addElement('html', get_string('requestingcopyofcourse', 'block_ps_selfstudy', $course->course_name));
 
         // Group user profile fields.
         $mform->addElement('header', 'displayinfo', get_string('group_userfields', 'block_ps_selfstudy'));

@@ -132,7 +132,7 @@ function complete_course_request($requestid) {
  */
 function add_course_request($request) {
     global $DB;
-    
+
     if (!$DB->insert_record('block_ps_selfstudy_request', $request)) {
         return false;
     }
@@ -170,7 +170,7 @@ function notify_user($requestinfo) {
         <p>Hello $userinfo->firstname $userinfo->lastname,</p>
 
         <p>You should receive this order within the next week. Be sure to come back into
-        the EPS system <a href='{$CFG->wwwroot}/blocks/ps_selfstudy/myrequests.php'>$CFG->wwwroot</a>
+        the EPS system <a href='{$CFG->wwwroot}/blocks/ps_selfstudy/myrequests.php'>{$CFG->wwwroot}</a>
         and indicate the date you complete the course so that your training history can be updated.</p>
 
         <p>Thank you.</p>
