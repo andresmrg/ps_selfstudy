@@ -31,12 +31,36 @@ class viewrequests_table extends table_sql {
     public function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code', 'course_name', 'email', 'firstname', 'address',
-            'address2', 'city', 'state', 'zipcode', 'country', 'phone1', 'request_date', 'request_status'
+        $columns = array(
+            'course_code',
+            'course_name',
+            'email',
+            'firstname',
+            'address',
+            'address2',
+            'city',
+            'state',
+            'zipcode',
+            'country',
+            'phone1',
+            'request_date',
+            'request_status'
         );
         // Define the titles of columns to show in header.
-        $headers = array('Course Code', 'Title', 'Email Address', 'Name', 'Address 1',
-            'Address 2', 'City', 'State', 'Zip', 'Country', 'Phone #', 'Request date', 'Status'
+        $headers = array(
+            get_string('coursecode', 'block_ps_selfstudy'),
+            get_string('title', 'block_ps_selfstudy'),
+            get_string('email', 'block_ps_selfstudy'),
+            get_string('firstname', 'block_ps_selfstudy'),
+            get_string('address', 'block_ps_selfstudy'),
+            get_string('address2', 'block_ps_selfstudy'),
+            get_string('city', 'block_ps_selfstudy'),
+            get_string('state', 'block_ps_selfstudy'),
+            get_string('zip', 'block_ps_selfstudy'),
+            get_string('country', 'block_ps_selfstudy'),
+            get_string('phone1', 'block_ps_selfstudy'),
+            get_string('requestdate', 'block_ps_selfstudy'),
+            get_string('status', 'block_ps_selfstudy'),
         );
 
         if (!$this->is_downloading()) {

@@ -101,6 +101,7 @@ $string['description'] = 'Description';
 $string['hours'] = 'Hours';
 $string['coursetype'] = 'Course Type';
 $string['status'] = 'Status';
+$string['zip'] = 'Zip';
 $string['datecreated'] = 'Date Created';
 $string['action'] = 'Action';
 $string['physicalcourse'] = 'Physical Copy';
