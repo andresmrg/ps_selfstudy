@@ -17,8 +17,9 @@
 /**
  * Contains the functions to be executed on actions.php
  *
- * @package    block_ps_selfstudy
- * @copyright  2015 Andres Ramos
+ * @package     block_ps_selfstudy
+ * @copyright   2015 Andres Ramos
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();

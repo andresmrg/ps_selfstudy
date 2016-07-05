@@ -17,9 +17,11 @@
 /**
  * Display All requests from students whether shipped or pending
  *
- * @package block_ps_selfstudy
- * @copyright 2015 Andres Ramos
+ * @package     block_ps_selfstudy
+ * @copyright   2015 Andres Ramos
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/tablelib.php');
 require_once('filter_form.php');

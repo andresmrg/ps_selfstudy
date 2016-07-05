@@ -15,15 +15,19 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file contains the class for the form that a user has to fill out to make a request.
+ * Form that a users have to fill out to request a course.
  *
- * @package block_ps_selfstudy
- * @copyright Andres Ramos
+ * @package     block_ps_selfstudy
+ * @copyright   2015 Andres Ramos
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_once($CFG->libdir . '/formslib.php');
 
 /**
- * Form Class.
+ * Form for requesting a selfstudy course
+ * @package    block_ps_selfstudy
+ * @copyright  2015 Andres Ramos
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class requestcourse_form extends moodleform {
 

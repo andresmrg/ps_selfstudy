@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file generates the form for the course creation.
+ * Form for creating a selfstudy course
  * @package    block_ps_selfstudy
  * @copyright  2015 Andres Ramos
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,11 +24,13 @@
 require_once($CFG->libdir . '/formslib.php');
 
 /**
- * Form class for the course creation.
- * @package block_ps_selfstudy
- * @author Andres Ramos
- * @copyright 2015 Andres Ramos
+ * Class form for creating a selfstudy course.
+ *
+ * @package     block_ps_selfstudy
+ * @author      Andres Ramos
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  **/
+
 class createcourse_form extends moodleform {
 
     /**

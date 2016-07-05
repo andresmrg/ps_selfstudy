@@ -17,9 +17,11 @@
 /**
  * Contains a table with the list of courses created, and provides the ability to edit, and remove them.
  *
- * @package  block_ps_selfstudy
- * @copyright 2015 Andres Ramos
+ * @package     block_ps_selfstudy
+ * @copyright   2015 Andres Ramos
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 require_once(__DIR__ . '/../../config.php');
 require($CFG->libdir . '/tablelib.php');
 require('managecourses_table.php');

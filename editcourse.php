@@ -21,6 +21,7 @@
  * @copyright   2015 Andres Ramos
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 require_once($CFG->wwwroot . '../../config.php');
 require_once('editcourse_form.php');
 
@@ -62,7 +63,6 @@ if ($formpage->is_cancelled()) {
 
 } else {
     // ... form didn't validate or this is the first display.
-    $site = get_site();
     echo $OUTPUT->header();
     if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
         $formpage->display();

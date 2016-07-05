@@ -15,17 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file generates the from to allow users to edit a course.
+ * Form for editing a selfstudy course.
  *
- * @package block_ps_selfstudy
- * @copyright 2015 Andres Ramos
+ * @package     block_ps_selfstudy
+ * @copyright   2015 Andres Ramos
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once($CFG->libdir . '/formslib.php');
 
 /**
- * Class to generates the form.
- */
+ * Class form for editing a selfstudy course.
+ *
+ * @package block_ps_selfstudy
+ * @author  Andres Ramos
+ **/
+
 class editcourse_form extends moodleform {
 
     public function definition() {

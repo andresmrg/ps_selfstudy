@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Selfstudy block
+ *
+ * @package    block_ps_selfstudy
+ * @copyright  Andres Ramos
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 class block_ps_selfstudy extends block_list {
 
     public function init() {
@@ -32,27 +40,31 @@ class block_ps_selfstudy extends block_list {
         $this->content->items = array();
         $this->content->icons = array();
 
-        $url1 = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
-        $url2 = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
-        $url3 = new moodle_url('/blocks/ps_selfstudy/myrequests.php');
-        $url4 = new moodle_url('/blocks/ps_selfstudy/viewcompletion.php');
+        $managecourses = new moodle_url('/blocks/ps_selfstudy/managecourses.php');
+        $viewrequests = new moodle_url('/blocks/ps_selfstudy/viewrequests.php');
+        $myrequests = new moodle_url('/blocks/ps_selfstudy/myrequests.php');
+        $viewcompletion = new moodle_url('/blocks/ps_selfstudy/viewcompletion.php');
 
         $context = context_system::instance();
         if (has_capability('block/ps_selfstudy:managecourses', $context, $USER->id)) {
-            $this->content->items[] = html_writer::link($url1, get_string('link_managecourses', 'block_ps_selfstudy'));
+            $this->content->items[] = html_writer::link($managecourses, get_string('link_managecourses', 'block_ps_selfstudy'));
         }
         if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
-            $this->content->items[] = html_writer::link($url2, get_string('link_requests', 'block_ps_selfstudy'));
+            $this->content->items[] = html_writer::link($viewrequests, get_string('link_requests', 'block_ps_selfstudy'));
         }
         if (has_capability('block/ps_selfstudy:viewrequests', $context, $USER->id)) {
-            $this->content->items[] = html_writer::link($url4, get_string('link_completion', 'block_ps_selfstudy'));
+            $this->content->items[] = html_writer::link($viewcompletion, get_string('link_completion', 'block_ps_selfstudy'));
         }
         if (has_capability('block/ps_selfstudy:myrequests', $context, $USER->id)) {
-            $this->content->items[] = html_writer::link($url3, get_string('link_myrequests', 'block_ps_selfstudy'));
+            $this->content->items[] = html_writer::link($myrequests, get_string('link_myrequests', 'block_ps_selfstudy'));
         }
         return $this->content;
     }
 
+    /**
+     * Defines where this block should be available.
+     * @return array
+     **/
     public function applicable_formats() {
         return array(
                'site-index'     => true,
@@ -63,11 +75,18 @@ class block_ps_selfstudy extends block_list {
         );
     }
 
+    /**
+     * Defines whether you can allow multiple instances of the same block.
+     * @return false to prevent multiple instances
+     **/
     public function instance_allow_multiple() {
         return false;
     }
 
-    // Allow configurations.
+    /**
+     * Defines where this block has configuration options.
+     * @return false, so it doesn't have config.
+     **/
     public function has_config() {
         return false;
     }

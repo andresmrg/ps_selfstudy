@@ -17,8 +17,9 @@
 /**
  * This file displays a form for the user to fill up in order to request a physical course.
  *
- * @package   block_ps_selfstudy
- * @copyright Andres Ramos
+ * @package     block_ps_selfstudy
+ * @copyright   2015 Andres Ramos
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 require_once(__DIR__ . '/../../config.php');
 require_once('requestcourse_form.php');

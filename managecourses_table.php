@@ -18,6 +18,7 @@
  * This files display the table of all courses created.
  * @package     block_ps_selfstudy
  * @copyright   2015 Andres Ramos
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class managecourses_table extends table_sql {
 

@@ -20,6 +20,7 @@
  * @copyright  2015 Andres Ramos
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 class completion_table extends table_sql {
 
     /**
@@ -30,8 +31,15 @@ class completion_table extends table_sql {
     public function __construct($uniqueid) {
         parent::__construct($uniqueid);
         // Define the list of columns to show.
-        $columns = array('course_code', 'course_name', 'empctry', 'email',
-                'firstname', 'completion_date', 'completion_status');
+        $columns = array(
+                'course_code',
+                'course_name',
+                'empctry',
+                'email',
+                'firstname',
+                'completion_date',
+                'completion_status'
+        );
         // Define the titles of columns to show in header.
         $headers = array(
             get_string('coursecode', 'block_ps_selfstudy'),
@@ -62,7 +70,7 @@ class completion_table extends table_sql {
             return $fullname;
         } else {
             return '<a href="' . $CFG->wwwroot . '/../../../user/profile.php?id='.$values->student_id.'">
-                '.$values->firstname." ".$values->lastname.'</a>';
+                    '.$values->firstname." ".$values->lastname.'</a>';
         }
     }
 
@@ -73,12 +81,25 @@ class completion_table extends table_sql {
      */
     public function col_empctry($values) {
         global $DB;
+
         // If the data is being downloaded than we don't want to show HTML.
-        $empctryid = $DB->get_record('user_info_field', array('shortname' => 'empctry'),
-                $fields = 'id', $strictness = IGNORE_MISSING);
+        $empctryid = $DB->get_record(
+                'user_info_field',
+                array('shortname' => 'empctry'),
+                $fields = 'id'
+        );
+
         if (!empty($empctryid)) {
-            $empctry = $DB->get_record('user_info_data', array('userid' => $values->student_id,
-                    'fieldid' => $empctryid->id), $fields = 'data', $strictness = IGNORE_MISSING);
+
+            $empctry = $DB->get_record(
+                'user_info_data',
+                array(
+                    'userid' => $values->student_id,
+                    'fieldid' => $empctryid->id
+                ),
+                $fields = 'data'
+            );
+
             if (!empty($empctry)) {
                 return $empctry->data;
             } else {

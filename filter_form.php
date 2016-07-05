@@ -17,8 +17,9 @@
 /**
  * Generates the filter by code.
  *
- * @package block_ps_selfstudy
- * @copyright 2015 Andres Ramos
+ * @package     block_ps_selfstudy
+ * @copyright   2015 Andres Ramos
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once($CFG->libdir . '/formslib.php');

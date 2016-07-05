@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Table class to be put in managecourses.php selfstudy manage course page
- * for defining some custom column names and proccessing.
+ * Table class to display selfstudy courses and allow users to request courses.
  *
- * @package block_ps_selfstudy
- * @copyright 2015 Andres Ramos
+ * @package     block_ps_selfstudy
+ * @copyright   2015 Andres Ramos
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class viewrequests_table extends table_sql {
 
@@ -173,7 +173,7 @@ class viewrequests_table extends table_sql {
         if (!$this->is_downloading()) {
             if ($values->request_status == 0) {
                 return '<a href="action.php?action=deliver&requestid='.$values->id.'">
-                Delivered</a> - <a href="action.php?action=deleterequest&requestid='.$values->id.'">Delete</a>';
+                        Delivered</a> - <a href="action.php?action=deleterequest&requestid='.$values->id.'">Delete</a>';
             } else {
                 return '<a href="action.php?action=deleterequest&requestid='.$values->id.'">Delete</a>';
             }
