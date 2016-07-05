@@ -40,7 +40,7 @@ $PAGE->set_context($context);
 $PAGE->set_url('/blocks/ps_selfstudy/myrequests.php');
 $PAGE->set_pagelayout('standard');
 
-/**** TABLE LIST OF PHYSICAL REQUESTS ****/
+// Table of physical type courses request.
 $table = new html_table();
 $table->head = array(
     get_string('coursecode', 'block_ps_selfstudy'),
@@ -50,7 +50,8 @@ $table->head = array(
     get_string('completion', 'block_ps_selfstudy')
 );
 $table->data = array();
-/**** TABLE LINK TYPE REQUESTS ****/
+
+// Table of link type courses request.
 $tablelinktype = new html_table();
 $tablelinktype->head = array(
     get_string('coursecode', 'block_ps_selfstudy'),
@@ -60,7 +61,8 @@ $tablelinktype->head = array(
     get_string('completion', 'block_ps_selfstudy')
 );
 $tablelinktype->data = array();
-/**** TABLE HISTORY ****/
+
+// Table of course history.
 $tablehistory = new html_table();
 $tablehistory->head = array(
     get_string('coursecode', 'block_ps_selfstudy'),
@@ -159,6 +161,7 @@ $PAGE->set_heading(get_string('myrequests', 'block_ps_selfstudy'));
 $PAGE->navbar->add(get_string('myrequests', 'block_ps_selfstudy'));
 
 echo $OUTPUT->header(); // Output header.
+
 if (!empty($success)) {
 
     $attributes = array("class" => "alert alert-success");
@@ -168,6 +171,7 @@ if (!empty($success)) {
         echo html_writer::tag('div', get_string('completecourse', 'block_ps_selfstudy'), $attributes);
     }
 }
+
 if (has_capability('block/ps_selfstudy:myrequests', $context, $USER->id)) {
     if ($table->data) {
         echo get_string('tablerequest', 'block_ps_selfstudy');
