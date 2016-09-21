@@ -95,7 +95,8 @@ function delete_course_request($courseid) {
     // Delete all requests related to this course if any.
     $requestlist = $DB->get_records(
             'block_ps_selfstudy_request',
-            array('course_id' => $courseid), $sort = '', $fields = 'id'
+            array('course_id' => $courseid),
+            $sort = '', $fields = 'id'
     );
     if ($requestlist) {
         foreach ($requestlist as $request) {

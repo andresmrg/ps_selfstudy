@@ -33,6 +33,9 @@ if (isguestuser()) {
     print_error('guestsarenotallowed');
 }
 
+// Get script file.
+$PAGE->requires->js(new moodle_url('/blocks/ps_selfstudy/js/locallib.js'));
+
 // Get URL params.
 $success = optional_param('success',  0,  PARAM_NOTAGS);
 
@@ -128,20 +131,3 @@ if ($filterform->is_cancelled()) {
     }
     echo $OUTPUT->footer();
 }
-echo "
-<script>
-    function checkConfirm()
-    {
-        var c = confirm('IMPORTANT: If you delete this course, all requests
-            and completion records related to this course will be deleted. Do you want to proceed?');
-        if (c) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    ('#linkContainer').on('click', 'a', function() {
-    });
-</script>
-";
